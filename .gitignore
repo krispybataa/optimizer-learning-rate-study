@@ -1,0 +1,36 @@
+# ── Dataset (never commit raw or processed images) ───────────────────────────
+dataset/raw/
+dataset/processed/
+
+# ── Experiment outputs (regenerated from runs) ────────────────────────────────
+results/
+
+# ── Saved model artifacts ─────────────────────────────────────────────────────
+*.h5
+*.keras
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+
+# ── Jupyter ───────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+
+# ── OS / editor artifacts ─────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+venv/
+venv-gpu/
+
+# ── LaTeX build artifacts ─────────────────────────────────────────────────────
+docs/latex/*.aux
+docs/latex/*.log
+docs/latex/*.out
+docs/latex/*.toc
+docs/latex/*.fls
+docs/latex/*.fdb_latexmk
+docs/latex/*.synctex.gz
+docs/latex/*.pdf

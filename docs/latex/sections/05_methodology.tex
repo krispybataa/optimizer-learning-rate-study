@@ -1,0 +1,33 @@
+\section{Methodology}
+\label{sec:methodology}
+
+% TODO: Structure this section with the following subsections:
+%
+%  \subsection{Transfer Learning Architectures}
+%   - Describe each base model: VGG19, EfficientNetB3, ResNet50, DenseNet121
+%   - Pre-trained weights: ImageNet; all base layers frozen during training
+%   - Input shape: 256×256×3
+%
+%  \subsection{Custom Classification Head}
+%   - GlobalAveragePooling2D
+%   - Dense(256, relu) → Dropout(0.6)
+%   - Dense(128, relu) → Dropout(0.4)
+%   - Dense(64,  relu) → Dropout(0.3)
+%   - Dense(1, sigmoid)   [binary cross-entropy loss]
+%
+%  \subsection{Experiment Matrix}
+%   - Table: 4 architectures × 7 optimizers × 3 learning rates = 84 runs
+%   - Optimizers: Adam, Adagrad, Adamax, AdaDelta, SGD, RMSProp, <TBD>
+%   - Learning rates: 1e-4, 1e-5, 1e-6
+%
+%  \subsection{Fixed Hyperparameters}
+%   - Epochs: 50
+%   - Batch size: 32
+%   - Loss: binary_crossentropy
+%   - Metrics: accuracy, AUC
+%   - No learning-rate schedule (fixed LR per run)
+%
+%  \subsection{Evaluation Metrics}
+%   - Accuracy, Precision, Recall, F1-Score
+%   - AUC-ROC
+%   - Confusion matrix

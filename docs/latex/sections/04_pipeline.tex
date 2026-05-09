@@ -1,0 +1,49 @@
+\section{Pipeline}
+\label{sec:pipeline}
+
+% TODO: Write a brief narrative describing each stage of the end-to-end pipeline,
+%       referencing the diagram below. Explain the flow from raw data to final metrics.
+
+\begin{figure}[H]
+  \centering
+
+  \begin{tikzpicture}[
+    node distance = 1.6cm and 0.5cm,
+    box/.style    = {rectangle, rounded corners=4pt, draw=black!70, fill=blue!8,
+                     minimum width=2.8cm, minimum height=1cm,
+                     text centered, font=\small},
+    arrow/.style  = {-{Stealth[length=6pt]}, thick},
+  ]
+
+    % ── Pipeline nodes (left to right) ───────────────────────────────────────
+    \node[box] (raw)    {Raw Dataset\\(987 images)};
+    \node[box, right=of raw]    (prep)  {Preprocessing\\(resize, normalise)};
+    \node[box, right=of prep]   (aug)   {Augmentation\\(train set only)};
+    \node[box, right=of aug]    (split) {Train / Val / Test\\Split};
+
+    % ── Second row ───────────────────────────────────────────────────────────
+    \node[box, below=of split]  (train) {Model Training\\(50 epochs, bs=32)};
+    \node[box, left=of train]   (arch)  {Architecture\\VGG19 / EffNetB3\\ResNet50 / DenseNet121};
+    \node[box, left=of arch]    (opt)   {Optimizer \& LR\\(7 × 3 combos)};
+    \node[box, below=of train]  (eval)  {Evaluation\\(accuracy, AUC-ROC,\\confusion matrix)};
+    \node[box, below=of eval]   (res)   {Results \&\\Comparison};
+
+    % TODO: Adjust node positions and add additional stages as needed once the
+    %       final pipeline is confirmed. Replace placeholder labels with exact
+    %       hyperparameter values if desired.
+
+    % ── Arrows ───────────────────────────────────────────────────────────────
+    \draw[arrow] (raw)   -- (prep);
+    \draw[arrow] (prep)  -- (aug);
+    \draw[arrow] (aug)   -- (split);
+    \draw[arrow] (split) -- (train);
+    \draw[arrow] (arch)  -- (train);
+    \draw[arrow] (opt)   -- (arch);
+    \draw[arrow] (train) -- (eval);
+    \draw[arrow] (eval)  -- (res);
+
+  \end{tikzpicture}
+
+  \caption{End-to-end pipeline for the 84-simulation ovarian cancer prediction study.}
+  \label{fig:pipeline}
+\end{figure}
