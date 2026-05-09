@@ -16,7 +16,7 @@ The experiment matrix is:
 | Dimension | Options | Count |
 |-----------|---------|------:|
 | Base architectures | VGG19, EfficientNetB3, ResNet50, DenseNet121 | 4 |
-| Optimizers | Adam, Adagrad, Adamax, AdaDelta, SGD, RMSProp, <TBD> | 7 |
+| Optimizers | Adam, Adagrad, Adamax, AdaDelta, SGD, RMSProp, Nadam | 7 |
 | Learning rates | 0.0001, 0.00001, 0.000001 | 3 |
 | **Total runs** | 4 × 7 × 3 | **84** |
 
@@ -63,7 +63,10 @@ optimizer-learning-rate-study/
 │   └── pipeline_diagram/      ← Source files for pipeline visualization
 │
 ├── notebooks/
-│   └── exploration.ipynb      ← EDA notebook
+│   ├── 00_data_exploration.ipynb       ← EDA: class distribution, sample images, pixel stats
+│   ├── 01_preprocessing_pipeline.ipynb ← Documents every preprocessing step with rationale
+│   ├── 02_experiments.ipynb            ← Master notebook: runs all 84 simulations
+│   └── 03_results_analysis.ipynb       ← Heatmaps, rankings, discussion prompts
 │
 ├── requirements.txt
 ├── .gitignore
@@ -72,23 +75,48 @@ optimizer-learning-rate-study/
 
 ---
 
+## Dataset
+
+This project uses the **STRAMPN Histopathological Images for Ovarian Cancer Prediction** dataset, available from IEEE DataPort:
+
+https://ieee-dataport.org/documents/strampn-histopathological-images-ovarian-cancer-prediction
+
+The dataset is **not included in this repository**. To reproduce this study:
+1. Download the dataset from the link above (IEEE account required)
+2. Place the contents at `dataset/raw/STRAMPN Dataset/Dataset/`
+3. Run `src/preprocessing.py` to generate the processed train/val/test splits
+
+All rights to the dataset belong to its original authors.
+
+---
+
 ## Dataset Setup
 
-1. Download the **STRAMPN Histopathological Images for Ovarian Cancer Prediction**
-   dataset from its source repository (e.g., Kaggle).
-2. Extract the archive so that images are organised into class subfolders:
-   ```
-   dataset/raw/
-   ├── cancer/
-   │   └── *.jpg  (or *.png)
-   └── no_cancer/
-       └── *.jpg  (or *.png)
-   ```
-3. Run the preprocessing script to split and resize all images:
-   ```bash
-   python src/preprocessing.py
-   ```
-   This will populate `dataset/processed/train/`, `val/`, and `test/`.
+The STRAMPN dataset is already downloaded and present at `dataset/raw/STRAMPN Dataset/`.
+
+**Actual structure on disk:**
+```
+dataset/raw/STRAMPN Dataset/Dataset/
+├── Ovarian_Cancer/        ← 481 images  (cancer class)
+└── Ovarian_Non_Cancer/    ← 506 images  (no_cancer class)
+                               ─────────
+                               987 images total
+```
+
+When running `01_preprocessing_pipeline.ipynb`, update `RAW_DIR` and the class folder
+names to match this structure:
+
+```python
+RAW_DIR = pathlib.Path('../dataset/raw/STRAMPN Dataset/Dataset')
+CLASSES = {
+    'cancer':    'Ovarian_Cancer',
+    'no_cancer': 'Ovarian_Non_Cancer',
+}
+```
+
+The notebook will copy the split images into `dataset/processed/train/`, `val/`, and
+`test/` under the normalised `cancer/` and `no_cancer/` subfolder names used by all
+downstream generators.
 
 > **Note:** `dataset/raw/` and `dataset/processed/` are excluded from version control
 > via `.gitignore`. Do **not** commit raw images to the repository.
@@ -121,3 +149,10 @@ bibtex main
 pdflatex main.tex
 pdflatex main.tex
 ```
+
+---
+
+## License
+
+The source code in this repository is licensed under the MIT License — see `LICENSE` for details.
+The dataset is not covered by this license and remains the property of its original authors.
