@@ -22,8 +22,11 @@ __pycache__/
 Thumbs.db
 .idea/
 .vscode/
+
+# ── Misc 
 venv/
 venv-gpu/
+.claude
 
 # ── LaTeX build artifacts ─────────────────────────────────────────────────────
 docs/latex/*.aux
