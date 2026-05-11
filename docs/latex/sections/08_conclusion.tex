@@ -1,14 +1,8 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-% TODO: Write a concise conclusion (1–2 paragraphs) covering:
-%   - Summary of what was done: 84-run experiment comparing 4 architectures,
-%     7 optimizers, and 3 learning rates on the STRAMPN ovarian cancer dataset
-%   - Key finding: best-performing configuration (architecture + optimizer + LR)
-%   - Quantitative highlight: top accuracy and AUC-ROC achieved
-%   - Future work:
-%       * Fine-tuning base layer weights
-%       * Learning rate scheduling / warm-up strategies
-%       * Larger and more diverse datasets
-%       * Ensemble methods combining top-performing models
-%       * Explainability via Grad-CAM for clinical interpretability
+This study presented a systematic evaluation of 84 deep learning configurations for binary classification of ovarian cancer from histopathological images. Four pretrained convolutional architectures (VGG19, EfficientNetB3, ResNet50, and DenseNet121) were combined with seven optimizers (Adam, Adagrad, Adamax, AdaDelta, SGD, RMSProp, Nadam) and three learning rates (1e-4, 1e-5, 1e-6) on the STRAMPN histopathological dataset of 987 images. All runs shared an identical data pipeline and classification head, isolating optimizer and learning rate as the sole experimental variables. The primary finding is unambiguous: LR=1e-4 is the appropriate learning rate for transfer learning with frozen ImageNet bases on this dataset, Nadam and RMSProp are the strongest optimizers (average AUC 0.8749 and 0.8705 respectively), ResNet50 is the most consistently reliable architecture (average AUC 0.7945), and VGG19 produced the single highest-performing run (AUC=0.9995 with both Adam and Adamax at LR=1e-4).
+
+The practical implication of this study for clinical and research applications is clear: when applying frozen pretrained convolutional networks to small medical imaging datasets, adaptive optimizers at a moderate learning rate of 1e-4 substantially and consistently outperform simpler optimization strategies. AdaDelta and SGD at small learning rates are unreliable in this setting and should be avoided. The study also identifies an important evaluation pitfall: AUC-ROC can remain misleadingly elevated even in degenerate runs where the model never correctly classifies a single positive sample, motivating the use of recall and specificity as complementary screening metrics in clinical deployment contexts.
+
+Future directions include fine-tuning of base model weights after initial head convergence, which was deliberately excluded from this study but is expected to yield further performance gains, especially for EfficientNetB3 at LR=1e-5. Larger and more diverse training datasets would strengthen the generalizability of findings. $k$-fold cross-validation would reduce the variance in metric estimates and strengthen the statistical basis for architecture and optimizer comparisons. Architecture-specific head tuning (including different node counts, dropout schedules, or attention mechanisms tailored to each backbone's feature space) represents another promising direction. Finally, integration of explainability tools such as Grad-CAM would be necessary before any configuration from this study could be considered for clinical deployment, as interpretability is a prerequisite for trust in automated cancer screening systems.

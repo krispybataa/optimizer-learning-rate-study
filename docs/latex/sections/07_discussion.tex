@@ -1,26 +1,38 @@
 \section{Discussion}
 \label{sec:discussion}
 
-% TODO: Analyse and interpret the experimental results. Suggested structure:
-%
-%  \subsection{Effect of Optimizer Choice}
-%   - Which optimizer(s) consistently outperformed others across all architectures?
-%   - Adaptive vs. non-adaptive optimizers (Adam/Adamax/AdaDelta vs. SGD)
-%   - Convergence speed differences observed in loss curves
-%
-%  \subsection{Effect of Learning Rate}
-%   - How did the three learning rates affect final accuracy and AUC?
-%   - Did very small LRs (1e-6) underfit within 50 epochs?
-%   - Identify the sweet-spot LR per architecture
-%
-%  \subsection{Architecture Comparison}
-%   - Which base architecture achieved the highest mean AUC-ROC?
-%   - Trade-off between model complexity and performance on this dataset size (987 images)
-%
-%  \subsection{Limitations}
-%   - Small dataset size; potential overfitting risk despite dropout
-%   - Fixed number of epochs; early stopping not used
-%   - Base layers frozen; fine-tuning not explored
-%
-%  \subsection{Clinical Relevance}
-%   - Practical implications of the best-performing model for ovarian cancer screening
+\subsection{Learning Rate Sensitivity}
+
+The results reveal a clear and monotonic performance gradient across the three learning rates tested. Mean AUC-ROC at LR=1e-4 was 0.8805, falling to 0.7539 at LR=1e-5, and collapsing further to 0.6003 at LR=1e-6. This gradient is not merely a consequence of a few outlier runs; it persists across all four architectures and most optimizer combinations, suggesting a structural relationship between learning rate magnitude and convergence quality under these experimental conditions.
+
+The underperformance of LR=1e-6 is mechanistically explained by the frozen-base transfer learning configuration. When all convolutional layers are frozen, the only learnable parameters are those in the custom classification head. These weights are initialized from scratch: they have no prior alignment with the ImageNet feature space. At LR=1e-6, the magnitude of weight updates per step is so small that the head parameters undergo negligible change across 50 epochs, effectively leaving the network unable to learn a discriminative boundary between cancer and non-cancer histology features. EarlyStopping triggered frequently at LR=1e-6, with many runs stopping as early as epoch 11, confirming that validation AUC failed to improve within the patience window of 10 epochs. LR=1e-4 is consistent with the established practice for fine-tuning frozen pretrained networks in the transfer learning literature, where the head is treated as a freshly initialized module requiring a standard learning rate.
+
+\subsection{Optimizer Behavior}
+
+Nadam (average AUC 0.8749) and RMSProp (0.8705) were the strongest optimizers overall, while AdaDelta was consistently the weakest (average AUC 0.5721). The dominance of adaptive methods over SGD on this dataset is expected: with only 518 training images, gradient signals are sparse and noisy. Adaptive optimizers compensate by maintaining per-parameter learning rate estimates, effectively amplifying useful gradient signals and dampening noisy ones. This is particularly beneficial when the training set is too small for stable gradient averaging over a large batch population.
+
+AdaDelta's consistent failure warrants specific attention. AdaDelta was designed to address Adagrad's learning rate collapse by using a windowed accumulation of squared gradients rather than a global one. However, on very small datasets with few steps per epoch (approximately 17 steps at batch size 32 from 518 training images), AdaDelta's effective learning rate decays rapidly even within its windowed scheme, converging to near-zero updates before meaningful head convergence can occur. This explains why ResNet50/AdaDelta/1e-4 produced the worst AUC in the entire experiment (0.1554) despite having a relatively large learning rate. The one apparent exception --- EfficientNetB3/AdaDelta/1e-5/AUC=0.8531 --- does not represent a general recovery of AdaDelta performance; it is an isolated outcome against an otherwise uniformly poor AdaDelta profile, and should not be interpreted as indicating AdaDelta's competence at LR=1e-5.
+
+SGD ranked fifth overall (average AUC 0.7109), performing competitively at LR=1e-4 for architectures where the loss surface was sufficiently smooth (e.g., ResNet50/SGD/1e-4/AUC=0.9869). However, SGD's fixed per-parameter step size makes it vulnerable to poorly scaled gradients, and its performance degraded sharply at LR=1e-5 and LR=1e-6.
+
+\subsection{Architecture Performance}
+
+ResNet50 achieved the highest average AUC (0.7945) across its 21 configurations, indicating the most consistent and reliable performance across optimizer and learning rate combinations. Its residual connections allow gradient flow through the frozen layers without vanishing, producing clean feature representations that the classification head can learn from effectively, even with limited training data.
+
+VGG19 produced the overall best single run (VGG19/Adamax/1e-4 with AUC=0.9995 and accuracy=0.9717, and VGG19/Adam/1e-4 with an identical AUC of 0.9995) yet had one of the higher variances across its 21 configurations. The simplicity of VGG19's architecture (uniform $3\times3$ convolution stacks with no skip connections) may paradoxically benefit performance when only the head is trained: the features extracted by VGG19 are more homogeneous and less entangled with specific residual pathway activations, making them easier for a simple pooling-and-dense head to exploit without seeing architectural nuances. This hypothesis is consistent with observations in small-dataset transfer learning literature.
+
+EfficientNetB3's average AUC (0.7075) ranked fourth despite being the most modern architecture. EfficientNetB3's compound-scaled architecture with its multi-scale feature extraction likely requires substantially more diverse training data to manifest its advantages. With only 518 training images, the benefits of compound scaling are not realized, and the model's more complex feature space may actually create a harder-to-learn mapping for the classification head.
+
+DenseNet121 (average AUC 0.7384) performed comparably to VGG19 in aggregate but showed a strong affinity for LR=1e-4 configurations. Its dense connections preserve feature information across all layers, but this also means the head receives a richer and potentially noisier signal than architectures with more selective bottlenecks.
+
+\subsection{Degenerate Cases}
+
+The 11 degenerate runs fall into two distinct failure modes. In the first, the model predicts all test samples as non-cancer (recall=0, specificity=1.0): the optimizer never produced sufficient gradient signal to push the sigmoid output above 0.5 for any cancer sample. In the second, the model predicts all test samples as cancer (recall=1.0, specificity=0): the optimizer drove all predictions to the positive class. Both are trivial solutions that correspond to local minima from which gradient updates could not escape.
+
+Degenerate collapses occurred predominantly at LR=1e-6 (8 of 11 cases), reinforcing the learning rate sensitivity finding. The remaining three cases involved AdaDelta or Adagrad at LR=1e-4 or LR=1e-5, consistent with those optimizers' tendency to produce rapidly diminishing effective learning rates.
+
+An important methodological observation is that AUC does not reliably detect degenerate runs. VGG19/Nadam/1e-6 achieved AUC=0.8201 despite recall=0, because AUC measures the model's ability to \emph{rank} positive samples above negative ones across all thresholds: a property that can hold even when the model's sigmoid scores are all below 0.5. This means that AUC-based evaluation should be supplemented with recall and specificity checks when screening for model collapse, particularly in medical imaging contexts where a recall=0 model would constitute a clinically catastrophic failure.
+
+\subsection{Limitations}
+
+Several limitations of the present study should be acknowledged. First, all base models were trained with their convolutional weights fully frozen; no fine-tuning pass was performed. Fine-tuning the final convolutional blocks at a reduced learning rate (e.g., 1e-5) may have substantially improved results, particularly for the LR=1e-5 group where validation AUC improved meaningfully for some configurations. Second, the dataset of 987 images is small by deep learning standards, and all performance metrics should be interpreted with caution regarding generalizability to unseen data distributions or imaging equipment. Third, the classification head architecture was fixed across all four base models, preventing architecture-specific optimization. Fourth, a single train/val/test split was used rather than cross-validation. While the integrity of the split was verified and the seed is fixed for reproducibility, single-split evaluations carry higher variance in estimated metrics than $k$-fold protocols. Fifth, the training image resolution was fixed at $256\times256$ for all architectures, which is not the native optimal resolution for some of them (EfficientNetB3 was designed for $300\times300$ input).

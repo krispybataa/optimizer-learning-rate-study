@@ -1,15 +1,98 @@
 \section{Preprocessing}
 \label{sec:preprocessing}
 
-% TODO: Describe every preprocessing step applied to the raw images before training:
-%   - Image resizing to 256×256 pixels
-%   - Pixel normalization (divide by 255 or ImageNet mean/std subtraction)
-%   - Data augmentation applied to the training set only:
-%       * Horizontal and vertical flips
-%       * Random rotation (±20°)
-%       * Zoom range (±10%)
-%       * Brightness adjustment
-%       * Width/height shift
-%   - Rationale for each augmentation choice (combat class imbalance / overfitting)
-%   - No augmentation applied to val/test sets (only rescaling)
-%   - Tools used: TensorFlow ImageDataGenerator or tf.data pipeline
+All preprocessing was performed via \texttt{src/preprocessing.py} using only standard Python libraries: \texttt{pathlib}, \texttt{shutil}, \texttt{sklearn}, and \texttt{os}. No deep learning frameworks were involved at this stage. The script is idempotent: re-running it skips already-copied files without overwriting data.
+
+\subsection{Raw Data Inventory}
+
+Step 1 of the preprocessing pipeline inventories the raw dataset directories and verifies expected file counts before any splitting or copying is performed. Each class folder is scanned for JPEG files, non-JPEG files are reported as warnings, and counts are compared against expected values (481 for Ovarian Cancer, 506 for Ovarian Non-Cancer, 987 total). A representative inventory output is shown below.
+
+\begin{lstlisting}[style=python]
+============================================================
+STEP 1 -- RAW DATASET INVENTORY
+============================================================
+
+  [cancer]  path: .../dataset/raw/STRAMPN Dataset/Dataset/Ovarian_Cancer
+    Total files : 481
+    All files   : .jpg [ok]
+    JPG count   : 481  [ok]
+
+  [no_cancer]  path: .../dataset/raw/STRAMPN Dataset/Dataset/Ovarian_Non_Cancer
+    Total files : 506
+    All files   : .jpg [ok]
+    JPG count   : 506  [ok]
+
+  Total images across both classes: 987  [ok]
+\end{lstlisting}
+
+\subsection{Normalization}
+
+All images (training, validation, and test) are normalized using \textbf{samplewise standard normalization} via the Keras \texttt{ImageDataGenerator} parameters:
+
+\begin{itemize}
+  \item \texttt{samplewise\_center=True}: subtracts the per-sample mean from each pixel channel.
+  \item \texttt{samplewise\_std\_normalization=True}: divides each pixel channel by the per-sample standard deviation.
+\end{itemize}
+
+Samplewise normalization was chosen over featurewise (dataset-wide) normalization for two reasons. First, with only 987 images, computing dataset-wide channel statistics would be noisy. Second, featurewise statistics computed from the training set would constitute a form of information leak if applied naively to the test set. Samplewise normalization requires no dataset-level statistics and is computed independently for each image at inference time, making it both safer and more reproducible.
+
+\subsection{Data Augmentation}
+
+Data augmentation is applied \textbf{exclusively to the training generator}. The validation and test generators receive normalization only. Restricting augmentation to training data prevents artificially altered images from appearing in evaluation sets, ensuring that validation and test metrics reflect true model generalization on unmodified inputs.
+
+Table~\ref{tab:augmentation} lists all augmentation parameters used.
+
+\begin{table}[H]
+  \centering
+  \caption{Augmentation parameters applied to the training generator only.}
+  \label{tab:augmentation}
+  \begin{tabular}{lll}
+    \toprule
+    \rowcolor{tableheader}
+    \textbf{Parameter} & \textbf{Value} & \textbf{Effect} \\
+    \midrule
+    \texttt{rotation\_range}               & 30\textdegree  & Random rotations up to 30 degrees \\
+    \texttt{width\_shift\_range}           & 0.15           & Horizontal shift up to 15\% of width \\
+    \texttt{height\_shift\_range}          & 0.15           & Vertical shift up to 15\% of height \\
+    \texttt{shear\_range}                  & 0.3            & Shear transformation \\
+    \texttt{zoom\_range}                   & 0.30           & Random zoom up to 30\% \\
+    \texttt{horizontal\_flip}              & True           & Random horizontal flipping \\
+    \texttt{fill\_mode}                    & \texttt{nearest} & Fill border pixels without artifacts \\
+    \texttt{samplewise\_std\_normalization} & True          & Per-sample standardization \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The training and evaluation generators as defined in \texttt{src/run\_all.py} are shown below.
+
+\begin{lstlisting}[style=python]
+image_generatorFullAugment = ImageDataGenerator(
+    samplewise_center=True,
+    samplewise_std_normalization=True,
+    rotation_range=30,
+    width_shift_range=0.15,
+    height_shift_range=0.15,
+    shear_range=0.3,
+    zoom_range=0.30,
+    horizontal_flip=True,
+    fill_mode="nearest",
+)
+
+image_generatorNoAugment = ImageDataGenerator(
+    samplewise_center=True,
+    samplewise_std_normalization=True,
+)
+\end{lstlisting}
+
+\subsection{Experimental Integrity}
+
+A critical design decision in the training pipeline is that both data generators are constructed \textbf{once} before the 84-run training loop and are shared across all runs without re-initialization. Re-initializing the training generator inside the loop would re-shuffle the batch order differently for each configuration, introducing data variability as a confounding factor. By fixing the generator state, any observed performance differences between configurations can be attributed solely to the choice of optimizer and learning rate, not to variation in the training data sequence.
+
+This principle is enforced in both \texttt{src/run\_all.py} and documented as an explicit warning in \texttt{notebooks/02\_experiments.ipynb}:
+
+\begin{lstlisting}[style=python]
+# EXPERIMENTAL INTEGRITY NOTE: generators are constructed ONCE here
+# and shared across all 84 runs. Do not re-initialize them inside
+# the loop -- doing so would reshuffle the training data differently
+# per run and confound optimizer/LR comparisons.
+\end{lstlisting}
