@@ -7,7 +7,9 @@ The experiment follows a full factorial design crossing four base architectures,
 
 \begingroup
 \setstretch{1}
-\begin{longtable}{rll}
+\setlength{\extrarowheight}{0pt}
+\setlength{\LTcapwidth}{\textwidth}
+\begin{longtable}{r p{6.5cm} p{6.5cm}}
   \caption{Complete 84-run experiment matrix in execution order.}
   \label{tab:runs} \\
   \toprule
@@ -117,7 +119,7 @@ Four convolutional neural network architectures pre-trained on ImageNet were eva
   \centering
   \caption{Base architectures used as frozen feature extractors.}
   \label{tab:architectures}
-  \begin{tabular}{llrl}
+  \begin{tabularx}{\textwidth}{l l r X}
     \toprule
     \rowcolor{tableheader}
     \textbf{Architecture} & \textbf{Year} & \textbf{Parameters} & \textbf{Key Characteristic} \\
@@ -127,7 +129,7 @@ Four convolutional neural network architectures pre-trained on ImageNet were eva
     ResNet50       & 2015 &  25.6M & Residual (skip) connections \\
     DenseNet121    & 2016 &   8.0M & Dense connections between all layers \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 Each architecture was loaded via the corresponding \texttt{tf.keras.applications} class with \texttt{include\_top=False}, \texttt{weights=\char`"imagenet\char`"}, and \texttt{trainable=False}. Freezing all base layers ensures that backpropagation updates only the custom classification head, and that the ImageNet feature representations are preserved throughout training.
@@ -188,7 +190,7 @@ Seven optimizers spanning adaptive and non-adaptive families were evaluated (Tab
   \centering
   \caption{Optimizers evaluated across all 84 runs.}
   \label{tab:optimizers}
-  \begin{tabular}{lll}
+  \begin{tabularx}{\textwidth}{l l X}
     \toprule
     \rowcolor{tableheader}
     \textbf{Optimizer} & \textbf{Full Name} & \textbf{Key Characteristic} \\
@@ -201,7 +203,7 @@ Seven optimizers spanning adaptive and non-adaptive families were evaluated (Tab
     RMSProp  & Root Mean Square Propagation    & Divides LR by moving average of squared gradients \\
     Nadam    & Nesterov Adam                   & Adam with Nesterov momentum lookahead \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 \subsection{Fixed Hyperparameters}
@@ -237,7 +239,7 @@ Four Keras callbacks were applied uniformly to every run (Table~\ref{tab:callbac
   \centering
   \caption{Keras callbacks applied to all 84 training runs.}
   \label{tab:callbacks}
-  \begin{tabular}{llll}
+  \begin{tabularx}{\textwidth}{l l l X}
     \toprule
     \rowcolor{tableheader}
     \textbf{Callback} & \textbf{Monitor} & \textbf{Parameters} & \textbf{Purpose} \\
@@ -247,7 +249,7 @@ Four Keras callbacks were applied uniformly to every run (Table~\ref{tab:callbac
     ReduceLROnPlateau & \texttt{val\_loss} & \texttt{factor=0.5, patience=5, min\_lr=1e-7} & Reduces LR on plateau \\
     CSVLogger        & --                & Per-run \texttt{training\_log.csv}            & Logs epoch metrics \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 \subsection{Evaluation Metrics}

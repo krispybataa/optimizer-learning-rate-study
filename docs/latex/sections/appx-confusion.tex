@@ -1,369 +1,525 @@
 \clearpage
 
 % ── VGG19 ─────────────────────────────────────────────────────────────────────
-\begin{figure}[p]
+\subsection*{VGG19}
+
+\begin{figure}[htbp]
   \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_Adam_LR1e-04/confusion_matrices/VGG19_Adam_LR1e-04.png}
-    \caption{Adam, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_Adam_LR1e-05/confusion_matrices/VGG19_Adam_LR1e-05.png}
-    \caption{Adam, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_Adam_LR1e-06/confusion_matrices/VGG19_Adam_LR1e-06.png}
-    \caption{Adam, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{VGG19,Adam: Confusion Matrices across Learning Rates}
+  \label{fig:cm-vgg19-adam}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_Adagrad_LR1e-04/confusion_matrices/VGG19_Adagrad_LR1e-04.png}
-    \caption{Adagrad, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_Adagrad_LR1e-05/confusion_matrices/VGG19_Adagrad_LR1e-05.png}
-    \caption{Adagrad, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_Adagrad_LR1e-06/confusion_matrices/VGG19_Adagrad_LR1e-06.png}
-    \caption{Adagrad, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{VGG19,Adagrad: Confusion Matrices across Learning Rates}
+  \label{fig:cm-vgg19-adagrad}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_Adamax_LR1e-04/confusion_matrices/VGG19_Adamax_LR1e-04.png}
-    \caption{Adamax, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_Adamax_LR1e-05/confusion_matrices/VGG19_Adamax_LR1e-05.png}
-    \caption{Adamax, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_Adamax_LR1e-06/confusion_matrices/VGG19_Adamax_LR1e-06.png}
-    \caption{Adamax, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{VGG19,Adamax: Confusion Matrices across Learning Rates}
+  \label{fig:cm-vgg19-adamax}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_AdaDelta_LR1e-04/confusion_matrices/VGG19_AdaDelta_LR1e-04.png}
-    \caption{AdaDelta, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_AdaDelta_LR1e-05/confusion_matrices/VGG19_AdaDelta_LR1e-05.png}
-    \caption{AdaDelta, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_AdaDelta_LR1e-06/confusion_matrices/VGG19_AdaDelta_LR1e-06.png}
-    \caption{AdaDelta, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{VGG19,AdaDelta: Confusion Matrices across Learning Rates}
+  \label{fig:cm-vgg19-adadelta}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_SGD_LR1e-04/confusion_matrices/VGG19_SGD_LR1e-04.png}
-    \caption{SGD, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_SGD_LR1e-05/confusion_matrices/VGG19_SGD_LR1e-05.png}
-    \caption{SGD, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_SGD_LR1e-06/confusion_matrices/VGG19_SGD_LR1e-06.png}
-    \caption{SGD, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{VGG19,SGD: Confusion Matrices across Learning Rates}
+  \label{fig:cm-vgg19-sgd}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_RMSProp_LR1e-04/confusion_matrices/VGG19_RMSProp_LR1e-04.png}
-    \caption{RMSProp, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_RMSProp_LR1e-05/confusion_matrices/VGG19_RMSProp_LR1e-05.png}
-    \caption{RMSProp, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_RMSProp_LR1e-06/confusion_matrices/VGG19_RMSProp_LR1e-06.png}
-    \caption{RMSProp, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{VGG19,RMSProp: Confusion Matrices across Learning Rates}
+  \label{fig:cm-vgg19-rmsprop}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_Nadam_LR1e-04/confusion_matrices/VGG19_Nadam_LR1e-04.png}
-    \caption{Nadam, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_Nadam_LR1e-05/confusion_matrices/VGG19_Nadam_LR1e-05.png}
-    \caption{Nadam, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/VGG19_Nadam_LR1e-06/confusion_matrices/VGG19_Nadam_LR1e-06.png}
-    \caption{Nadam, LR=1e-6}
+    \caption{LR=1e-6}
   \end{subfigure}
-  \caption{Confusion Matrices --- VGG19 (all 21 configurations).}
-  \label{fig:cm-vgg19}
+  \caption{VGG19,Nadam: Confusion Matrices across Learning Rates}
+  \label{fig:cm-vgg19-nadam}
 \end{figure}
+
 \clearpage
 
 % ── EfficientNetB3 ────────────────────────────────────────────────────────────
-\begin{figure}[p]
+\subsection*{EfficientNetB3}
+
+\begin{figure}[htbp]
   \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adam_LR1e-04/confusion_matrices/EfficientNetB3_Adam_LR1e-04.png}
-    \caption{Adam, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adam_LR1e-05/confusion_matrices/EfficientNetB3_Adam_LR1e-05.png}
-    \caption{Adam, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adam_LR1e-06/confusion_matrices/EfficientNetB3_Adam_LR1e-06.png}
-    \caption{Adam, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{EfficientNetB3,Adam: Confusion Matrices across Learning Rates}
+  \label{fig:cm-effnet-adam}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adagrad_LR1e-04/confusion_matrices/EfficientNetB3_Adagrad_LR1e-04.png}
-    \caption{Adagrad, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adagrad_LR1e-05/confusion_matrices/EfficientNetB3_Adagrad_LR1e-05.png}
-    \caption{Adagrad, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adagrad_LR1e-06/confusion_matrices/EfficientNetB3_Adagrad_LR1e-06.png}
-    \caption{Adagrad, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{EfficientNetB3,Adagrad: Confusion Matrices across Learning Rates}
+  \label{fig:cm-effnet-adagrad}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adamax_LR1e-04/confusion_matrices/EfficientNetB3_Adamax_LR1e-04.png}
-    \caption{Adamax, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adamax_LR1e-05/confusion_matrices/EfficientNetB3_Adamax_LR1e-05.png}
-    \caption{Adamax, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adamax_LR1e-06/confusion_matrices/EfficientNetB3_Adamax_LR1e-06.png}
-    \caption{Adamax, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{EfficientNetB3,Adamax: Confusion Matrices across Learning Rates}
+  \label{fig:cm-effnet-adamax}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_AdaDelta_LR1e-04/confusion_matrices/EfficientNetB3_AdaDelta_LR1e-04.png}
-    \caption{AdaDelta, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_AdaDelta_LR1e-05/confusion_matrices/EfficientNetB3_AdaDelta_LR1e-05.png}
-    \caption{AdaDelta, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_AdaDelta_LR1e-06/confusion_matrices/EfficientNetB3_AdaDelta_LR1e-06.png}
-    \caption{AdaDelta, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{EfficientNetB3,AdaDelta: Confusion Matrices across Learning Rates}
+  \label{fig:cm-effnet-adadelta}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_SGD_LR1e-04/confusion_matrices/EfficientNetB3_SGD_LR1e-04.png}
-    \caption{SGD, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_SGD_LR1e-05/confusion_matrices/EfficientNetB3_SGD_LR1e-05.png}
-    \caption{SGD, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_SGD_LR1e-06/confusion_matrices/EfficientNetB3_SGD_LR1e-06.png}
-    \caption{SGD, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{EfficientNetB3,SGD: Confusion Matrices across Learning Rates}
+  \label{fig:cm-effnet-sgd}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_RMSProp_LR1e-04/confusion_matrices/EfficientNetB3_RMSProp_LR1e-04.png}
-    \caption{RMSProp, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_RMSProp_LR1e-05/confusion_matrices/EfficientNetB3_RMSProp_LR1e-05.png}
-    \caption{RMSProp, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_RMSProp_LR1e-06/confusion_matrices/EfficientNetB3_RMSProp_LR1e-06.png}
-    \caption{RMSProp, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{EfficientNetB3,RMSProp: Confusion Matrices across Learning Rates}
+  \label{fig:cm-effnet-rmsprop}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Nadam_LR1e-04/confusion_matrices/EfficientNetB3_Nadam_LR1e-04.png}
-    \caption{Nadam, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Nadam_LR1e-05/confusion_matrices/EfficientNetB3_Nadam_LR1e-05.png}
-    \caption{Nadam, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Nadam_LR1e-06/confusion_matrices/EfficientNetB3_Nadam_LR1e-06.png}
-    \caption{Nadam, LR=1e-6}
+    \caption{LR=1e-6}
   \end{subfigure}
-  \caption{Confusion Matrices --- EfficientNetB3 (all 21 configurations).}
-  \label{fig:cm-effnet}
+  \caption{EfficientNetB3,Nadam: Confusion Matrices across Learning Rates}
+  \label{fig:cm-effnet-nadam}
 \end{figure}
+
 \clearpage
 
 % ── ResNet50 ──────────────────────────────────────────────────────────────────
-\begin{figure}[p]
+\subsection*{ResNet50}
+
+\begin{figure}[htbp]
   \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_Adam_LR1e-04/confusion_matrices/ResNet50_Adam_LR1e-04.png}
-    \caption{Adam, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_Adam_LR1e-05/confusion_matrices/ResNet50_Adam_LR1e-05.png}
-    \caption{Adam, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_Adam_LR1e-06/confusion_matrices/ResNet50_Adam_LR1e-06.png}
-    \caption{Adam, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{ResNet50,Adam: Confusion Matrices across Learning Rates}
+  \label{fig:cm-resnet-adam}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_Adagrad_LR1e-04/confusion_matrices/ResNet50_Adagrad_LR1e-04.png}
-    \caption{Adagrad, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_Adagrad_LR1e-05/confusion_matrices/ResNet50_Adagrad_LR1e-05.png}
-    \caption{Adagrad, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_Adagrad_LR1e-06/confusion_matrices/ResNet50_Adagrad_LR1e-06.png}
-    \caption{Adagrad, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{ResNet50,Adagrad: Confusion Matrices across Learning Rates}
+  \label{fig:cm-resnet-adagrad}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_Adamax_LR1e-04/confusion_matrices/ResNet50_Adamax_LR1e-04.png}
-    \caption{Adamax, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_Adamax_LR1e-05/confusion_matrices/ResNet50_Adamax_LR1e-05.png}
-    \caption{Adamax, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_Adamax_LR1e-06/confusion_matrices/ResNet50_Adamax_LR1e-06.png}
-    \caption{Adamax, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{ResNet50,Adamax: Confusion Matrices across Learning Rates}
+  \label{fig:cm-resnet-adamax}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_AdaDelta_LR1e-04/confusion_matrices/ResNet50_AdaDelta_LR1e-04.png}
-    \caption{AdaDelta, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_AdaDelta_LR1e-05/confusion_matrices/ResNet50_AdaDelta_LR1e-05.png}
-    \caption{AdaDelta, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_AdaDelta_LR1e-06/confusion_matrices/ResNet50_AdaDelta_LR1e-06.png}
-    \caption{AdaDelta, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{ResNet50,AdaDelta: Confusion Matrices across Learning Rates}
+  \label{fig:cm-resnet-adadelta}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_SGD_LR1e-04/confusion_matrices/ResNet50_SGD_LR1e-04.png}
-    \caption{SGD, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_SGD_LR1e-05/confusion_matrices/ResNet50_SGD_LR1e-05.png}
-    \caption{SGD, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_SGD_LR1e-06/confusion_matrices/ResNet50_SGD_LR1e-06.png}
-    \caption{SGD, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{ResNet50,SGD: Confusion Matrices across Learning Rates}
+  \label{fig:cm-resnet-sgd}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_RMSProp_LR1e-04/confusion_matrices/ResNet50_RMSProp_LR1e-04.png}
-    \caption{RMSProp, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_RMSProp_LR1e-05/confusion_matrices/ResNet50_RMSProp_LR1e-05.png}
-    \caption{RMSProp, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_RMSProp_LR1e-06/confusion_matrices/ResNet50_RMSProp_LR1e-06.png}
-    \caption{RMSProp, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{ResNet50,RMSProp: Confusion Matrices across Learning Rates}
+  \label{fig:cm-resnet-rmsprop}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_Nadam_LR1e-04/confusion_matrices/ResNet50_Nadam_LR1e-04.png}
-    \caption{Nadam, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_Nadam_LR1e-05/confusion_matrices/ResNet50_Nadam_LR1e-05.png}
-    \caption{Nadam, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/ResNet50_Nadam_LR1e-06/confusion_matrices/ResNet50_Nadam_LR1e-06.png}
-    \caption{Nadam, LR=1e-6}
+    \caption{LR=1e-6}
   \end{subfigure}
-  \caption{Confusion Matrices --- ResNet50 (all 21 configurations).}
-  \label{fig:cm-resnet}
+  \caption{ResNet50,Nadam: Confusion Matrices across Learning Rates}
+  \label{fig:cm-resnet-nadam}
 \end{figure}
+
 \clearpage
 
 % ── DenseNet121 ───────────────────────────────────────────────────────────────
-\begin{figure}[p]
+\subsection*{DenseNet121}
+
+\begin{figure}[htbp]
   \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_Adam_LR1e-04/confusion_matrices/DenseNet121_Adam_LR1e-04.png}
-    \caption{Adam, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_Adam_LR1e-05/confusion_matrices/DenseNet121_Adam_LR1e-05.png}
-    \caption{Adam, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_Adam_LR1e-06/confusion_matrices/DenseNet121_Adam_LR1e-06.png}
-    \caption{Adam, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{DenseNet121,Adam: Confusion Matrices across Learning Rates}
+  \label{fig:cm-densenet-adam}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_Adagrad_LR1e-04/confusion_matrices/DenseNet121_Adagrad_LR1e-04.png}
-    \caption{Adagrad, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_Adagrad_LR1e-05/confusion_matrices/DenseNet121_Adagrad_LR1e-05.png}
-    \caption{Adagrad, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_Adagrad_LR1e-06/confusion_matrices/DenseNet121_Adagrad_LR1e-06.png}
-    \caption{Adagrad, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{DenseNet121,Adagrad: Confusion Matrices across Learning Rates}
+  \label{fig:cm-densenet-adagrad}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_Adamax_LR1e-04/confusion_matrices/DenseNet121_Adamax_LR1e-04.png}
-    \caption{Adamax, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_Adamax_LR1e-05/confusion_matrices/DenseNet121_Adamax_LR1e-05.png}
-    \caption{Adamax, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_Adamax_LR1e-06/confusion_matrices/DenseNet121_Adamax_LR1e-06.png}
-    \caption{Adamax, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{DenseNet121,Adamax: Confusion Matrices across Learning Rates}
+  \label{fig:cm-densenet-adamax}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_AdaDelta_LR1e-04/confusion_matrices/DenseNet121_AdaDelta_LR1e-04.png}
-    \caption{AdaDelta, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_AdaDelta_LR1e-05/confusion_matrices/DenseNet121_AdaDelta_LR1e-05.png}
-    \caption{AdaDelta, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_AdaDelta_LR1e-06/confusion_matrices/DenseNet121_AdaDelta_LR1e-06.png}
-    \caption{AdaDelta, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{DenseNet121,AdaDelta: Confusion Matrices across Learning Rates}
+  \label{fig:cm-densenet-adadelta}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_SGD_LR1e-04/confusion_matrices/DenseNet121_SGD_LR1e-04.png}
-    \caption{SGD, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_SGD_LR1e-05/confusion_matrices/DenseNet121_SGD_LR1e-05.png}
-    \caption{SGD, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_SGD_LR1e-06/confusion_matrices/DenseNet121_SGD_LR1e-06.png}
-    \caption{SGD, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{DenseNet121,SGD: Confusion Matrices across Learning Rates}
+  \label{fig:cm-densenet-sgd}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_RMSProp_LR1e-04/confusion_matrices/DenseNet121_RMSProp_LR1e-04.png}
-    \caption{RMSProp, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_RMSProp_LR1e-05/confusion_matrices/DenseNet121_RMSProp_LR1e-05.png}
-    \caption{RMSProp, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_RMSProp_LR1e-06/confusion_matrices/DenseNet121_RMSProp_LR1e-06.png}
-    \caption{RMSProp, LR=1e-6}
-  \end{subfigure}\\[0.3em]
+    \caption{LR=1e-6}
+  \end{subfigure}
+  \caption{DenseNet121,RMSProp: Confusion Matrices across Learning Rates}
+  \label{fig:cm-densenet-rmsprop}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_Nadam_LR1e-04/confusion_matrices/DenseNet121_Nadam_LR1e-04.png}
-    \caption{Nadam, LR=1e-4}
+    \caption{LR=1e-4}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_Nadam_LR1e-05/confusion_matrices/DenseNet121_Nadam_LR1e-05.png}
-    \caption{Nadam, LR=1e-5}
+    \caption{LR=1e-5}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{../../results/DenseNet121_Nadam_LR1e-06/confusion_matrices/DenseNet121_Nadam_LR1e-06.png}
-    \caption{Nadam, LR=1e-6}
+    \caption{LR=1e-6}
   \end{subfigure}
-  \caption{Confusion Matrices --- DenseNet121 (all 21 configurations).}
-  \label{fig:cm-densenet}
+  \caption{DenseNet121,Nadam: Confusion Matrices across Learning Rates}
+  \label{fig:cm-densenet-nadam}
 \end{figure}
+
 \clearpage

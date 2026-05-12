@@ -32,8 +32,13 @@ venv-gpu/
 docs/latex/*.aux
 docs/latex/*.log
 docs/latex/*.out
+docs/latex/*.lof
+docs/latex/*.lot
 docs/latex/*.toc
 docs/latex/*.fls
 docs/latex/*.fdb_latexmk
 docs/latex/*.synctex.gz
 docs/latex/*.pdf
+
+# ── LaTeX tooling config (local build config, not project source) ─────────────
+docs/latex/latexmkrc
