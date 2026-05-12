@@ -1,7 +1,7 @@
 """
 model_builder.py
 
-Builds compiled Keras transfer-learning models for the 84-simulation experiment matrix.
+Builds compiled Keras transfer-learning models for the 72-simulation experiment matrix.
 """
 
 import tensorflow as tf
@@ -12,7 +12,7 @@ from tensorflow.keras.layers import (
 )
 from tensorflow.keras.metrics import Precision, Recall, AUC
 from tensorflow.keras.optimizers import (
-    Adam, Adagrad, Adamax, Adadelta, SGD, RMSprop, Nadam,
+    Adam, Adagrad, Adamax, Adadelta, SGD, RMSprop,
 )
 
 # ── Architecture registry ─────────────────────────────────────────────────────
@@ -35,7 +35,6 @@ def _make_optimizer(name: str, learning_rate: float):
         "AdaDelta": lambda lr: Adadelta(learning_rate=lr),
         "SGD":      lambda lr: SGD(learning_rate=lr, momentum=0.9),
         "RMSProp":  lambda lr: RMSprop(learning_rate=lr),
-        "Nadam":    lambda lr: Nadam(learning_rate=lr),
     }
     if name not in registry:
         raise ValueError(
@@ -59,7 +58,7 @@ def build_model(
     Args:
         architecture_name: One of 'VGG19', 'EfficientNetB3', 'ResNet50', 'DenseNet121'.
         optimizer_name:    One of 'Adam', 'Adagrad', 'Adamax', 'AdaDelta',
-                           'SGD', 'RMSProp', 'Nadam'.
+                           'SGD', 'RMSProp'.
         learning_rate:     Floating-point learning rate (e.g. 1e-4).
         input_shape:       HWC tuple; must match the generators (default 256×256×3).
 

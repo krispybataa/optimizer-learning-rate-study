@@ -3,14 +3,14 @@
 
 \subsection{Experiment Design}
 
-The experiment follows a full factorial design crossing four base architectures, seven optimizers, and three learning rates, producing $4 \times 7 \times 3 = 84$ unique configurations. Each configuration is trained independently on the same fixed data split. The execution order follows \texttt{itertools.product(ARCHITECTURES, OPTIMIZERS, LEARNING\_RATES)}, iterating architecture as the outermost variable and learning rate as the innermost. Table~\ref{tab:runs} enumerates all 84 runs.
+The experiment follows a full factorial design crossing four base architectures, six optimizers, and three learning rates, producing $4 \times 6 \times 3 = 72$ unique configurations. Each configuration is trained independently on the same fixed data split. The execution order follows \texttt{itertools.product(ARCHITECTURES, OPTIMIZERS, LEARNING\_RATES)}, iterating architecture as the outermost variable and learning rate as the innermost. Table~\ref{tab:runs} enumerates all 72 runs.
 
 \begingroup
 \setstretch{1}
 \setlength{\extrarowheight}{0pt}
 \setlength{\LTcapwidth}{\textwidth}
 \begin{longtable}{r p{6.5cm} p{6.5cm}}
-  \caption{Complete 84-run experiment matrix in execution order.}
+  \caption{Complete 72-run experiment matrix in execution order.}
   \label{tab:runs} \\
   \toprule
   \rowcolor{tableheader}
@@ -42,9 +42,10 @@ The experiment follows a full factorial design crossing four base architectures,
   16 & VGG19\_RMSProp\_LR1e-04  & VGG19 / RMSProp / LR=1e-4 \\
   17 & VGG19\_RMSProp\_LR1e-05  & VGG19 / RMSProp / LR=1e-5 \\
   18 & VGG19\_RMSProp\_LR1e-06  & VGG19 / RMSProp / LR=1e-6 \\
-  19 & VGG19\_Nadam\_LR1e-04    & VGG19 / Nadam / LR=1e-4 \\
-  20 & VGG19\_Nadam\_LR1e-05    & VGG19 / Nadam / LR=1e-5 \\
-  21 & VGG19\_Nadam\_LR1e-06    & VGG19 / Nadam / LR=1e-6 \\
+% Nadam runs excluded from presented results
+%  19 & VGG19\_Nadam\_LR1e-04    & VGG19 / Nadam / LR=1e-4 \\
+%  20 & VGG19\_Nadam\_LR1e-05    & VGG19 / Nadam / LR=1e-5 \\
+%  21 & VGG19\_Nadam\_LR1e-06    & VGG19 / Nadam / LR=1e-6 \\
   22 & EfficientNetB3\_Adam\_LR1e-04     & EfficientNetB3 / Adam / LR=1e-4 \\
   23 & EfficientNetB3\_Adam\_LR1e-05     & EfficientNetB3 / Adam / LR=1e-5 \\
   24 & EfficientNetB3\_Adam\_LR1e-06     & EfficientNetB3 / Adam / LR=1e-6 \\
@@ -63,9 +64,10 @@ The experiment follows a full factorial design crossing four base architectures,
   37 & EfficientNetB3\_RMSProp\_LR1e-04  & EfficientNetB3 / RMSProp / LR=1e-4 \\
   38 & EfficientNetB3\_RMSProp\_LR1e-05  & EfficientNetB3 / RMSProp / LR=1e-5 \\
   39 & EfficientNetB3\_RMSProp\_LR1e-06  & EfficientNetB3 / RMSProp / LR=1e-6 \\
-  40 & EfficientNetB3\_Nadam\_LR1e-04    & EfficientNetB3 / Nadam / LR=1e-4 \\
-  41 & EfficientNetB3\_Nadam\_LR1e-05    & EfficientNetB3 / Nadam / LR=1e-5 \\
-  42 & EfficientNetB3\_Nadam\_LR1e-06    & EfficientNetB3 / Nadam / LR=1e-6 \\
+% Nadam runs excluded from presented results
+%  40 & EfficientNetB3\_Nadam\_LR1e-04    & EfficientNetB3 / Nadam / LR=1e-4 \\
+%  41 & EfficientNetB3\_Nadam\_LR1e-05    & EfficientNetB3 / Nadam / LR=1e-5 \\
+%  42 & EfficientNetB3\_Nadam\_LR1e-06    & EfficientNetB3 / Nadam / LR=1e-6 \\
   43 & ResNet50\_Adam\_LR1e-04     & ResNet50 / Adam / LR=1e-4 \\
   44 & ResNet50\_Adam\_LR1e-05     & ResNet50 / Adam / LR=1e-5 \\
   45 & ResNet50\_Adam\_LR1e-06     & ResNet50 / Adam / LR=1e-6 \\
@@ -84,9 +86,10 @@ The experiment follows a full factorial design crossing four base architectures,
   58 & ResNet50\_RMSProp\_LR1e-04  & ResNet50 / RMSProp / LR=1e-4 \\
   59 & ResNet50\_RMSProp\_LR1e-05  & ResNet50 / RMSProp / LR=1e-5 \\
   60 & ResNet50\_RMSProp\_LR1e-06  & ResNet50 / RMSProp / LR=1e-6 \\
-  61 & ResNet50\_Nadam\_LR1e-04    & ResNet50 / Nadam / LR=1e-4 \\
-  62 & ResNet50\_Nadam\_LR1e-05    & ResNet50 / Nadam / LR=1e-5 \\
-  63 & ResNet50\_Nadam\_LR1e-06    & ResNet50 / Nadam / LR=1e-6 \\
+% Nadam runs excluded from presented results
+%  61 & ResNet50\_Nadam\_LR1e-04    & ResNet50 / Nadam / LR=1e-4 \\
+%  62 & ResNet50\_Nadam\_LR1e-05    & ResNet50 / Nadam / LR=1e-5 \\
+%  63 & ResNet50\_Nadam\_LR1e-06    & ResNet50 / Nadam / LR=1e-6 \\
   64 & DenseNet121\_Adam\_LR1e-04     & DenseNet121 / Adam / LR=1e-4 \\
   65 & DenseNet121\_Adam\_LR1e-05     & DenseNet121 / Adam / LR=1e-5 \\
   66 & DenseNet121\_Adam\_LR1e-06     & DenseNet121 / Adam / LR=1e-6 \\
@@ -105,9 +108,10 @@ The experiment follows a full factorial design crossing four base architectures,
   79 & DenseNet121\_RMSProp\_LR1e-04  & DenseNet121 / RMSProp / LR=1e-4 \\
   80 & DenseNet121\_RMSProp\_LR1e-05  & DenseNet121 / RMSProp / LR=1e-5 \\
   81 & DenseNet121\_RMSProp\_LR1e-06  & DenseNet121 / RMSProp / LR=1e-6 \\
-  82 & DenseNet121\_Nadam\_LR1e-04    & DenseNet121 / Nadam / LR=1e-4 \\
-  83 & DenseNet121\_Nadam\_LR1e-05    & DenseNet121 / Nadam / LR=1e-5 \\
-  84 & DenseNet121\_Nadam\_LR1e-06    & DenseNet121 / Nadam / LR=1e-6 \\
+% Nadam runs excluded from presented results
+%  82 & DenseNet121\_Nadam\_LR1e-04    & DenseNet121 / Nadam / LR=1e-4 \\
+%  83 & DenseNet121\_Nadam\_LR1e-05    & DenseNet121 / Nadam / LR=1e-5 \\
+%  84 & DenseNet121\_Nadam\_LR1e-06    & DenseNet121 / Nadam / LR=1e-6 \\
 \end{longtable}
 \endgroup
 
@@ -140,7 +144,7 @@ A common classification head was attached to all four architectures (Table~\ref{
 
 \begin{table}[H]
   \centering
-  \caption{Custom classification head architecture (identical across all 84 runs).}
+  \caption{Custom classification head architecture (identical across all 72 runs).}
   \label{tab:head}
   \begin{tabular}{llll}
     \toprule
@@ -184,11 +188,11 @@ output = Dense(1, activation="sigmoid")(x)
 
 \subsection{Optimizers}
 
-Seven optimizers spanning adaptive and non-adaptive families were evaluated (Table~\ref{tab:optimizers}). SGD was configured with momentum of 0.9; all others used default Keras parameters except the learning rate.
+Six optimizers spanning adaptive and non-adaptive families were evaluated (Table~\ref{tab:optimizers}). SGD was configured with momentum of 0.9; all others used default Keras parameters except the learning rate.
 
 \begin{table}[H]
   \centering
-  \caption{Optimizers evaluated across all 84 runs.}
+  \caption{Optimizers evaluated across all 72 runs.}
   \label{tab:optimizers}
   \begin{tabularx}{\textwidth}{l l X}
     \toprule
@@ -201,18 +205,17 @@ Seven optimizers spanning adaptive and non-adaptive families were evaluated (Tab
     AdaDelta & Adaptive Delta                  & Adagrad variant with bounded accumulation window \\
     SGD      & Stochastic Gradient Descent     & Fixed step size; momentum=0.9; simple and interpretable \\
     RMSProp  & Root Mean Square Propagation    & Divides LR by moving average of squared gradients \\
-    Nadam    & Nesterov Adam                   & Adam with Nesterov momentum lookahead \\
     \bottomrule
   \end{tabularx}
 \end{table}
 
 \subsection{Fixed Hyperparameters}
 
-All 84 runs share the fixed hyperparameters listed in Table~\ref{tab:fixed-hp}. No learning rate schedules were applied beyond \texttt{ReduceLROnPlateau} (see Section~\ref{subsec:callbacks}).
+All 72 runs share the fixed hyperparameters listed in Table~\ref{tab:fixed-hp}. No learning rate schedules were applied beyond \texttt{ReduceLROnPlateau} (see Section~\ref{subsec:callbacks}).
 
 \begin{table}[H]
   \centering
-  \caption{Fixed hyperparameters shared across all 84 runs.}
+  \caption{Fixed hyperparameters shared across all 72 runs.}
   \label{tab:fixed-hp}
   \begin{tabular}{ll}
     \toprule
@@ -235,9 +238,10 @@ All 84 runs share the fixed hyperparameters listed in Table~\ref{tab:fixed-hp}. 
 
 Four Keras callbacks were applied uniformly to every run (Table~\ref{tab:callbacks}).
 
+
 \begin{table}[H]
   \centering
-  \caption{Keras callbacks applied to all 84 training runs.}
+  \caption{Keras callbacks applied to all 72 training runs.}
   \label{tab:callbacks}
   \begin{tabularx}{\textwidth}{l l l X}
     \toprule
@@ -258,7 +262,7 @@ Performance is assessed on the held-out test set (247 images) after training com
 
 \begin{table}[H]
   \centering
-  \caption{Evaluation metrics computed for all 84 runs.}
+  \caption{Evaluation metrics computed for all 72 runs.}
   \label{tab:metrics}
   \begin{tabular}{lll}
     \toprule
