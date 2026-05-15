@@ -1,23 +1,23 @@
 \section{Dataset}
 \label{sec:dataset}
 
-\subsection{Sourcing}
+\subsection{Data Source}
 
-The dataset used in this study is the \textbf{STRAMPN Histopathological Images for Ovarian Cancer Prediction}, published on IEEE DataPort and accessible at:
+For this study, we used the \textbf{STRAMPN Histopathological Images for Ovarian Cancer Prediction} dataset from IEEE DataPort. You can find it at:
 
 \begin{center}
 \url{https://ieee-dataport.org/documents/strampn-histopathological-images-ovarian-cancer-prediction}
 \end{center}
 
-The dataset consists of histopathological JPEG images drawn from ovarian tissue specimens and is labelled for binary classification: \emph{Ovarian Cancer} versus \emph{Ovarian Non-Cancer}. The dataset was accessed in May 2026. In accordance with IEEE DataPort terms, the dataset is not redistributed as part of this repository; all rights remain with the original authors.
+The dataset contains histopathological JPEG images of ovarian tissue, labeled as either \emph{Ovarian Cancer} or \emph{Ovarian Non-Cancer}. We downloaded the data in May 2026. To respect the original authors' rights and the IEEE DataPort terms, we don't include the raw images in this repository; they have to be downloaded directly from the source.
 
-\subsection{Composition}
+\subsection{Class Distribution}
 
-The full dataset contains 987 images distributed across two classes as shown in Table~\ref{tab:class-composition}.
+There are 987 images in total. As shown in Table~\ref{tab:class-composition}, the dataset is pretty well-balanced.
 
 \begin{table}[H]
   \centering
-  \caption{Class composition of the STRAMPN dataset.}
+  \caption{Breakdown of images by class in the STRAMPN dataset.}
   \label{tab:class-composition}
   \begin{tabular}{lrr}
     \toprule
@@ -32,17 +32,17 @@ The full dataset contains 987 images distributed across two classes as shown in 
   \end{tabular}
 \end{table}
 
-The class distribution is near-balanced, with a modest majority of non-cancer images (51.27\%). This near-parity reduces the risk of class-imbalance bias and justifies the use of accuracy as a supplementary metric alongside AUC-ROC.
+Since the split between cancer and non-cancer images is almost 50/50, we don't have to worry too much about class imbalance bias. This makes accuracy a useful metric for us, though we still focused on AUC-ROC as our primary measurement.
 
-\subsection{Train / Validation / Test Split}
+\subsection{Splitting the Data}
 
-A two-stage stratified split was applied to partition the dataset. In the first stage, 75\% of images per class were assigned to a combined train-and-validation pool, with the remaining 25\% reserved as the held-out test set. In the second stage, the train-and-validation pool was further divided 70\%/30\%, yielding approximately 52.5\% of the full dataset for training and 22.5\% for validation.
+We split the dataset into training, validation, and test sets using a two-stage process. First, we took 75\% of the images from each class for our training and validation pool, leaving 25\% for the final test set. Then, we split that 75\% pool again, using 70\% for actual training and 30\% for validation.
 
-Both split stages used \texttt{sklearn.model\_selection.train\_test\_split} with \texttt{stratify=labels} and \texttt{random\_state=42}, ensuring class proportions are preserved in every subset and the split is fully reproducible. The resulting partition is shown in Table~\ref{tab:split}.
+We used \texttt{sklearn}'s \texttt{train\_test\_split} with \texttt{stratify=labels} to make sure the class proportions stayed the same in every subset. We also fixed the \texttt{random\_state} to 42 so that our splits are completely reproducible. The final counts for each split are in Table~\ref{tab:split}.
 
 \begin{table}[H]
   \centering
-  \caption{Stratified train / validation / test split.}
+  \caption{Our stratified train, validation, and test split.}
   \label{tab:split}
   \begin{tabular}{lrrrr}
     \toprule
@@ -58,14 +58,15 @@ Both split stages used \texttt{sklearn.model\_selection.train\_test\_split} with
   \end{tabular}
 \end{table}
 
-The fixed \texttt{random\_state=42} is applied consistently throughout \texttt{src/preprocessing.py} and is never altered between the 84 training runs, guaranteeing that every configuration trains on identical data partitions.
+By keeping the seed at 42, we ensured that every one of our 72 training runs used the exact same images for training and testing.
 
-\subsection{Data Integrity Verification}
+\subsection{Double-Checking Data Integrity}
 
-Following the file-copy step, \texttt{src/preprocessing.py} performs a cross-split leakage check by comparing image filename stems across all three splits. Any filename appearing in more than one split is flagged as a violation. The preprocessing output confirmed:
+After copying the files into their respective folders, we ran a quick check in our preprocessing script to make sure no images were accidentally placed in more than one split (data leakage). Our script confirmed that there were no overlaps:
 
 \begin{lstlisting}[style=python, basicstyle=\scriptsize\ttfamily]
-PREPROCESSING COMPLETE -- No integrity violations found
+PREPROCESSING COMPLETE: No integrity violations found
 \end{lstlisting}
 
-No images are shared between the training, validation, and test directories, confirming that evaluation results are free from data leakage.
+This gives us confidence that our evaluation results are based on truly unseen data.
+

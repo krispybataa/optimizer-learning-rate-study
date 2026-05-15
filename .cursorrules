@@ -1,0 +1,31 @@
+# Cursor Project Rules - Optimizer LR Study
+
+## Project Overview
+You are assisting with a deep learning research project evaluating 84 configurations for ovarian cancer prediction. The project uses Python (TensorFlow/Keras) and LaTeX.
+
+## Critical Rules
+
+### 1. LaTeX Appendices & Clean Code
+- **MANDATORY:** Any Python file mentioned in `docs/latex/sections/appx-source-code.tex` must have a corresponding `_clean.py` version in `src/`.
+- **ASCII Only:** `_clean.py` files MUST NOT contain UTF-8 characters like em-dashes (—), warning icons (⚠️), or checkmarks (✓). These break the pdflatex compilation.
+- Use `src/preprocessing_clean.py`, `src/train_clean.py`, `src/visualize_clean.py`, and `src/run_all_clean.py` for the LaTeX listings.
+
+### 2. Result Matrix (84 Runs)
+- The experiment matrix is 4 Architectures (VGG19, EfficientNetB3, ResNet50, DenseNet121) × 7 Optimizers (Adam, Adagrad, Adamax, AdaDelta, SGD, RMSProp, Nadam) × 3 Learning Rates (1e-4, 1e-5, 1e-6).
+- Do not modify these constants in `src/run_all.py` unless explicitly instructed.
+
+### 3. LaTeX Formatting
+- Use `\ref{...}` for all internal references.
+- All tables must have labels.
+- Follow the existing document structure in `docs/latex/sections/`.
+
+## Workflow
+1. If modifying core logic in `src/`, always update the `_clean.py` equivalent if it exists.
+2. If results change, update `results/summary/master_results.csv` and then re-run the analysis notebook to update LaTeX figures.
+3. To compile the paper, use `latexmk -pdf main.tex` in `docs/latex/`.
+
+## Directory Map
+- `src/`: Core logic and training scripts.
+- `docs/latex/`: Paper source.
+- `results/`: Training artifacts (metrics, curves).
+- `notebooks/`: EDA and results analysis.

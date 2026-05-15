@@ -1,9 +1,9 @@
 \documentclass[12pt,a4paper]{article}
 
-% ── Page layout ───────────────────────────────────────────────────────────────
+% -- Page layout ---------------------------------------------------------------
 \usepackage[top=1in, bottom=1in, left=1.25in, right=1in]{geometry}
 
-% ── Typography ────────────────────────────────────────────────────────────────
+% -- Typography ----------------------------------------------------------------
 \usepackage{lmodern}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -12,7 +12,7 @@
 \usepackage{setspace}
 \onehalfspacing
 
-% ── Headers / footers ─────────────────────────────────────────────────────────
+% -- Headers / footers ---------------------------------------------------------
 \usepackage{fancyhdr}
 \setlength{\headheight}{14pt}
 \pagestyle{fancy}
@@ -22,14 +22,15 @@
 \cfoot{\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 
-% ── Section title formatting ──────────────────────────────────────────────────
+% -- Section title formatting --------------------------------------------------
 \usepackage{titlesec}
 
-% ── Math ──────────────────────────────────────────────────────────────────────
+% -- Math ----------------------------------------------------------------------
 \usepackage{amsmath}
 
-% ── Figures ───────────────────────────────────────────────────────────────────
+% -- Figures -------------------------------------------------------------------
 \usepackage{graphicx}
+\graphicspath{{figures/}}
 \usepackage{subcaption}
 \usepackage{float}
 \usepackage{placeins}
@@ -39,18 +40,18 @@
 \captionsetup{font=small, labelfont=bf, justification=raggedright, singlelinecheck=false}
 \captionsetup[subfigure]{font=small, justification=centering}
 
-% ── Tables ────────────────────────────────────────────────────────────────────
+% -- Tables --------------------------------------------------------------------
 \usepackage{longtable}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{multirow}
 
-% ── Colors ────────────────────────────────────────────────────────────────────
+% -- Colors --------------------------------------------------------------------
 \usepackage[dvipsnames,svgnames,x11names,table,HTML]{xcolor}
 \colorlet{tableheader}{gray!15}
 \definecolor{linkblue}{RGB}{0,70,140}
 
-% ── Code listings ─────────────────────────────────────────────────────────────
+% -- Code listings -------------------------------------------------------------
 \usepackage{listings}
 \lstdefinestyle{python}{
   language=Python,
@@ -66,27 +67,27 @@
   breaklines=true,
   showstringspaces=false,
   literate=
-    {─}{{-}}1
-    {━}{{-}}1
-    {│}{{|}}1
-    {✓}{{[ok]}}1
-    {✗}{{[x]}}1
-    {→}{{->}}1
-    {…}{{...}}1
-    {×}{{x}}1
-    {≥}{{>=}}1
-    {≤}{{<=}}1
-    {≠}{{!=}}1,
+    {-}{{-}}1
+    {=}{{-}}1
+    {|}{{|}}1
+    {[OK]}{{[ok]}}1
+    {[FAILED]}{{[x]}}1
+    {->}{{->}}1
+    {...}{{...}}1
+    {x}{{x}}1
+    {>=}{{>=}}1
+    {<=}{{<=}}1
+    {!=}{{!=}}1,
 }
 
-% ── TikZ ──────────────────────────────────────────────────────────────────────
+% -- TikZ ----------------------------------------------------------------------
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, backgrounds}
 
-% ── Appendices ────────────────────────────────────────────────────────────────
+% -- Appendices ----------------------------------------------------------------
 \usepackage{appendix}
 
-% ── Hyperlinks (load last) ────────────────────────────────────────────────────
+% -- Hyperlinks (load last) ----------------------------------------------------
 \usepackage[
   colorlinks=true,
   linkcolor=linkblue,
@@ -96,14 +97,14 @@
   pdfauthor={DelaCruz, Doria, Rodriguez},
 ]{hyperref}
 
-% ── Custom commands ───────────────────────────────────────────────────────────
+% -- Custom commands -----------------------------------------------------------
 \newcommand{\codefile}[1]{\vspace{0.5em}\noindent\textbf{\small\texttt{#1}}\vspace{0.2em}\par}
 \newcommand{\metricrow}[7]{#1 & #2 & #3 & #4 & #5 & #6 & #7}
 
-% ─────────────────────────────────────────────────────────────────────────────
+% -----------------------------------------------------------------------------
 \begin{document}
 
-% ── Title page ────────────────────────────────────────────────────────────────
+% -- Title page ----------------------------------------------------------------
 \begin{titlepage}
   \centering
   \vspace*{4cm}
@@ -122,7 +123,10 @@
 \listoftables
 \newpage
 
-% ── Body sections ─────────────────────────────────────────────────────────────
+% -- Body sections -------------------------------------------------------------
+\newpage
+\input{sections/01_introduction}
+
 \newpage
 \input{sections/02_dataset}
 
@@ -144,9 +148,19 @@
 \newpage
 \input{sections/08_conclusion}
 
-% ── Appendices ────────────────────────────────────────────────────────────────
+% -- Appendices ----------------------------------------------------------------
 \newpage
 \section{Appendices}
+
+% Local redefinition to handle missing experiment images gracefully
+\let\oldincludegraphics\includegraphics
+\renewcommand{\includegraphics}[2][]{%
+  \IfFileExists{#2}{%
+    \oldincludegraphics[#1]{#2}%
+  }{%
+    \framebox[\linewidth]{\tiny Missing: \detokenize{#2}}%
+  }%
+}
 
 \subsection{Per-Model Accuracy and Loss Curves}
 \label{appx:acc-loss}
@@ -159,6 +173,8 @@
 \subsection{Per-Model Confusion Matrices}
 \label{appx:confusion}
 \input{sections/appx-confusion}
+
+\let\includegraphics\oldincludegraphics % Restore normal behavior
 
 \subsection{Complete 72-Run Results Table}
 \label{appx:full-results}
