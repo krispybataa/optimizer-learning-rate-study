@@ -8,20 +8,20 @@ import os
 
 import numpy as np
 import matplotlib
-matplotlib.use("Agg")  # non-interactive backend — safe for headless runs
+matplotlib.use("Agg")  # non-interactive backend - safe for headless runs
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import roc_curve, auc as sklearn_auc
 
-# ── Shared style ──────────────────────────────────────────────────────────────
+# -- Shared style --------------------------------------------------------------
 
 _STYLE        = "seaborn-v0_8-whitegrid"
 _FIG_DPI      = 150
-_CANCER_COLOR = "#C0392B"   # red — cancer class
-_NORMAL_COLOR = "#2980B9"   # blue — no_cancer class
+_CANCER_COLOR = "#C0392B"   # red - cancer class
+_NORMAL_COLOR = "#2980B9"   # blue - no_cancer class
 
 
-# ── Accuracy / Loss curves ────────────────────────────────────────────────────
+# -- Accuracy / Loss curves ----------------------------------------------------
 
 def plot_accuracy_loss(history, run_name: str, output_dir: str) -> None:
     """
@@ -63,10 +63,10 @@ def plot_accuracy_loss(history, run_name: str, output_dir: str) -> None:
         fig.savefig(out_path, dpi=_FIG_DPI, bbox_inches="tight")
         plt.close(fig)
 
-    print(f"[visualize] Accuracy/Loss curve saved → {out_path}")
+    print(f"[visualize] Accuracy/Loss curve saved -> {out_path}")
 
 
-# ── AUC-ROC curve ─────────────────────────────────────────────────────────────
+# -- AUC-ROC curve -------------------------------------------------------------
 
 def plot_auc_roc(model, test_generator, run_name: str, output_dir: str) -> None:
     """
@@ -95,7 +95,7 @@ def plot_auc_roc(model, test_generator, run_name: str, output_dir: str) -> None:
                 label="Random Classifier")
         ax.set_xlabel("False Positive Rate")
         ax.set_ylabel("True Positive Rate")
-        ax.set_title(f"ROC Curve — {run_name}", fontweight="bold")
+        ax.set_title(f"ROC Curve - {run_name}", fontweight="bold")
         ax.legend(loc="lower right")
         ax.set_xlim(0, 1)
         ax.set_ylim(0, 1.02)
@@ -105,10 +105,10 @@ def plot_auc_roc(model, test_generator, run_name: str, output_dir: str) -> None:
         fig.savefig(out_path, dpi=_FIG_DPI, bbox_inches="tight")
         plt.close(fig)
 
-    print(f"[visualize] AUC-ROC curve saved → {out_path}")
+    print(f"[visualize] AUC-ROC curve saved -> {out_path}")
 
 
-# ── Confusion matrix ──────────────────────────────────────────────────────────
+# -- Confusion matrix ----------------------------------------------------------
 
 def plot_confusion_matrix(
     cm: np.ndarray,
@@ -120,7 +120,7 @@ def plot_confusion_matrix(
     Plot a seaborn heatmap of the confusion matrix and save as PNG.
 
     Args:
-        cm:           2×2 numpy confusion matrix from sklearn.
+        cm:           2x2 numpy confusion matrix from sklearn.
         run_name:     Stem used for the output filename.
         class_names:  List of class label strings, e.g. ['cancer', 'no_cancer'].
         output_dir:   Directory to save the figure (results/confusion_matrices/).
@@ -151,11 +151,11 @@ def plot_confusion_matrix(
         )
         ax.set_xlabel("Predicted Label", fontsize=10)
         ax.set_ylabel("True Label", fontsize=10)
-        ax.set_title(f"Confusion Matrix — {run_name}", fontweight="bold", fontsize=11)
+        ax.set_title(f"Confusion Matrix - {run_name}", fontweight="bold", fontsize=11)
 
         fig.tight_layout()
         out_path = os.path.join(output_dir, f"{run_name}.png")
         fig.savefig(out_path, dpi=_FIG_DPI, bbox_inches="tight")
         plt.close(fig)
 
-    print(f"[visualize] Confusion matrix saved → {out_path}")
+    print(f"[visualize] Confusion matrix saved -> {out_path}")

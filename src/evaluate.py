@@ -45,33 +45,33 @@ def evaluate_model(
             run_name, architecture, optimizer, learning_rate,
             accuracy, precision, recall, specificity, f1, auc
     """
-    # ── Predict ───────────────────────────────────────────────────────────────
+    # -- Predict ---------------------------------------------------------------
     # Reset generator so prediction starts at the first batch.
     test_generator.reset()
     y_prob = model.predict(test_generator, verbose=0).ravel()
     y_pred = (y_prob >= 0.5).astype(int)
     y_true = test_generator.classes
 
-    # ── Scalar metrics ────────────────────────────────────────────────────────
+    # -- Scalar metrics --------------------------------------------------------
     accuracy  = accuracy_score(y_true, y_pred)
     precision = precision_score(y_true, y_pred, zero_division=0)
     recall    = recall_score(y_true, y_pred, zero_division=0)
     f1        = f1_score(y_true, y_pred, zero_division=0)
     auc       = roc_auc_score(y_true, y_prob)
 
-    # ── Specificity: TN / (TN + FP) ──────────────────────────────────────────
+    # -- Specificity: TN / (TN + FP) ------------------------------------------
     cm = confusion_matrix(y_true, y_pred)
     tn, fp = cm[0, 0], cm[0, 1]
     specificity = tn / (tn + fp) if (tn + fp) > 0 else 0.0
 
-    # ── Parse run_name into components ───────────────────────────────────────
+    # -- Parse run_name into components ---------------------------------------
     # Expected format: {Architecture}_{Optimizer}_LR{lr}  e.g. ResNet50_Adam_LR1e-4
     parts = run_name.split("_")
     architecture   = parts[0] if len(parts) > 0 else run_name
     optimizer_name = parts[1] if len(parts) > 1 else ""
     learning_rate  = parts[2].replace("LR", "") if len(parts) > 2 else ""
 
-    # ── Confusion matrix plot ─────────────────────────────────────────────────
+    # -- Confusion matrix plot -------------------------------------------------
     cm_dir = os.path.join(output_dir, "confusion_matrices")
     os.makedirs(cm_dir, exist_ok=True)
     plot_confusion_matrix(
@@ -81,7 +81,7 @@ def evaluate_model(
         output_dir=cm_dir,
     )
 
-    # ── Save metrics CSV (one row per run) ────────────────────────────────────
+    # -- Save metrics CSV (one row per run) ------------------------------------
     metrics_dir = os.path.join(output_dir, "metrics")
     os.makedirs(metrics_dir, exist_ok=True)
     csv_path = os.path.join(metrics_dir, f"{run_name}.csv")

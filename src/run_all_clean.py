@@ -23,7 +23,7 @@ from src.model_builder import build_model
 from src.train import train_model
 
 
-# ── Configuration ─────────────────────────────────────────────────────────────
+# -- Configuration -------------------------------------------------------------
 
 RANDOM_SEED   = 42
 EPOCHS        = 50
@@ -35,7 +35,7 @@ OPTIMIZERS     = ['Adam', 'Adagrad', 'Adamax', 'AdaDelta', 'SGD', 'RMSProp']
 LEARNING_RATES = [1e-4, 1e-5, 1e-6]
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
+# -- Helpers -------------------------------------------------------------------
 
 def _seed_everything(seed: int) -> None:
     random.seed(seed)
@@ -43,7 +43,7 @@ def _seed_everything(seed: int) -> None:
     tf.random.set_seed(seed)
 
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+# -- Main ----------------------------------------------------------------------
 
 def run_all() -> None:
     _seed_everything(RANDOM_SEED)
@@ -167,7 +167,7 @@ def run_all() -> None:
     print(f"\nALL {total_runs} SIMULATIONS COMPLETE")
 
 
-# ── Entry point ───────────────────────────────────────────────────────────────
+# -- Entry point ---------------------------------------------------------------
 
 if __name__ == "__main__":
     run_all()
