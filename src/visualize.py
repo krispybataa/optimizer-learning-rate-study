@@ -1,7 +1,12 @@
 """
 visualize.py
 
-Visualization utilities: accuracy/loss curves, AUC-ROC curves, confusion matrices.
+Visualization utilities for the optimizer/learning-rate study. Each training run
+produces three plot types:
+
+  - Accuracy/loss curves  ->  {run_dir}/{run_name}_acc_loss.png
+  - AUC-ROC curves        ->  {run_dir}/{run_name}_auc_roc.png
+  - Confusion matrices    ->  {run_dir}/confusion_matrices/{run_name}.png
 """
 
 import os
@@ -27,10 +32,12 @@ def plot_accuracy_loss(history, run_name: str, output_dir: str) -> None:
     """
     Plot training and validation accuracy + loss curves and save as PNG.
 
+    Saves to: {output_dir}/{run_name}_acc_loss.png
+
     Args:
         history:    tf.keras.callbacks.History object (or its .history dict).
         run_name:   Stem used for the output filename.
-        output_dir: Directory to save the figure (results/curves/accuracy_loss/).
+        output_dir: Directory in which the figure is saved (typically the run directory).
     """
     os.makedirs(output_dir, exist_ok=True)
 
@@ -59,7 +66,7 @@ def plot_accuracy_loss(history, run_name: str, output_dir: str) -> None:
         ax_loss.legend()
 
         fig.tight_layout()
-        out_path = os.path.join(output_dir, f"{run_name}.png")
+        out_path = os.path.join(output_dir, f"{run_name}_acc_loss.png")
         fig.savefig(out_path, dpi=_FIG_DPI, bbox_inches="tight")
         plt.close(fig)
 
@@ -72,11 +79,13 @@ def plot_auc_roc(model, test_generator, run_name: str, output_dir: str) -> None:
     """
     Compute the ROC curve and save the AUC-ROC plot as PNG.
 
+    Saves to: {output_dir}/{run_name}_auc_roc.png
+
     Args:
         model:          Trained tf.keras.Model.
         test_generator: Test generator with shuffle=False.
         run_name:       Stem used for the output filename.
-        output_dir:     Directory to save the figure (results/curves/auc_roc/).
+        output_dir:     Directory in which the figure is saved (typically the run directory).
     """
     os.makedirs(output_dir, exist_ok=True)
 
@@ -101,7 +110,7 @@ def plot_auc_roc(model, test_generator, run_name: str, output_dir: str) -> None:
         ax.set_ylim(0, 1.02)
 
         fig.tight_layout()
-        out_path = os.path.join(output_dir, f"{run_name}.png")
+        out_path = os.path.join(output_dir, f"{run_name}_auc_roc.png")
         fig.savefig(out_path, dpi=_FIG_DPI, bbox_inches="tight")
         plt.close(fig)
 
@@ -119,11 +128,13 @@ def plot_confusion_matrix(
     """
     Plot a seaborn heatmap of the confusion matrix and save as PNG.
 
+    Saves to: {output_dir}/{run_name}.png  (output_dir is typically confusion_matrices/ under the run directory)
+
     Args:
         cm:           2x2 numpy confusion matrix from sklearn.
         run_name:     Stem used for the output filename.
         class_names:  List of class label strings, e.g. ['cancer', 'no_cancer'].
-        output_dir:   Directory to save the figure (results/confusion_matrices/).
+        output_dir:   Directory in which the figure is saved (typically {run_dir}/confusion_matrices/).
     """
     os.makedirs(output_dir, exist_ok=True)
 

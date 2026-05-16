@@ -23,7 +23,7 @@ from src.model_builder import build_model
 from src.train import train_model
 
 
-# -- Configuration -------------------------------------------------------------
+# -- Configuration 
 
 RANDOM_SEED   = 42
 EPOCHS        = 50

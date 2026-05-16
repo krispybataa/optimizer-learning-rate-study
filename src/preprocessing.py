@@ -61,9 +61,7 @@ def run_preprocessing(random_seed: int = 42) -> None:
                      Must be identical to the seed used in all 84 training runs.
     """
 
-    # ==========================================================================
     # Step 1 - Inventory
-    # ==========================================================================
     print("=" * 60)
     print("STEP 1 - RAW DATASET INVENTORY")
     print("=" * 60)
@@ -102,9 +100,7 @@ def run_preprocessing(random_seed: int = 42) -> None:
     total_sym = "[ok]" if total == _EXPECTED_TOTAL else f"[x] (expected {_EXPECTED_TOTAL})"
     print(f"\n  Total images across both classes: {total}  {total_sym}")
 
-    # ==========================================================================
     # Step 2 - Stratified Split
-    # ==========================================================================
     print("\n" + "=" * 60)
     print("STEP 2 - STRATIFIED SPLIT")
     print("=" * 60)
@@ -143,9 +139,7 @@ def run_preprocessing(random_seed: int = 42) -> None:
         print(f"  {split_name:<8}  {c:>8}  {nc:>10}  {len(lbls):>7}")
     print(f"  {'total':<8}  {labels.count('cancer'):>8}  {labels.count('no_cancer'):>10}  {total:>7}")
 
-    # ==========================================================================
     # Step 3 - Copy Files
-    # ==========================================================================
     print("\n" + "=" * 60)
     print("STEP 3 - COPYING FILES TO dataset/processed/")
     print("=" * 60)
@@ -168,9 +162,8 @@ def run_preprocessing(random_seed: int = 42) -> None:
             f"skipped (already exist): {skipped_total:>4}"
         )
 
-    # ==========================================================================
     # Step 4 - Verification Report
-    # ==========================================================================
+
     print("\n" + "=" * 60)
     print("STEP 4 - VERIFICATION REPORT")
     print("=" * 60)

@@ -23,7 +23,7 @@ from src.model_builder import build_model
 from src.train import train_model
 
 
-# -- Configuration -------------------------------------------------------------
+# Configuration 
 
 RANDOM_SEED   = 42
 EPOCHS        = 50
@@ -35,7 +35,7 @@ OPTIMIZERS     = ['Adam', 'Adagrad', 'Adamax', 'AdaDelta', 'SGD', 'RMSProp']
 LEARNING_RATES = [1e-4, 1e-5, 1e-6]
 
 
-# -- Helpers -------------------------------------------------------------------
+# Helpers 
 
 def _seed_everything(seed: int) -> None:
     random.seed(seed)
@@ -43,7 +43,7 @@ def _seed_everything(seed: int) -> None:
     tf.random.set_seed(seed)
 
 
-# -- Main ----------------------------------------------------------------------
+# Main 
 
 def run_all() -> None:
     _seed_everything(RANDOM_SEED)
@@ -54,9 +54,7 @@ def run_all() -> None:
     summary_dir   = results_dir / "summary"
     summary_dir.mkdir(parents=True, exist_ok=True)
 
-    # ==========================================================================
     # Section 2 - Shared Data Pipeline (constructed ONCE, reused across all 72)
-    # ==========================================================================
 
     image_generatorFullAugment = ImageDataGenerator(
         samplewise_center=True,
@@ -113,9 +111,7 @@ def run_all() -> None:
         "optimizer/LR comparisons."
     )
 
-    # ==========================================================================
     # Section 3 - 72-Run Training Loop
-    # ==========================================================================
 
     experiment_matrix = list(itertools.product(ARCHITECTURES, OPTIMIZERS, LEARNING_RATES))
     total_runs        = len(experiment_matrix)
@@ -154,9 +150,7 @@ def run_all() -> None:
         train_generator.reset()
         test_generator.reset()
 
-    # ==========================================================================
     # Section 4 - Aggregate Results
-    # ==========================================================================
 
     master_df   = pd.DataFrame(all_metrics)
     summary_csv = summary_dir / "master_results.csv"

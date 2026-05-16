@@ -3,6 +3,15 @@ train.py
 
 Runs the training loop for a single model configuration (one of the 84 runs).
 Called once per simulation from run_all.py or 02_experiments.ipynb.
+
+Each run writes the following artifacts to results/{run_name}/:
+
+  - best_model.keras                      - best checkpoint by val_auc
+  - training_log.csv                      - per-epoch metrics
+  - {run_name}_acc_loss.png               - accuracy and loss curves
+  - {run_name}_auc_roc.png                - AUC-ROC curve
+  - confusion_matrices/{run_name}.png     - confusion matrix heatmap
+  - (metrics row appended to master CSV by the caller)
 """
 
 import pathlib
@@ -113,12 +122,14 @@ def train_model(
         output_dir=str(run_dir),
     )
 
+    # saves {run_name}_acc_loss.png into run_dir
     plot_accuracy_loss(
         history=history,
         run_name=run_name,
         output_dir=str(run_dir),
     )
 
+    # saves {run_name}_auc_roc.png into run_dir
     plot_auc_roc(
         model=model,
         test_generator=test_generator,
