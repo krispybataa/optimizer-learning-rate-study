@@ -43,3 +43,4 @@ docs/latex/*.pdf
 # ── LaTeX tooling config (local build config, not project source) ─────────────
 docs/latex/latexmkrc
 ~$GRP1-CAPSTONE-PRESENTATION.pptx
+*.pptx
