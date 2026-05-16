@@ -1,7 +1,7 @@
 \section{Methodology}
 \label{sec:methodology}
 
-\subsection{Experimental Setup}
+\subsection{Experiment Setup}
 
 Our study was built around a full factorial design to see how different combinations of models and optimizers perform. We tested 4 base architectures, 6 optimizers, and 3 learning rates, which gave us a total of $4 \times 6 \times 3 = \mathbf{72}$ unique runs. Each run followed the same training process on our fixed data split to ensure a fair comparison.
 
@@ -15,7 +15,7 @@ The design of the classification head (Table~\ref{tab:head}) was provided in our
 
 \begin{table}[H]
   \centering
-  \caption{Our standard classification head (used for all 72 runs).}
+  \caption[Classification Head]{Our standard classification head (used for all 72 runs).}
   \label{tab:head}
   \begin{tabular}{lll}
     \toprule
@@ -53,14 +53,14 @@ To make training efficient, we used several callbacks. We set up \texttt{EarlySt
 
 \subsection{Metrics and Evaluation}
 
-After each run, we evaluated the model on our held-out test set (247 images). We collected standard metrics like accuracy, precision, and recall, with AUC-ROC as our primary way to rank the models. 
+After each run, we evaluated the model on our held-out test set (247 images). We collected the specified metrics: accuracy, precision, and recall, with AUC-ROC as our primary way to rank the models. 
 
 Since specificity isn't a default metric in Keras, we implemented a custom calculation to extract it from the confusion matrix. This was important because, in medical imaging, knowing how well a model identifies healthy (non-cancer) tissue is just as critical as finding the cancer.
 
 \begingroup
 \setstretch{1}
 \begin{longtable}{r l l}
-  \caption{The full 72-run experiment matrix.}
+  \caption[Experiment Matrix]{The full 72-run experiment matrix.}
   \label{tab:runs} \\
   \toprule
   \rowcolor{tableheader}

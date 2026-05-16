@@ -18,10 +18,9 @@ from pathlib import Path
 from sklearn.model_selection import train_test_split
 
 
-# -- Directory layout ----------------------------------------------------------
+# Directory layout 
 
 # Resolve paths relative to this file's location so the script works from
-# C:\dev-work\optimizer-learning-rate-study (Windows) or the WSL2 mount path.
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 _RAW_BASE = _PROJECT_ROOT / "dataset" / "raw" / "STRAMPN Dataset" / "Dataset"
@@ -36,7 +35,7 @@ _EXPECTED_COUNTS = {"cancer": 481, "no_cancer": 506}
 _EXPECTED_TOTAL  = 987
 
 
-# -- Helpers -------------------------------------------------------------------
+# Helpers 
 
 def _all_files(directory: Path) -> list[Path]:
     """Return a sorted list of all files (non-recursive) in directory."""
@@ -52,7 +51,7 @@ def _copy_file(src: Path, dst_dir: Path) -> str:
     return "copied"
 
 
-# -- Main function -------------------------------------------------------------
+# Main function
 
 def run_preprocessing(random_seed: int = 42) -> None:
     """
@@ -230,7 +229,7 @@ def run_preprocessing(random_seed: int = 42) -> None:
     print("\n" + "=" * 60)
 
 
-# -- Entry point ---------------------------------------------------------------
+# Entry point 
 
 if __name__ == "__main__":
     run_preprocessing()

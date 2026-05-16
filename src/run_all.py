@@ -167,7 +167,7 @@ def run_all() -> None:
     print(f"\nALL {total_runs} SIMULATIONS COMPLETE")
 
 
-# -- Entry point ---------------------------------------------------------------
+# Entry point
 
 if __name__ == "__main__":
     run_all()

@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import roc_curve, auc as sklearn_auc
 
-# -- Shared style --------------------------------------------------------------
+# Shared style Settings
 
 _STYLE        = "seaborn-v0_8-whitegrid"
 _FIG_DPI      = 150
@@ -21,7 +21,7 @@ _CANCER_COLOR = "#C0392B"   # red - cancer class
 _NORMAL_COLOR = "#2980B9"   # blue - no_cancer class
 
 
-# -- Accuracy / Loss curves ----------------------------------------------------
+# Accuracy / Loss curves 
 
 def plot_accuracy_loss(history, run_name: str, output_dir: str) -> None:
     """
@@ -66,7 +66,7 @@ def plot_accuracy_loss(history, run_name: str, output_dir: str) -> None:
     print(f"[visualize] Accuracy/Loss curve saved -> {out_path}")
 
 
-# -- AUC-ROC curve -------------------------------------------------------------
+# AUC-ROC curve 
 
 def plot_auc_roc(model, test_generator, run_name: str, output_dir: str) -> None:
     """
@@ -108,7 +108,7 @@ def plot_auc_roc(model, test_generator, run_name: str, output_dir: str) -> None:
     print(f"[visualize] AUC-ROC curve saved -> {out_path}")
 
 
-# -- Confusion matrix ----------------------------------------------------------
+# Confusion matrix 
 
 def plot_confusion_matrix(
     cm: np.ndarray,

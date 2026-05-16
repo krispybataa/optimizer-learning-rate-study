@@ -19,7 +19,7 @@ EfficientNetB3, which is the most modern model we tested, actually came in last 
 
 \subsection{A Warning about AUC}
 
-One of the most important takeaways for us was about the AUC metric itself. We saw several "degenerate" runs where the model predicted the same class for every single image, yet they still had an AUC over 0.80. This happens because AUC measures how well the model *ranks* images, not how well it classifies them at a specific threshold. In a real clinical setting, a model that never finds a single cancer case is a total failure, even if its "ranking ability" looks good on paper. This reinforces the need to always check recall and specificity alongside AUC.
+One of the most important takeaways for us was about the AUC metric itself. We saw several "degenerate" runs where the model predicted the same class for every single image, yet they still had an AUC over 0.80. This happens because AUC measures how well the model ``ranks'' images, not how well it classifies them at a specific threshold. In a real clinical setting, a model that never finds a single cancer case is a total failure, even if its "ranking ability" looks good on paper. This reinforces the need to always check recall and specificity alongside AUC.
 
 \subsection{What We'd Do Next}
 

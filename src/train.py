@@ -49,7 +49,7 @@ def train_model(
     """
     results_base_dir = pathlib.Path(results_base_dir)
 
-    # -- Step 1 - Setup --------------------------------------------------------
+    # Step 1 - Setup 
     lr_str   = f"{learning_rate:.0e}"                    # e.g. '1e-04'
     run_name = f"{architecture}_{optimizer_name}_LR{lr_str}"
     run_dir  = results_base_dir / run_name
@@ -62,7 +62,7 @@ def train_model(
     print(f"Learning Rate: {learning_rate}")
     print("=" * 60)
 
-    # -- Step 2 - Callbacks ----------------------------------------------------
+    # Step 2 - Callbacks 
     callbacks = [
         ModelCheckpoint(
             filepath=str(run_dir / "best_model.keras"),
@@ -92,7 +92,7 @@ def train_model(
         ),
     ]
 
-    # -- Step 3 - Training -----------------------------------------------------
+    # Step 3 - Training
     history = model.fit(
         train_generator,
         validation_data=val_generator,
@@ -105,7 +105,7 @@ def train_model(
     best_val_auc   = max(history.history["val_auc"])
     print(f"\nTraining complete - epochs run: {actual_epochs} / {epochs}  |  best val_auc: {best_val_auc:.4f}")
 
-    # -- Step 4 - Evaluation and Visualization ---------------------------------
+    # Step 4 - Evaluation and Visualization 
     metrics = evaluate_model(
         model=model,
         test_generator=test_generator,
@@ -128,7 +128,7 @@ def train_model(
 
     metrics["epochs_run"] = actual_epochs
 
-    # -- Step 5 - Cleanup ------------------------------------------------------
+    # Step 5 - Cleanup 
     tf.keras.backend.clear_session()
 
     print(f"\nCOMPLETED: {run_name}")
