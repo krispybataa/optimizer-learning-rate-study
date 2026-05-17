@@ -9,11 +9,12 @@ For this study, we used the \textbf{STRAMPN Histopathological Images for Ovarian
 \url{https://ieee-dataport.org/documents/strampn-histopathological-images-ovarian-cancer-prediction}
 \end{center}
 
-The dataset contains histopathological JPEG images of ovarian tissue, labeled as either \emph{Ovarian Cancer} or \emph{Ovarian Non-Cancer}. We downloaded the data in May 2026. To respect the original authors' rights and the IEEE DataPort terms, we don't include the raw images in this repository; they have to be downloaded directly from the source.
+The dataset contains histopathological JPEG images of ovarian tissue, labeled as either \emph{Ovarian Cancer} or \emph{Ovarian Non-Cancer}. 
+% We downloaded the data in May 2026. To respect the original authors' rights and the IEEE DataPort terms, we don't include the raw images in this repository; they have to be downloaded directly from the source.
 
 \subsection{Class Distribution}
 
-There are 987 images in total. As shown in Table~\ref{tab:class-composition}, the dataset is pretty well-balanced.
+There are 987 images in total. As shown in Table~\ref{tab:class-composition}, the dataset is reasonably balanced.
 
 \begin{table}[H]
   \centering
@@ -32,17 +33,17 @@ There are 987 images in total. As shown in Table~\ref{tab:class-composition}, th
   \end{tabular}
 \end{table}
 
-Since the split between cancer and non-cancer images is almost 50/50, we don't have to worry too much about class imbalance bias. This makes accuracy a useful metric for us, though we still focused on AUC-ROC as our primary measurement.
+Since the split between cancer and non-cancer images is nearly 50/50 there is little concern in regards to class imbalance. Allowing accuracy and AUC to remain the primary metrics of focus in the simulation, with the a suite of metrics collected alongside the primary two (accuracy, recall, specificity, F1-score)
 
 \subsection{Splitting the Data}
 
-We split the dataset into training, validation, and test sets using a two-stage process. First, we took 75\% of the images from each class for our training and validation pool, leaving 25\% for the final test set. Then, we split that 75\% pool again, using 70\% for actual training and 30\% for validation.
+As specified, the dataset was split into training, validation, and test sets using a two-stage process. First, we took 75\% of the images from each class for our training and validation pool, leaving 25\% for the final test set. Then, we split that 75\% pool again, using 70\% for actual training and 30\% for validation.
 
 We used \texttt{sklearn}'s \texttt{train\_test\_split} with \texttt{stratify=labels} to make sure the class proportions stayed the same in every subset. We also fixed the \texttt{random\_state} to 42 so that our splits are completely reproducible. The final counts for each split are in Table~\ref{tab:split}.
 
 \begin{table}[H]
   \centering
-  \caption{Our stratified train, validation, and test split.}
+  \caption{Stratified train, validation, and test split.}
   \label{tab:split}
   \begin{tabular}{lrrrr}
     \toprule
@@ -60,7 +61,7 @@ We used \texttt{sklearn}'s \texttt{train\_test\_split} with \texttt{stratify=lab
 
 By keeping the seed at 42, we ensured that every one of our 72 training runs used the exact same images for training and testing.
 
-\subsection{Double-Checking Data Integrity}
+\subsection{Data Integrity}
 
 After copying the files into their respective folders, we ran a quick check in our preprocessing script to make sure no images were accidentally placed in more than one split (data leakage). Our script confirmed that there were no overlaps:
 

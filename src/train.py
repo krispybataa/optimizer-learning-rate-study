@@ -1,7 +1,7 @@
 """
 train.py
 
-Runs the training loop for a single model configuration (one of the 84 runs).
+Runs the training loop for a single model configuration (one of the 72 runs).
 Called once per simulation from run_all.py or 02_experiments.ipynb.
 
 Each run writes the following artifacts to results/{run_name}/:

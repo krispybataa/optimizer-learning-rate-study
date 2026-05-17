@@ -3,7 +3,7 @@
 
 \subsection{General Performance}
 
-Overall, our 72 runs showed a wide range of results. We saw everything from near-perfect classification to complete model failure. The best performance came from VGG19 using Adam and Adamax at a learning rate of $10^{-4}$, both reaching an AUC of 0.9995. On the other end of the spectrum, we had 10 "degenerate" runs where the model failed to learn anything useful and just predicted one class for every image.
+Overall, the 72 runs showed a wide range of results. We observed everything from near-perfect classification to complete model failure. The best performance came from VGG19 using Adam and Adamax at a learning rate of $10^{-4}$, both reaching an AUC of 0.9995. On the other end of the spectrum, we had 10 subopotimal runs where the model failed to learn anything useful and just predicted one class for every image.
 
 \subsection{Top Performers}
 
@@ -30,7 +30,7 @@ When we look at the best model for each architecture (Table~\ref{tab:best-arch})
 
 One of our biggest findings was just how much the learning rate matters for transfer learning. As we dropped the learning rate from $10^{-4}$ down to $10^{-6}$, performance took a massive hit across the board. 
 
-At $10^{-4}$, most models converged quickly and performed well. However, at $10^{-6}$, many models stopped improving after just 11 epochs (due to our EarlyStopping callback) because the updates were too small to make any real progress. This tells us that for these specific frozen models, $10^{-4}$ is likely the "sweet spot."
+At $10^{-4}$, most models converged quickly and performed well. However, at $10^{-6}$, many models stopped improving after just 11 epochs (due to our EarlyStopping callback) because the updates were too small to make any real progress. This tells us that for these specific frozen models, $10^{-4}$ is likely the optimal rate.
 
 \subsection{Optimizer Comparison}
 
@@ -38,7 +38,7 @@ In our tests, RMSProp was the most consistent performer, with the highest averag
 
 \subsection{Visualizing the Results}
 
-We used heatmaps to visualize how the different architectures responded to the optimizer and learning rate settings. Figures~\ref{fig:heatmap-acc} and~\ref{fig:heatmap-auc} show that while some models are more flexible, most configurations cluster around a specific "ideal" zone in the hyperparameter space.
+We used heatmaps to visualize how the different architectures responded to the optimizer and learning rate settings. Figures~\ref{fig:heatmap-acc} and~\ref{fig:heatmap-auc} show that while some models are more flexible, most configurations cluster around a specific ideal zone in the hyperparameter space.
 
 \begin{figure}[htbp]
   \centering
@@ -54,6 +54,6 @@ We used heatmaps to visualize how the different architectures responded to the o
   \label{fig:heatmap-auc}
 \end{figure}
 
-\subsection{Failures and Degenerate Runs}
+\subsection{Failures and Suboptimal Runs}
 
-It's also worth noting the runs that failed. We identified 10 cases where the models simply "collapsed" to predicting one class. Interestingly, some of these runs still showed a high AUC (above 0.80) even though they were practically useless because they never correctly identified a single cancer (or non-cancer) case. This highlighted why we need to look at more than just AUC when evaluating these models for medical use.
+It is also worth noting the runs that failed. We identified 10 cases where the models simply collapsed to predicting one class. Interestingly, some of these runs still showed a high AUC (above 0.80) even though they were practically useless because they never correctly identified a single cancer (or non-cancer) case. This highlighted why we need to look at more than just AUC when evaluating these models for medical use.

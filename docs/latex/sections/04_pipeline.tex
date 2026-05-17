@@ -1,43 +1,50 @@
 \section{Experimental Pipeline}
 \label{sec:pipeline}
 
-Our pipeline was designed to be as consistent as possible across all 72 configurations. We wanted to make sure that the only things changing were the architecture, optimizer, and learning rate. The process follows a clear path from raw data to final evaluation.
+The pipeline was designed to be as consistent as possible across all 72 configurations. We wanted to make sure that the only things changing were the architecture, optimizer, and learning rate all according to specification. The process follows a clear path from raw data to final evaluation.
 
-The diagram in Figure~\ref{fig:pipeline} shows the high-level flow. We start by preparing the data (splitting and augmenting), then move into the core training loop where we iterate through our experimental matrix, and finally aggregate all the metrics for analysis.
+The diagram in Figure~\ref{fig:pipeline} shows the high-level flow. Starting by preparing the data (splitting and augmenting), then move into the core training loop where we iterate through our experimental matrix, and finally aggregate all the metrics for analysis.
+
+% \begin{figure}[H]
+%   \centering
+%   \begin{tikzpicture}[
+%     node distance=0.8cm and 0.5cm,
+%     stepbox/.style={
+%       rectangle, rounded corners=3pt,
+%       draw=black!70, fill=gray!5,
+%       minimum width=3.5cm, minimum height=1.2cm,
+%       align=center, font=\small
+%     },
+%     arrow/.style={-{Stealth}, thick}
+%   ]
+
+%   % Row 1
+%   \node[stepbox] (data) {\textbf{Data Source}\\STRAMPN Dataset};
+%   \node[stepbox, right=of data] (prep) {\textbf{Preparation}\\Splitting \& Inventory};
+%   \node[stepbox, right=of prep] (aug) {\textbf{Augmentation}\\Training set only};
+
+%   % Row 2
+%   \node[stepbox, below=1.5cm of aug] (matrix) {\textbf{Experiment Matrix}\\72 Configurations};
+%   \node[stepbox, left=of matrix] (train) {\textbf{Training}\\50 Epochs Max};
+%   \node[stepbox, left=of train] (eval) {\textbf{Evaluation}\\Metrics \& Heatmaps};
+
+%   % Arrows
+%   \draw[arrow] (data) -- (prep);
+%   \draw[arrow] (prep) -- (aug);
+%   \draw[arrow] (aug) -- (matrix);
+%   \draw[arrow] (matrix) -- (train);
+%   \draw[arrow] (train) -- (eval);
+
+%   \end{tikzpicture}
+%   \caption[Experiment Pipeline]{Our experimental workflow. We used a unified data pipeline for all 72 runs to ensure that any differences in performance were due to the model settings, not the data preparation.}
+%   \label{fig:pipeline}
+% \end{figure}
 
 \begin{figure}[H]
-  \centering
-  \begin{tikzpicture}[
-    node distance=0.8cm and 0.5cm,
-    stepbox/.style={
-      rectangle, rounded corners=3pt,
-      draw=black!70, fill=gray!5,
-      minimum width=3.5cm, minimum height=1.2cm,
-      align=center, font=\small
-    },
-    arrow/.style={-{Stealth}, thick}
-  ]
-
-  % Row 1
-  \node[stepbox] (data) {\textbf{Data Source}\\STRAMPN Dataset};
-  \node[stepbox, right=of data] (prep) {\textbf{Preparation}\\Splitting \& Inventory};
-  \node[stepbox, right=of prep] (aug) {\textbf{Augmentation}\\Training set only};
-
-  % Row 2
-  \node[stepbox, below=1.5cm of aug] (matrix) {\textbf{Experiment Matrix}\\72 Configurations};
-  \node[stepbox, left=of matrix] (train) {\textbf{Training}\\50 Epochs Max};
-  \node[stepbox, left=of train] (eval) {\textbf{Evaluation}\\Metrics \& Heatmaps};
-
-  % Arrows
-  \draw[arrow] (data) -- (prep);
-  \draw[arrow] (prep) -- (aug);
-  \draw[arrow] (aug) -- (matrix);
-  \draw[arrow] (matrix) -- (train);
-  \draw[arrow] (train) -- (eval);
-
-  \end{tikzpicture}
-  \caption[Experiment Pipeline]{Our experimental workflow. We used a unified data pipeline for all 72 runs to ensure that any differences in performance were due to the model settings, not the data preparation.}
-  \label{fig:pipeline}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/pipeline.png}
+    \caption[Experiment Pipeline]{Our experimental workflow. We used a unified data pipeline for all 72 runs to ensure that any differences in performance were due to the model settings, not the data preparation.}
+    \label{fig:pipeline}
 \end{figure}
 
-By using this structured approach, we were able to systematically compare how each architecture handled different optimizers. This setup also made it easier to identify "degenerate" runs early, as we could see when a specific combination of learning rate and optimizer failed to converge regardless of the base model.
+By using this structured approach, we were able to systematically compare how each architecture handled different optimizers. This setup also made it easier to identify subopotimal runs early, as we could see when a specific combination of learning rate and optimizer failed to converge regardless of the base model.

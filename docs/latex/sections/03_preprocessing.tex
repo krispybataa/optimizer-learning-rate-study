@@ -5,7 +5,7 @@ We handled all our preprocessing using a custom script, \texttt{src/preprocessin
 
 \subsection{Raw Data Inventory}
 
-First, we took an inventory of the raw dataset to make sure all files were valid JPEGs and that we had the expected counts for each class. Our script confirmed that we had 481 cancer images and 506 non-cancer images, all in the correct format.
+First, we took an inventory of the raw dataset to make sure all files were valid JPEGs and that we had the expected counts for each class. The script confirmed that we had 481 cancer images and 506 non-cancer images, all in the correct format.
 
 \begin{lstlisting}[style=python]
 ============================================================
@@ -24,11 +24,11 @@ We applied \textbf{samplewise standard normalization} to every image using Keras
   \item Standardizing each image by dividing by its standard deviation.
 \end{itemize}
 
-We chose samplewise normalization because it's safer for small datasets like ours. Instead of relying on global statistics (which can be noisy or lead to data leakage), each image is processed independently. This makes our evaluation more reliable and ensures the model handles new images correctly during testing.
+Samplewise normalization was chosen for its reliability for relatively small datasets such at this one. As opposed to relying on global statistics (which can be noisy or lead to data leakage), each image is processed independently. This makes the evaluation more reliable and ensures the model handles new images correctly during testing.
 
 \subsection{Data Augmentation}
 
-To help our models learn more robust features and avoid overfitting, we used data augmentation, but \textbf{only for the training set}. We kept the validation and test sets in their original state (except for normalization) to ensure our results reflect real-world performance.
+To help the models learn more robust features and avoid overfitting, we used data augmentation, but \textbf{only for the training set}. We kept the validation and test sets in their original state (except for normalization) to ensure the results reflect real-world performance.
 
 Table~\ref{tab:augmentation} summarizes the augmentations we used. We picked these to simulate the typical variations found in histology slides, such as different rotations and slight scaling differences.
 

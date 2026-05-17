@@ -3,15 +3,15 @@
 
 \subsection{Experiment Setup}
 
-Our study was built around a full factorial design to see how different combinations of models and optimizers perform. We tested 4 base architectures, 6 optimizers, and 3 learning rates, which gave us a total of $4 \times 6 \times 3 = \mathbf{72}$ unique runs. Each run followed the same training process on our fixed data split to ensure a fair comparison.
+The simulation was built around a full factorial design to see how different combinations of models and optimizers perform. We tested 4 base architectures, 6 optimizers, and 3 learning rates, which gave us a total of $4 \times 6 \times 3 = \mathbf{72}$ unique runs. Each run followed the same training process on our fixed data split to ensure a fair comparison.
 
 We automated the entire process using a master script (\texttt{src/run\_all.py}) that iterated through every configuration. To keep things organized, each run was saved in its own folder named after the architecture, optimizer, and learning rate (e.g., \texttt{VGG19\_Adam\_LR1e-04/}).
 
 \subsection{Architecture and Model Design}
 
-We used four popular convolutional neural networks as our base models: VGG19, EfficientNetB3, ResNet50, and DenseNet121. Following standard transfer learning practices, we loaded these with ImageNet weights and froze all their convolutional layers. This allowed us to use the powerful features these models already "learned" from millions of images, while we only trained a new classification head on top.
+We used four convolutional neural networks as our base models: VGG19, EfficientNetB3, ResNet50, and DenseNet121. Following standard transfer learning practices, we loaded these with ImageNet weights and froze all their convolutional layers. This allowed us to use the powerful features these models already learned from millions of images, while we only trained a new classification head on top.
 
-The design of the classification head (Table~\ref{tab:head}) was provided in our project specifications. It uses a series of Dense layers with Batch Normalization and Dropout to prevent overfitting on our relatively small dataset. We used GlobalAveragePooling2D to bridge the gap between the frozen base and our dense layers, a pattern we adapted from our course materials.
+The design of the classification head (Table~\ref{tab:head}) was provided in the project specifications. It uses a series of Dense layers with Batch Normalization and Dropout to prevent overfitting on our relatively small dataset. We used GlobalAveragePooling2D to bridge the gap between the frozen base and our dense layers, a pattern we adapted from our course materials.
 
 \begin{table}[H]
   \centering
@@ -39,7 +39,7 @@ The design of the classification head (Table~\ref{tab:head}) was provided in our
 
 \subsection{Hyperparameters and Optimization}
 
-We tested six different optimizers: Adam, Adagrad, Adamax, AdaDelta, SGD (with 0.9 momentum), and RMSProp. For each optimizer, we tried three learning rates: $10^{-4}$, $10^{-5}$, and $10^{-6}$.
+The simulation tested six different optimizers: Adam, Adagrad, Adamax, AdaDelta, SGD (with 0.9 momentum), and RMSProp. For each optimizer, we tried three learning rates: $10^{-4}$, $10^{-5}$, and $10^{-6}$.
 
 Our training parameters were also fixed across all runs:
 \begin{itemize}
