@@ -1,23 +1,23 @@
-# ── Dataset (never commit raw or processed images) ───────────────────────────
+# ── Dataset (never commit raw or processed images) 
 dataset/raw/
 dataset/processed/
 
-# ── Experiment outputs (regenerated from runs) ────────────────────────────────
+# ── Experiment outputs (regenerated from runs) 
 results/
 
-# ── Saved model artifacts ─────────────────────────────────────────────────────
+# ── Saved model artifacts 
 *.h5
 *.keras
 
-# ── Python ────────────────────────────────────────────────────────────────────
+# ── Python 
 __pycache__/
 *.pyc
 *.pyo
 
-# ── Jupyter ───────────────────────────────────────────────────────────────────
+# ── Jupyter 
 .ipynb_checkpoints/
 
-# ── OS / editor artifacts ─────────────────────────────────────────────────────
+# ── OS / editor artifacts 
 .DS_Store
 Thumbs.db
 .idea/
@@ -28,7 +28,7 @@ venv/
 venv-gpu/
 .claude
 
-# ── LaTeX build artifacts ─────────────────────────────────────────────────────
+# ── LaTeX build artifacts 
 docs/latex/*.aux
 docs/latex/*.log
 docs/latex/*.out
@@ -39,7 +39,7 @@ docs/latex/*.fls
 docs/latex/*.fdb_latexmk
 docs/latex/*.synctex.gz
 docs/latex/*.pdf
-
+!docs/latex/main.pdf
 # ── LaTeX tooling config (local build config, not project source) ─────────────
 docs/latex/latexmkrc
 ~$GRP1-CAPSTONE-PRESENTATION.pptx
