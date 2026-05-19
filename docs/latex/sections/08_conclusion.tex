@@ -3,7 +3,7 @@
 
 In this study, we systematically tested 72 different deep learning configurations to see how they performed at classifying ovarian cancer images. By looking at four different architectures across six optimizers and three learning rates, we have gained a much clearer picture of what works for this kind of medical imaging task.
 
-Our main findings are quite clear:
+Our main findings are as follows:
 \begin{itemize}
     \item \textbf{Learning Rate is Key:} For frozen transfer learning on this dataset, a learning rate of $10^{-4}$ is essential. Anything smaller often leads to model collapse.
     \item \textbf{Top Optimizers:} RMSProp, Adam, and Adamax are the most reliable choices for this task.
@@ -11,4 +11,4 @@ Our main findings are quite clear:
     \item \textbf{Metric Caution:} We can't rely on AUC alone; checking for suboptimal runs using recall and specificity is critical for medical safety.
 \end{itemize}
 
-While these results are promising, they are just a starting point. We hope our findings provide a useful baseline for others working on similar medical classification problems, helping them choose the right optimization settings more quickly and avoid common pitfalls like suboptimal convergence.
+While these results are promising, they are just a starting point and could use some further work. The hope is for the findings to provide a useful baseline for others working on similar medical classification problems, helping them choose the right optimization settings more quickly and avoid common pitfalls like suboptimal convergence.
