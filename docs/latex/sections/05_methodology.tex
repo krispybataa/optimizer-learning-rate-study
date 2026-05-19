@@ -1,284 +1,81 @@
 \section{Methodology}
 \label{sec:methodology}
 
-\subsection{Experiment Design}
+\subsection{Experiment Setup}
 
-The experiment follows a full factorial design crossing four base architectures, seven optimizers, and three learning rates, producing $4 \times 7 \times 3 = 84$ unique configurations. Each configuration is trained independently on the same fixed data split. The execution order follows \texttt{itertools.product(ARCHITECTURES, OPTIMIZERS, LEARNING\_RATES)}, iterating architecture as the outermost variable and learning rate as the innermost. Table~\ref{tab:runs} enumerates all 84 runs.
+The simulation was built around a full factorial design to see how different combinations of models and optimizers perform. We tested 4 base architectures, 6 optimizers, and 3 learning rates, which gave us a total of $4 \times 6 \times 3 = \mathbf{72}$ unique runs. Each run followed the same training process on our fixed data split to ensure a fair comparison.
+
+We automated the entire process using a master script (\texttt{src/run\_all.py}) that iterated through every configuration. To keep things organized, each run was saved in its own folder named after the architecture, optimizer, and learning rate (e.g., \texttt{VGG19\_Adam\_LR1e-04/}).
+
+\subsection{Architecture and Model Design}
+
+We used four convolutional neural networks as our base models: VGG19, EfficientNetB3, ResNet50, and DenseNet121. Following standard transfer learning practices, we loaded these with ImageNet weights and froze all their convolutional layers. This allowed us to use the powerful features these models already learned from millions of images, while we only trained a new classification head on top.
+
+The design of the classification head (Table~\ref{tab:head}) was provided in the project specifications. It uses a series of Dense layers with Batch Normalization and Dropout to prevent overfitting on our relatively small dataset. We used GlobalAveragePooling2D to bridge the gap between the frozen base and our dense layers, a pattern we adapted from our course materials.
+
+\begin{table}[H]
+  \centering
+  \caption[Classification Head]{Our standard classification head (used for all 72 runs).}
+  \label{tab:head}
+  \begin{tabular}{lll}
+    \toprule
+    \rowcolor{tableheader}
+    \textbf{Layer} & \textbf{Parameters} & \textbf{Activation} \\
+    \midrule
+    GlobalAveragePooling2D & -- & -- \\
+    Dense & 256 units & ReLU \\
+    BatchNormalization & -- & -- \\
+    Dropout & 0.6 rate & -- \\
+    Dense & 128 units & ReLU \\
+    BatchNormalization & -- & -- \\
+    Dropout & 0.4 rate & -- \\
+    Dense & 64 units & ReLU \\
+    BatchNormalization & -- & -- \\
+    Dropout & 0.3 rate & -- \\
+    Dense (Output) & 1 unit & Sigmoid \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Hyperparameters and Optimization}
+
+The simulation tested six different optimizers: Adam, Adagrad, Adamax, AdaDelta, SGD (with 0.9 momentum), and RMSProp. For each optimizer, we tried three learning rates: $10^{-4}$, $10^{-5}$, and $10^{-6}$.
+
+Our training parameters were also fixed across all runs:
+\begin{itemize}
+    \item \textbf{Input Resolution:} $256 \times 256$
+    \item \textbf{Batch Size:} 32
+    \item \textbf{Maximum Epochs:} 50
+    \item \textbf{Loss Function:} Binary Crossentropy
+\end{itemize}
+
+To make training efficient, we used several callbacks. We set up \texttt{EarlyStopping} to halt runs that stopped improving after 10 epochs, \texttt{ReduceLROnPlateau} to adjust the learning rate if the validation loss stalled, and \texttt{ModelCheckpoint} to keep only the best weights from each run.
+
+\subsection{Metrics and Evaluation}
+
+After each run, we evaluated the model on our held-out test set (247 images). We collected the specified metrics: accuracy, precision, and recall, with AUC-ROC as our primary way to rank the models. 
+
+Since specificity isn't a default metric in Keras, we implemented a custom calculation to extract it from the confusion matrix. This was important because, in medical imaging, knowing how well a model identifies healthy (non-cancer) tissue is just as critical as finding the cancer.
 
 \begingroup
 \setstretch{1}
-\setlength{\extrarowheight}{0pt}
-\setlength{\LTcapwidth}{\textwidth}
-\begin{longtable}{r p{6.5cm} p{6.5cm}}
-  \caption{Complete 84-run experiment matrix in execution order.}
+\begin{longtable}{r l l}
+  \caption[Experiment Matrix]{The full 72-run experiment matrix.}
   \label{tab:runs} \\
   \toprule
   \rowcolor{tableheader}
-  \textbf{Run} & \textbf{Run Name} & \textbf{Configuration} \\
+  \textbf{Run} & \textbf{Architecture} & \textbf{Optimizer / LR} \\
   \midrule
   \endfirsthead
   \toprule
   \rowcolor{tableheader}
-  \textbf{Run} & \textbf{Run Name} & \textbf{Configuration} \\
+  \textbf{Run} & \textbf{Architecture} & \textbf{Optimizer / LR} \\
   \midrule
   \endhead
+  1--18   & VGG19          & 6 Optimizers $\times$ 3 LRs \\
+  19--36  & EfficientNetB3 & 6 Optimizers $\times$ 3 LRs \\
+  37--54  & ResNet50       & 6 Optimizers $\times$ 3 LRs \\
+  55--72  & DenseNet121    & 6 Optimizers $\times$ 3 LRs \\
   \bottomrule
-  \endfoot
-   1 & VGG19\_Adam\_LR1e-04     & VGG19 / Adam / LR=1e-4 \\
-   2 & VGG19\_Adam\_LR1e-05     & VGG19 / Adam / LR=1e-5 \\
-   3 & VGG19\_Adam\_LR1e-06     & VGG19 / Adam / LR=1e-6 \\
-   4 & VGG19\_Adagrad\_LR1e-04  & VGG19 / Adagrad / LR=1e-4 \\
-   5 & VGG19\_Adagrad\_LR1e-05  & VGG19 / Adagrad / LR=1e-5 \\
-   6 & VGG19\_Adagrad\_LR1e-06  & VGG19 / Adagrad / LR=1e-6 \\
-   7 & VGG19\_Adamax\_LR1e-04   & VGG19 / Adamax / LR=1e-4 \\
-   8 & VGG19\_Adamax\_LR1e-05   & VGG19 / Adamax / LR=1e-5 \\
-   9 & VGG19\_Adamax\_LR1e-06   & VGG19 / Adamax / LR=1e-6 \\
-  10 & VGG19\_AdaDelta\_LR1e-04 & VGG19 / AdaDelta / LR=1e-4 \\
-  11 & VGG19\_AdaDelta\_LR1e-05 & VGG19 / AdaDelta / LR=1e-5 \\
-  12 & VGG19\_AdaDelta\_LR1e-06 & VGG19 / AdaDelta / LR=1e-6 \\
-  13 & VGG19\_SGD\_LR1e-04      & VGG19 / SGD / LR=1e-4 \\
-  14 & VGG19\_SGD\_LR1e-05      & VGG19 / SGD / LR=1e-5 \\
-  15 & VGG19\_SGD\_LR1e-06      & VGG19 / SGD / LR=1e-6 \\
-  16 & VGG19\_RMSProp\_LR1e-04  & VGG19 / RMSProp / LR=1e-4 \\
-  17 & VGG19\_RMSProp\_LR1e-05  & VGG19 / RMSProp / LR=1e-5 \\
-  18 & VGG19\_RMSProp\_LR1e-06  & VGG19 / RMSProp / LR=1e-6 \\
-  19 & VGG19\_Nadam\_LR1e-04    & VGG19 / Nadam / LR=1e-4 \\
-  20 & VGG19\_Nadam\_LR1e-05    & VGG19 / Nadam / LR=1e-5 \\
-  21 & VGG19\_Nadam\_LR1e-06    & VGG19 / Nadam / LR=1e-6 \\
-  22 & EfficientNetB3\_Adam\_LR1e-04     & EfficientNetB3 / Adam / LR=1e-4 \\
-  23 & EfficientNetB3\_Adam\_LR1e-05     & EfficientNetB3 / Adam / LR=1e-5 \\
-  24 & EfficientNetB3\_Adam\_LR1e-06     & EfficientNetB3 / Adam / LR=1e-6 \\
-  25 & EfficientNetB3\_Adagrad\_LR1e-04  & EfficientNetB3 / Adagrad / LR=1e-4 \\
-  26 & EfficientNetB3\_Adagrad\_LR1e-05  & EfficientNetB3 / Adagrad / LR=1e-5 \\
-  27 & EfficientNetB3\_Adagrad\_LR1e-06  & EfficientNetB3 / Adagrad / LR=1e-6 \\
-  28 & EfficientNetB3\_Adamax\_LR1e-04   & EfficientNetB3 / Adamax / LR=1e-4 \\
-  29 & EfficientNetB3\_Adamax\_LR1e-05   & EfficientNetB3 / Adamax / LR=1e-5 \\
-  30 & EfficientNetB3\_Adamax\_LR1e-06   & EfficientNetB3 / Adamax / LR=1e-6 \\
-  31 & EfficientNetB3\_AdaDelta\_LR1e-04 & EfficientNetB3 / AdaDelta / LR=1e-4 \\
-  32 & EfficientNetB3\_AdaDelta\_LR1e-05 & EfficientNetB3 / AdaDelta / LR=1e-5 \\
-  33 & EfficientNetB3\_AdaDelta\_LR1e-06 & EfficientNetB3 / AdaDelta / LR=1e-6 \\
-  34 & EfficientNetB3\_SGD\_LR1e-04      & EfficientNetB3 / SGD / LR=1e-4 \\
-  35 & EfficientNetB3\_SGD\_LR1e-05      & EfficientNetB3 / SGD / LR=1e-5 \\
-  36 & EfficientNetB3\_SGD\_LR1e-06      & EfficientNetB3 / SGD / LR=1e-6 \\
-  37 & EfficientNetB3\_RMSProp\_LR1e-04  & EfficientNetB3 / RMSProp / LR=1e-4 \\
-  38 & EfficientNetB3\_RMSProp\_LR1e-05  & EfficientNetB3 / RMSProp / LR=1e-5 \\
-  39 & EfficientNetB3\_RMSProp\_LR1e-06  & EfficientNetB3 / RMSProp / LR=1e-6 \\
-  40 & EfficientNetB3\_Nadam\_LR1e-04    & EfficientNetB3 / Nadam / LR=1e-4 \\
-  41 & EfficientNetB3\_Nadam\_LR1e-05    & EfficientNetB3 / Nadam / LR=1e-5 \\
-  42 & EfficientNetB3\_Nadam\_LR1e-06    & EfficientNetB3 / Nadam / LR=1e-6 \\
-  43 & ResNet50\_Adam\_LR1e-04     & ResNet50 / Adam / LR=1e-4 \\
-  44 & ResNet50\_Adam\_LR1e-05     & ResNet50 / Adam / LR=1e-5 \\
-  45 & ResNet50\_Adam\_LR1e-06     & ResNet50 / Adam / LR=1e-6 \\
-  46 & ResNet50\_Adagrad\_LR1e-04  & ResNet50 / Adagrad / LR=1e-4 \\
-  47 & ResNet50\_Adagrad\_LR1e-05  & ResNet50 / Adagrad / LR=1e-5 \\
-  48 & ResNet50\_Adagrad\_LR1e-06  & ResNet50 / Adagrad / LR=1e-6 \\
-  49 & ResNet50\_Adamax\_LR1e-04   & ResNet50 / Adamax / LR=1e-4 \\
-  50 & ResNet50\_Adamax\_LR1e-05   & ResNet50 / Adamax / LR=1e-5 \\
-  51 & ResNet50\_Adamax\_LR1e-06   & ResNet50 / Adamax / LR=1e-6 \\
-  52 & ResNet50\_AdaDelta\_LR1e-04 & ResNet50 / AdaDelta / LR=1e-4 \\
-  53 & ResNet50\_AdaDelta\_LR1e-05 & ResNet50 / AdaDelta / LR=1e-5 \\
-  54 & ResNet50\_AdaDelta\_LR1e-06 & ResNet50 / AdaDelta / LR=1e-6 \\
-  55 & ResNet50\_SGD\_LR1e-04      & ResNet50 / SGD / LR=1e-4 \\
-  56 & ResNet50\_SGD\_LR1e-05      & ResNet50 / SGD / LR=1e-5 \\
-  57 & ResNet50\_SGD\_LR1e-06      & ResNet50 / SGD / LR=1e-6 \\
-  58 & ResNet50\_RMSProp\_LR1e-04  & ResNet50 / RMSProp / LR=1e-4 \\
-  59 & ResNet50\_RMSProp\_LR1e-05  & ResNet50 / RMSProp / LR=1e-5 \\
-  60 & ResNet50\_RMSProp\_LR1e-06  & ResNet50 / RMSProp / LR=1e-6 \\
-  61 & ResNet50\_Nadam\_LR1e-04    & ResNet50 / Nadam / LR=1e-4 \\
-  62 & ResNet50\_Nadam\_LR1e-05    & ResNet50 / Nadam / LR=1e-5 \\
-  63 & ResNet50\_Nadam\_LR1e-06    & ResNet50 / Nadam / LR=1e-6 \\
-  64 & DenseNet121\_Adam\_LR1e-04     & DenseNet121 / Adam / LR=1e-4 \\
-  65 & DenseNet121\_Adam\_LR1e-05     & DenseNet121 / Adam / LR=1e-5 \\
-  66 & DenseNet121\_Adam\_LR1e-06     & DenseNet121 / Adam / LR=1e-6 \\
-  67 & DenseNet121\_Adagrad\_LR1e-04  & DenseNet121 / Adagrad / LR=1e-4 \\
-  68 & DenseNet121\_Adagrad\_LR1e-05  & DenseNet121 / Adagrad / LR=1e-5 \\
-  69 & DenseNet121\_Adagrad\_LR1e-06  & DenseNet121 / Adagrad / LR=1e-6 \\
-  70 & DenseNet121\_Adamax\_LR1e-04   & DenseNet121 / Adamax / LR=1e-4 \\
-  71 & DenseNet121\_Adamax\_LR1e-05   & DenseNet121 / Adamax / LR=1e-5 \\
-  72 & DenseNet121\_Adamax\_LR1e-06   & DenseNet121 / Adamax / LR=1e-6 \\
-  73 & DenseNet121\_AdaDelta\_LR1e-04 & DenseNet121 / AdaDelta / LR=1e-4 \\
-  74 & DenseNet121\_AdaDelta\_LR1e-05 & DenseNet121 / AdaDelta / LR=1e-5 \\
-  75 & DenseNet121\_AdaDelta\_LR1e-06 & DenseNet121 / AdaDelta / LR=1e-6 \\
-  76 & DenseNet121\_SGD\_LR1e-04      & DenseNet121 / SGD / LR=1e-4 \\
-  77 & DenseNet121\_SGD\_LR1e-05      & DenseNet121 / SGD / LR=1e-5 \\
-  78 & DenseNet121\_SGD\_LR1e-06      & DenseNet121 / SGD / LR=1e-6 \\
-  79 & DenseNet121\_RMSProp\_LR1e-04  & DenseNet121 / RMSProp / LR=1e-4 \\
-  80 & DenseNet121\_RMSProp\_LR1e-05  & DenseNet121 / RMSProp / LR=1e-5 \\
-  81 & DenseNet121\_RMSProp\_LR1e-06  & DenseNet121 / RMSProp / LR=1e-6 \\
-  82 & DenseNet121\_Nadam\_LR1e-04    & DenseNet121 / Nadam / LR=1e-4 \\
-  83 & DenseNet121\_Nadam\_LR1e-05    & DenseNet121 / Nadam / LR=1e-5 \\
-  84 & DenseNet121\_Nadam\_LR1e-06    & DenseNet121 / Nadam / LR=1e-6 \\
 \end{longtable}
 \endgroup
-
-\subsection{Architectures}
-
-Four convolutional neural network architectures pre-trained on ImageNet were evaluated as frozen feature extractors (Table~\ref{tab:architectures}).
-
-\begin{table}[H]
-  \centering
-  \caption{Base architectures used as frozen feature extractors.}
-  \label{tab:architectures}
-  \begin{tabularx}{\textwidth}{l l r X}
-    \toprule
-    \rowcolor{tableheader}
-    \textbf{Architecture} & \textbf{Year} & \textbf{Parameters} & \textbf{Key Characteristic} \\
-    \midrule
-    VGG19          & 2014 & 143.7M & Deep uniform $3\times3$ convolution stack \\
-    EfficientNetB3 & 2019 &  12.0M & Compound scaling of depth/width/resolution \\
-    ResNet50       & 2015 &  25.6M & Residual (skip) connections \\
-    DenseNet121    & 2016 &   8.0M & Dense connections between all layers \\
-    \bottomrule
-  \end{tabularx}
-\end{table}
-
-Each architecture was loaded via the corresponding \texttt{tf.keras.applications} class with \texttt{include\_top=False}, \texttt{weights=\char`"imagenet\char`"}, and \texttt{trainable=False}. Freezing all base layers ensures that backpropagation updates only the custom classification head, and that the ImageNet feature representations are preserved throughout training.
-
-\subsection{Classification Head}
-
-A common classification head was attached to all four architectures (Table~\ref{tab:head}). The head was designed to provide progressive dimensionality reduction with aggressive dropout regularization to mitigate overfitting on the small dataset.
-
-\begin{table}[H]
-  \centering
-  \caption{Custom classification head architecture (identical across all 84 runs).}
-  \label{tab:head}
-  \begin{tabular}{llll}
-    \toprule
-    \rowcolor{tableheader}
-    \textbf{Layer} & \textbf{Units / Rate} & \textbf{Activation} & \textbf{Notes} \\
-    \midrule
-    GlobalAveragePooling2D & --   & --      & Replaces Flatten \\
-    Dense                  & 256  & ReLU    & \\
-    BatchNormalization      & --   & --      & \\
-    Dropout                & 0.6  & --      & \\
-    Dense                  & 128  & ReLU    & \\
-    BatchNormalization      & --   & --      & \\
-    Dropout                & 0.4  & --      & \\
-    Dense                  & 64   & ReLU    & \\
-    BatchNormalization      & --   & --      & \\
-    Dropout                & 0.3  & --      & \\
-    Dense                  & 1    & Sigmoid & Binary output \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-The head construction code from \texttt{src/model\_builder.py} is shown below.
-
-\begin{lstlisting}[style=python]
-x = GlobalAveragePooling2D()(base_model.output)
-
-x = Dense(256, activation="relu")(x)
-x = BatchNormalization()(x)
-x = Dropout(0.6)(x)
-
-x = Dense(128, activation="relu")(x)
-x = BatchNormalization()(x)
-x = Dropout(0.4)(x)
-
-x = Dense(64, activation="relu")(x)
-x = BatchNormalization()(x)
-x = Dropout(0.3)(x)
-
-output = Dense(1, activation="sigmoid")(x)
-\end{lstlisting}
-
-\subsection{Optimizers}
-
-Seven optimizers spanning adaptive and non-adaptive families were evaluated (Table~\ref{tab:optimizers}). SGD was configured with momentum of 0.9; all others used default Keras parameters except the learning rate.
-
-\begin{table}[H]
-  \centering
-  \caption{Optimizers evaluated across all 84 runs.}
-  \label{tab:optimizers}
-  \begin{tabularx}{\textwidth}{l l X}
-    \toprule
-    \rowcolor{tableheader}
-    \textbf{Optimizer} & \textbf{Full Name} & \textbf{Key Characteristic} \\
-    \midrule
-    Adam     & Adaptive Moment Estimation      & Adapts LR per parameter using 1st and 2nd moments \\
-    Adagrad  & Adaptive Gradient               & Accumulates squared gradients; larger updates for rare features \\
-    Adamax   & Max Adaptive Moment             & Adam variant using infinity norm; more stable for sparse data \\
-    AdaDelta & Adaptive Delta                  & Adagrad variant with bounded accumulation window \\
-    SGD      & Stochastic Gradient Descent     & Fixed step size; momentum=0.9; simple and interpretable \\
-    RMSProp  & Root Mean Square Propagation    & Divides LR by moving average of squared gradients \\
-    Nadam    & Nesterov Adam                   & Adam with Nesterov momentum lookahead \\
-    \bottomrule
-  \end{tabularx}
-\end{table}
-
-\subsection{Fixed Hyperparameters}
-
-All 84 runs share the fixed hyperparameters listed in Table~\ref{tab:fixed-hp}. No learning rate schedules were applied beyond \texttt{ReduceLROnPlateau} (see Section~\ref{subsec:callbacks}).
-
-\begin{table}[H]
-  \centering
-  \caption{Fixed hyperparameters shared across all 84 runs.}
-  \label{tab:fixed-hp}
-  \begin{tabular}{ll}
-    \toprule
-    \rowcolor{tableheader}
-    \textbf{Hyperparameter} & \textbf{Value} \\
-    \midrule
-    Input Size     & $256 \times 256 \times 3$ \\
-    Batch Size     & 32 \\
-    Maximum Epochs & 50 \\
-    Loss Function  & Binary Crossentropy \\
-    Dense Nodes    & 256 $\to$ 128 $\to$ 64 \\
-    Dropout Rates  & 0.6 $\to$ 0.4 $\to$ 0.3 \\
-    Random Seed    & 42 \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\subsection{Training Callbacks}
-\label{subsec:callbacks}
-
-Four Keras callbacks were applied uniformly to every run (Table~\ref{tab:callbacks}).
-
-\begin{table}[H]
-  \centering
-  \caption{Keras callbacks applied to all 84 training runs.}
-  \label{tab:callbacks}
-  \begin{tabularx}{\textwidth}{l l l X}
-    \toprule
-    \rowcolor{tableheader}
-    \textbf{Callback} & \textbf{Monitor} & \textbf{Parameters} & \textbf{Purpose} \\
-    \midrule
-    ModelCheckpoint  & \texttt{val\_auc}  & \texttt{save\_best\_only=True}               & Saves best weights \\
-    EarlyStopping    & \texttt{val\_auc}  & \texttt{patience=10, min\_delta=0.001}        & Halts non-improving runs \\
-    ReduceLROnPlateau & \texttt{val\_loss} & \texttt{factor=0.5, patience=5, min\_lr=1e-7} & Reduces LR on plateau \\
-    CSVLogger        & --                & Per-run \texttt{training\_log.csv}            & Logs epoch metrics \\
-    \bottomrule
-  \end{tabularx}
-\end{table}
-
-\subsection{Evaluation Metrics}
-
-Performance is assessed on the held-out test set (247 images) after training completes. Six metrics are computed for each run (Table~\ref{tab:metrics}). AUC-ROC is the primary ranking metric because it is threshold-independent and robust to class imbalance.
-
-\begin{table}[H]
-  \centering
-  \caption{Evaluation metrics computed for all 84 runs.}
-  \label{tab:metrics}
-  \begin{tabular}{lll}
-    \toprule
-    \rowcolor{tableheader}
-    \textbf{Metric} & \textbf{Formula} & \textbf{Notes} \\
-    \midrule
-    Accuracy    & $(TP+TN)/(TP+TN+FP+FN)$ & Overall correctness \\
-    Precision   & $TP/(TP+FP)$             & Positive predictive value \\
-    Recall      & $TP/(TP+FN)$             & Sensitivity / true positive rate \\
-    Specificity & $TN/(TN+FP)$             & True negative rate; manually computed \\
-    F1-Score    & $2 \times (P \times R)/(P+R)$ & Harmonic mean of precision and recall \\
-    AUC         & Area under ROC curve     & \textbf{Primary metric} \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-Specificity is not natively available as a Keras metric and is computed manually from the confusion matrix in \texttt{src/evaluate.py}:
-
-\begin{lstlisting}[style=python]
-cm = confusion_matrix(y_true, y_pred)
-tn, fp = cm[0, 0], cm[0, 1]
-specificity = tn / (tn + fp) if (tn + fp) > 0 else 0.0
-\end{lstlisting}

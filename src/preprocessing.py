@@ -18,10 +18,9 @@ from pathlib import Path
 from sklearn.model_selection import train_test_split
 
 
-# ── Directory layout ──────────────────────────────────────────────────────────
+# Directory layout
 
 # Resolve paths relative to this file's location so the script works from
-# C:\dev-work\optimizer-learning-rate-study (Windows) or the WSL2 mount path.
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 _RAW_BASE = _PROJECT_ROOT / "dataset" / "raw" / "STRAMPN Dataset" / "Dataset"
@@ -36,7 +35,7 @@ _EXPECTED_COUNTS = {"cancer": 481, "no_cancer": 506}
 _EXPECTED_TOTAL  = 987
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
+# Helpers 
 
 def _all_files(directory: Path) -> list[Path]:
     """Return a sorted list of all files (non-recursive) in directory."""
@@ -52,22 +51,19 @@ def _copy_file(src: Path, dst_dir: Path) -> str:
     return "copied"
 
 
-# ── Main function ─────────────────────────────────────────────────────────────
-
+# Main function 
 def run_preprocessing(random_seed: int = 42) -> None:
     """
-    Full preprocessing pipeline: inventory → split → copy → verify.
+    Full preprocessing pipeline: inventory -> split -> copy -> verify.
 
     Args:
         random_seed: Controls the stratified split for reproducibility.
                      Must be identical to the seed used in all 84 training runs.
     """
 
-    # ══════════════════════════════════════════════════════════════════════════
-    # Step 1 — Inventory
-    # ══════════════════════════════════════════════════════════════════════════
+    # Step 1 - Inventory
     print("=" * 60)
-    print("STEP 1 — RAW DATASET INVENTORY")
+    print("STEP 1 - RAW DATASET INVENTORY")
     print("=" * 60)
 
     all_pairs: list[tuple[Path, str]] = []  # (filepath, label)
@@ -87,28 +83,26 @@ def run_preprocessing(random_seed: int = 42) -> None:
         print(f"    Total files : {len(files)}")
 
         if non_jpg:
-            print(f"    ⚠ Non-JPG files found ({len(non_jpg)}):")
+            print(f"    [WARNING] Non-JPG files found ({len(non_jpg)}):")
             for f in non_jpg:
                 print(f"        {f.name}")
         else:
-            print(f"    All files   : .jpg ✓")
+            print(f"    All files   : .jpg [ok]")
 
         jpg_files = [f for f in files if f.suffix.lower() == ".jpg"]
         expected  = _EXPECTED_COUNTS[label]
-        match_sym = "✓" if len(jpg_files) == expected else "✗ (expected {expected})"
+        match_sym = "[ok]" if len(jpg_files) == expected else "[x] (expected {expected})"
         print(f"    JPG count   : {len(jpg_files)}  {match_sym}")
 
         all_pairs.extend((f, label) for f in jpg_files)
 
     total = len(all_pairs)
-    total_sym = "✓" if total == _EXPECTED_TOTAL else f"✗ (expected {_EXPECTED_TOTAL})"
+    total_sym = "[ok]" if total == _EXPECTED_TOTAL else f"[x] (expected {_EXPECTED_TOTAL})"
     print(f"\n  Total images across both classes: {total}  {total_sym}")
 
-    # ══════════════════════════════════════════════════════════════════════════
-    # Step 2 — Stratified Split
-    # ══════════════════════════════════════════════════════════════════════════
+    # Step 2 - Stratified Split
     print("\n" + "=" * 60)
-    print("STEP 2 — STRATIFIED SPLIT")
+    print("STEP 2 - STRATIFIED SPLIT")
     print("=" * 60)
 
     filepaths = [p for p, _ in all_pairs]
@@ -122,7 +116,7 @@ def run_preprocessing(random_seed: int = 42) -> None:
         stratify=labels,
     )
 
-    # Second split: 70% train, 30% val  (of the 75% slice → ≈52.5% / 22.5% overall)
+    # Second split: 70% train, 30% val  (of the 75% slice -> ~52.5% / 22.5% overall)
     paths_train, paths_val, labels_train, labels_val = train_test_split(
         paths_trainval, labels_trainval,
         test_size=0.30,
@@ -145,11 +139,9 @@ def run_preprocessing(random_seed: int = 42) -> None:
         print(f"  {split_name:<8}  {c:>8}  {nc:>10}  {len(lbls):>7}")
     print(f"  {'total':<8}  {labels.count('cancer'):>8}  {labels.count('no_cancer'):>10}  {total:>7}")
 
-    # ══════════════════════════════════════════════════════════════════════════
-    # Step 3 — Copy Files
-    # ══════════════════════════════════════════════════════════════════════════
+    # Step 3 - Copy Files
     print("\n" + "=" * 60)
-    print("STEP 3 — COPYING FILES TO dataset/processed/")
+    print("STEP 3 - COPYING FILES TO dataset/processed/")
     print("=" * 60)
 
     for split_name, (paths, lbls) in splits.items():
@@ -170,11 +162,10 @@ def run_preprocessing(random_seed: int = 42) -> None:
             f"skipped (already exist): {skipped_total:>4}"
         )
 
-    # ══════════════════════════════════════════════════════════════════════════
-    # Step 4 — Verification Report
-    # ══════════════════════════════════════════════════════════════════════════
+    # Step 4 - Verification Report
+
     print("\n" + "=" * 60)
-    print("STEP 4 — VERIFICATION REPORT")
+    print("STEP 4 - VERIFICATION REPORT")
     print("=" * 60)
 
     class_names = ["cancer", "no_cancer"]
@@ -192,9 +183,9 @@ def run_preprocessing(random_seed: int = 42) -> None:
             print(f"  {split_name:<8}  {cls:<12}  {n:>6}  {pct:>9.1f}%")
 
     print(f"\n  Grand total in processed/: {grand_total}  "
-          f"({'✓ matches raw' if grand_total == total else '✗ MISMATCH with raw'})")
+          f"({'[ok] matches raw' if grand_total == total else '[x] MISMATCH with raw'})")
 
-    # Cross-split leakage check — compare stem names across splits
+    # Cross-split leakage check - compare stem names across splits
     print("\n  Checking for cross-split filename leakage...")
     split_stems: dict[str, set[str]] = {}
     for split_name in ["train", "val", "test"]:
@@ -214,23 +205,23 @@ def run_preprocessing(random_seed: int = 42) -> None:
             overlap = a_stems & b_stems
             if overlap:
                 violations.append(
-                    f"    ✗ {a_name} ∩ {b_name}: {len(overlap)} shared filename(s): "
+                    f"    [x] {a_name} intersect {b_name}: {len(overlap)} shared filename(s): "
                     + ", ".join(sorted(overlap)[:5])
-                    + ("…" if len(overlap) > 5 else "")
+                    + ("..." if len(overlap) > 5 else "")
                 )
 
     print()
     if violations:
-        print("  ⚠ INTEGRITY VIOLATIONS FOUND:")
+        print("  [WARNING] INTEGRITY VIOLATIONS FOUND:")
         for v in violations:
             print(v)
     else:
-        print("  PREPROCESSING COMPLETE — No integrity violations found")
+        print("  PREPROCESSING COMPLETE - No integrity violations found")
 
     print("\n" + "=" * 60)
 
 
-# ── Entry point ───────────────────────────────────────────────────────────────
+# Entry point 
 
 if __name__ == "__main__":
     run_preprocessing()

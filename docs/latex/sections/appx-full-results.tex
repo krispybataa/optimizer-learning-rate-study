@@ -1,9 +1,10 @@
-% Full 84-run results table, sorted by AUC descending, landscape orientation
-\begin{landscape}
-{\tiny
-\setlength{\LTcapwidth}{\linewidth}
-\begin{longtable}{rlllrrrrrrrl}
-  \caption{Complete 84-run results table sorted by AUC-ROC descending.}
+% Full 72-run results table, sorted by AUC descending
+\clearpage
+\begingroup
+\tiny
+\setlength{\tabcolsep}{2.5pt}
+\begin{longtable}{r l l l r r r r r r r r}
+  \caption{Complete 72-run results table sorted by AUC-ROC descending.}
   \label{tab:full-results} \\
   \toprule
   \rowcolor{tableheader}
@@ -21,90 +22,77 @@
   \endhead
   \bottomrule
   \endfoot
-   1 & VGG19\_Adam\_LR1e-04      & VGG19 & Adam    & 1e-4 & 0.7733 & 1.0000 & 0.5591 & 1.0000 & 0.7172 & 0.9995 & 26 \\
-   2 & VGG19\_Adamax\_LR1e-04    & VGG19 & Adamax  & 1e-4 & 0.9717 & 0.9918 & 0.9528 & 0.9917 & 0.9719 & 0.9995 & 50 \\
-   3 & VGG19\_Nadam\_LR1e-04     & VGG19 & Nadam   & 1e-4 & 0.8826 & 1.0000 & 0.7717 & 1.0000 & 0.8711 & 0.9991 & 26 \\
-   4 & DenseNet121\_Adam\_LR1e-04 & DenseNet121 & Adam & 1e-4 & 0.9676 & 1.0000 & 0.9370 & 1.0000 & 0.9675 & 0.9991 & 27 \\
-   5 & DenseNet121\_RMSProp\_LR1e-04 & DenseNet121 & RMSProp & 1e-4 & 0.9595 & 1.0000 & 0.9213 & 1.0000 & 0.9590 & 0.9990 & 24 \\
-   6 & DenseNet121\_Nadam\_LR1e-04 & DenseNet121 & Nadam & 1e-4 & 0.9676 & 0.9612 & 0.9764 & 0.9583 & 0.9688 & 0.9978 & 19 \\
-   7 & DenseNet121\_Adamax\_LR1e-04 & DenseNet121 & Adamax & 1e-4 & 0.9231 & 0.8699 & 1.0000 & 0.8417 & 0.9304 & 0.9977 & 23 \\
-   8 & VGG19\_RMSProp\_LR1e-04   & VGG19 & RMSProp & 1e-4 & 0.8178 & 1.0000 & 0.6457 & 1.0000 & 0.7847 & 0.9949 & 21 \\
-   9 & ResNet50\_RMSProp\_LR1e-04 & ResNet50 & RMSProp & 1e-4 & 0.9514 & 1.0000 & 0.9055 & 1.0000 & 0.9504 & 0.9943 & 40 \\
-  10 & VGG19\_RMSProp\_LR1e-05   & VGG19 & RMSProp & 1e-5 & 0.9312 & 0.9583 & 0.9055 & 0.9583 & 0.9312 & 0.9933 & 50 \\
-  11 & ResNet50\_Nadam\_LR1e-04  & ResNet50 & Nadam & 1e-4 & 0.9393 & 1.0000 & 0.8819 & 1.0000 & 0.9372 & 0.9913 & 37 \\
-  12 & DenseNet121\_SGD\_LR1e-04 & DenseNet121 & SGD & 1e-4 & 0.8178 & 1.0000 & 0.6457 & 1.0000 & 0.7847 & 0.9885 & 30 \\
-  13 & ResNet50\_SGD\_LR1e-04    & ResNet50 & SGD & 1e-4 & 0.9150 & 0.9907 & 0.8425 & 0.9917 & 0.9106 & 0.9869 & 35 \\
-  14 & ResNet50\_Adam\_LR1e-04   & ResNet50 & Adam & 1e-4 & 0.9352 & 0.9912 & 0.8819 & 0.9917 & 0.9333 & 0.9864 & 31 \\
-  15 & EfficientNetB3\_RMSProp\_LR1e-04 & EfficientNetB3 & RMSProp & 1e-4 & 0.8462 & 1.0000 & 0.7008 & 1.0000 & 0.8241 & 0.9841 & 41 \\
-  16 & VGG19\_SGD\_LR1e-04       & VGG19 & SGD & 1e-4 & 0.8785 & 1.0000 & 0.7638 & 1.0000 & 0.8661 & 0.9838 & 50 \\
-  17 & EfficientNetB3\_Nadam\_LR1e-04 & EfficientNetB3 & Nadam & 1e-4 & 0.9312 & 0.9508 & 0.9134 & 0.9500 & 0.9317 & 0.9837 & 42 \\
-  18 & ResNet50\_Adamax\_LR1e-04 & ResNet50 & Adamax & 1e-4 & 0.9150 & 0.9818 & 0.8504 & 0.9833 & 0.9114 & 0.9815 & 44 \\
-  19 & EfficientNetB3\_Adam\_LR1e-04 & EfficientNetB3 & Adam & 1e-4 & 0.8988 & 0.9636 & 0.8346 & 0.9667 & 0.8945 & 0.9787 & 42 \\
-  20 & ResNet50\_Adam\_LR1e-05   & ResNet50 & Adam & 1e-5 & 0.8704 & 1.0000 & 0.7480 & 1.0000 & 0.8559 & 0.9768 & 50 \\
-  21 & ResNet50\_SGD\_LR1e-05    & ResNet50 & SGD & 1e-5 & 0.9190 & 0.9496 & 0.8898 & 0.9500 & 0.9187 & 0.9722 & 32 \\
-  22 & EfficientNetB3\_SGD\_LR1e-04 & EfficientNetB3 & SGD & 1e-4 & 0.8623 & 0.9697 & 0.7559 & 0.9750 & 0.8496 & 0.9696 & 47 \\
-  23 & DenseNet121\_RMSProp\_LR1e-05 & DenseNet121 & RMSProp & 1e-5 & 0.9069 & 0.9407 & 0.8740 & 0.9417 & 0.9061 & 0.9619 & 37 \\
-  24 & EfficientNetB3\_Adamax\_LR1e-04 & EfficientNetB3 & Adamax & 1e-4 & 0.8462 & 0.9588 & 0.7323 & 0.9667 & 0.8304 & 0.9589 & 50 \\
-  25 & ResNet50\_RMSProp\_LR1e-05 & ResNet50 & RMSProp & 1e-5 & 0.8340 & 0.9574 & 0.7087 & 0.9667 & 0.8145 & 0.9510 & 36 \\
-  26 & ResNet50\_Nadam\_LR1e-05  & ResNet50 & Nadam & 1e-5 & 0.8259 & 1.0000 & 0.6614 & 1.0000 & 0.7962 & 0.9521 & 32 \\
-  27 & EfficientNetB3\_RMSProp\_LR1e-05 & EfficientNetB3 & RMSProp & 1e-5 & 0.8502 & 0.9245 & 0.7717 & 0.9333 & 0.8412 & 0.9489 & 50 \\
-  28 & EfficientNetB3\_Nadam\_LR1e-05 & EfficientNetB3 & Nadam & 1e-5 & 0.8138 & 0.7580 & 0.9370 & 0.6833 & 0.8380 & 0.9440 & 39 \\
-  29 & VGG19\_Nadam\_LR1e-05     & VGG19 & Nadam & 1e-5 & 0.8340 & 0.7829 & 0.9370 & 0.7250 & 0.8530 & 0.9306 & 50 \\
-  30 & DenseNet121\_Adam\_LR1e-05 & DenseNet121 & Adam & 1e-5 & 0.8016 & 0.7600 & 0.8976 & 0.7000 & 0.8231 & 0.9284 & 50 \\
-  31 & DenseNet121\_Adagrad\_LR1e-04 & DenseNet121 & Adagrad & 1e-4 & 0.4939 & 1.0000 & 0.0157 & 1.0000 & 0.0310 & 0.8734 & 25 \\
-  32 & ResNet50\_Adagrad\_LR1e-04 & ResNet50 & Adagrad & 1e-4 & 0.7854 & 0.7372 & 0.9055 & 0.6583 & 0.8127 & 0.8718 & 50 \\
-  33 & VGG19\_Adamax\_LR1e-06    & VGG19 & Adamax & 1e-6 & 0.8016 & 0.8482 & 0.7480 & 0.8583 & 0.7950 & 0.8713 & 11 \\
-  34 & DenseNet121\_Nadam\_LR1e-05 & DenseNet121 & Nadam & 1e-5 & 0.6964 & 0.6494 & 0.8898 & 0.4917 & 0.7508 & 0.8510 & 50 \\
-  35 & EfficientNetB3\_AdaDelta\_LR1e-05 & EfficientNetB3 & AdaDelta & 1e-5 & 0.5668 & 0.9545 & 0.1654 & 0.9917 & 0.2819 & 0.8531 & 15 \\
-  36 & VGG19\_Adagrad\_LR1e-05   & VGG19 & Adagrad & 1e-5 & 0.6154 & 0.9211 & 0.2756 & 0.9750 & 0.4242 & 0.8491 & 38 \\
-  37 & ResNet50\_Nadam\_LR1e-06  & ResNet50 & Nadam & 1e-6 & 0.5182 & 0.5163 & 1.0000 & 0.0083 & 0.6810 & 0.8451 & 23 \\
-  38 & ResNet50\_Adamax\_LR1e-05 & ResNet50 & Adamax & 1e-5 & 0.7368 & 0.7214 & 0.7953 & 0.6750 & 0.7566 & 0.8366 & 38 \\
-  39 & ResNet50\_AdaDelta\_LR1e-06 & ResNet50 & AdaDelta & 1e-6 & 0.5142 & 0.5142 & 1.0000 & 0.0000 & 0.6791 & 0.8350 & 11 \\
-  40 & EfficientNetB3\_AdaDelta\_LR1e-04 & EfficientNetB3 & AdaDelta & 1e-4 & 0.5668 & 0.9545 & 0.1654 & 0.9917 & 0.2819 & 0.8338 & 11 \\
-  41 & VGG19\_Nadam\_LR1e-06     & VGG19 & Nadam & 1e-6 & 0.4858 & 0.0000 & 0.0000 & 1.0000 & 0.0000 & 0.8201 & 11 \\
-  42 & EfficientNetB3\_Adamax\_LR1e-06 & EfficientNetB3 & Adamax & 1e-6 & 0.4858 & 0.0000 & 0.0000 & 1.0000 & 0.0000 & 0.8089 & 21 \\
-  43 & ResNet50\_Adagrad\_LR1e-06 & ResNet50 & Adagrad & 1e-6 & 0.5668 & 0.5435 & 0.9843 & 0.1250 & 0.7003 & 0.7961 & 25 \\
-  44 & EfficientNetB3\_RMSProp\_LR1e-06 & EfficientNetB3 & RMSProp & 1e-6 & 0.6032 & 0.8718 & 0.2677 & 0.9583 & 0.4096 & 0.7854 & 20 \\
-  45 & ResNet50\_SGD\_LR1e-06    & ResNet50 & SGD & 1e-6 & 0.7328 & 0.7440 & 0.7323 & 0.7333 & 0.7381 & 0.7844 & 41 \\
-  46 & EfficientNetB3\_SGD\_LR1e-05 & EfficientNetB3 & SGD & 1e-5 & 0.7166 & 0.6610 & 0.9213 & 0.5000 & 0.7697 & 0.7829 & 50 \\
-  47 & ResNet50\_RMSProp\_LR1e-06 & ResNet50 & RMSProp & 1e-6 & 0.4858 & 0.0000 & 0.0000 & 1.0000 & 0.0000 & 0.7809 & 11 \\
-  48 & DenseNet121\_Adamax\_LR1e-06 & DenseNet121 & Adamax & 1e-6 & 0.6559 & 0.8000 & 0.4409 & 0.8833 & 0.5685 & 0.7663 & 27 \\
-  49 & EfficientNetB3\_Adamax\_LR1e-05 & EfficientNetB3 & Adamax & 1e-5 & 0.6964 & 0.6494 & 0.8898 & 0.4917 & 0.7508 & 0.7335 & 37 \\
-  50 & DenseNet121\_Nadam\_LR1e-06 & DenseNet121 & Nadam & 1e-6 & 0.6235 & 0.5885 & 0.8898 & 0.3417 & 0.7085 & 0.7275 & 15 \\
-  51 & ResNet50\_Adamax\_LR1e-06 & ResNet50 & Adamax & 1e-6 & 0.6235 & 0.6889 & 0.4882 & 0.7667 & 0.5714 & 0.7269 & 13 \\
-  52 & VGG19\_Adamax\_LR1e-05    & VGG19 & Adamax & 1e-5 & 0.6194 & 0.6813 & 0.4882 & 0.7583 & 0.5688 & 0.7215 & 35 \\
-  53 & DenseNet121\_AdaDelta\_LR1e-05 & DenseNet121 & AdaDelta & 1e-5 & 0.6235 & 0.7833 & 0.3701 & 0.8917 & 0.5027 & 0.7146 & 11 \\
-  54 & VGG19\_Adam\_LR1e-05      & VGG19 & Adam & 1e-5 & 0.6073 & 0.6442 & 0.5276 & 0.6917 & 0.5801 & 0.7117 & 50 \\
-  55 & VGG19\_Adagrad\_LR1e-04   & VGG19 & Adagrad & 1e-4 & 0.4858 & 0.0000 & 0.0000 & 1.0000 & 0.0000 & 0.6997 & 25 \\
-  56 & DenseNet121\_RMSProp\_LR1e-06 & DenseNet121 & RMSProp & 1e-6 & 0.5547 & 0.6735 & 0.2598 & 0.8667 & 0.3750 & 0.6941 & 12 \\
-  57 & EfficientNetB3\_Adagrad\_LR1e-04 & EfficientNetB3 & Adagrad & 1e-4 & 0.4939 & 1.0000 & 0.0157 & 1.0000 & 0.0310 & 0.6686 & 29 \\
-  58 & VGG19\_Adagrad\_LR1e-06   & VGG19 & Adagrad & 1e-6 & 0.4858 & 0.0000 & 0.0000 & 1.0000 & 0.0000 & 0.6667 & 11 \\
-  59 & VGG19\_AdaDelta\_LR1e-05  & VGG19 & AdaDelta & 1e-5 & 0.5223 & 0.5187 & 0.9843 & 0.0333 & 0.6793 & 0.6634 & 11 \\
-  60 & DenseNet121\_AdaDelta\_LR1e-06 & DenseNet121 & AdaDelta & 1e-6 & 0.5992 & 0.5722 & 0.8740 & 0.3083 & 0.6916 & 0.6623 & 12 \\
-  61 & DenseNet121\_Adam\_LR1e-06 & DenseNet121 & Adam & 1e-6 & 0.5951 & 0.6849 & 0.3937 & 0.8083 & 0.5000 & 0.6365 & 18 \\
-  62 & DenseNet121\_SGD\_LR1e-05 & DenseNet121 & SGD & 1e-5 & 0.5830 & 0.6429 & 0.4252 & 0.7500 & 0.5118 & 0.6067 & 50 \\
-  63 & VGG19\_Adam\_LR1e-06      & VGG19 & Adam & 1e-6 & 0.4858 & 0.0000 & 0.0000 & 1.0000 & 0.0000 & 0.5520 & 11 \\
-  64 & VGG19\_AdaDelta\_LR1e-06  & VGG19 & AdaDelta & 1e-6 & 0.5628 & 0.6234 & 0.3780 & 0.7583 & 0.4706 & 0.5505 & 14 \\
-  65 & EfficientNetB3\_Adam\_LR1e-05 & EfficientNetB3 & Adam & 1e-5 & 0.5628 & 0.5497 & 0.8268 & 0.2833 & 0.6604 & 0.5308 & 43 \\
-  66 & ResNet50\_Adagrad\_LR1e-05 & ResNet50 & Adagrad & 1e-5 & 0.4858 & 0.0000 & 0.0000 & 1.0000 & 0.0000 & 0.5074 & 12 \\
-  67 & DenseNet121\_Adamax\_LR1e-05 & DenseNet121 & Adamax & 1e-5 & 0.4777 & 0.4872 & 0.2992 & 0.6667 & 0.3707 & 0.4989 & 49 \\
-  68 & DenseNet121\_Adagrad\_LR1e-05 & DenseNet121 & Adagrad & 1e-5 & 0.4696 & 0.4778 & 0.3386 & 0.6083 & 0.3963 & 0.4711 & 27 \\
-  69 & EfficientNetB3\_Nadam\_LR1e-06 & EfficientNetB3 & Nadam & 1e-6 & 0.4696 & 0.4900 & 0.7717 & 0.1500 & 0.5994 & 0.4567 & 23 \\
-  70 & DenseNet121\_SGD\_LR1e-06 & DenseNet121 & SGD & 1e-6 & 0.4049 & 0.3333 & 0.1575 & 0.6667 & 0.2139 & 0.4566 & 40 \\
-  71 & DenseNet121\_AdaDelta\_LR1e-04 & DenseNet121 & AdaDelta & 1e-4 & 0.4291 & 0.4444 & 0.4409 & 0.4167 & 0.4427 & 0.4281 & 33 \\
-  72 & VGG19\_SGD\_LR1e-05       & VGG19 & SGD & 1e-5 & 0.5385 & 0.5279 & 0.9685 & 0.0833 & 0.6833 & 0.4278 & 22 \\
-  73 & EfficientNetB3\_AdaDelta\_LR1e-06 & EfficientNetB3 & AdaDelta & 1e-6 & 0.4534 & 0.3750 & 0.0945 & 0.8333 & 0.1509 & 0.4241 & 11 \\
-  74 & ResNet50\_AdaDelta\_LR1e-05 & ResNet50 & AdaDelta & 1e-5 & 0.5223 & 0.5184 & 1.0000 & 0.0167 & 0.6828 & 0.3954 & 12 \\
-  75 & EfficientNetB3\_Adagrad\_LR1e-05 & EfficientNetB3 & Adagrad & 1e-5 & 0.4777 & 0.3750 & 0.0236 & 0.9583 & 0.0444 & 0.3934 & 28 \\
-  76 & VGG19\_SGD\_LR1e-06       & VGG19 & SGD & 1e-6 & 0.4939 & 0.5041 & 0.9606 & 0.0000 & 0.6612 & 0.3815 & 11 \\
-  77 & VGG19\_RMSProp\_LR1e-06   & VGG19 & RMSProp & 1e-6 & 0.4332 & 0.4652 & 0.6850 & 0.1667 & 0.5541 & 0.3577 & 35 \\
-  78 & ResNet50\_Adam\_LR1e-06   & ResNet50 & Adam & 1e-6 & 0.4858 & 0.5000 & 0.8976 & 0.0500 & 0.6423 & 0.3573 & 30 \\
-  79 & VGG19\_AdaDelta\_LR1e-04  & VGG19 & AdaDelta & 1e-4 & 0.5142 & 0.5145 & 0.9764 & 0.0250 & 0.6739 & 0.3490 & 12 \\
-  80 & EfficientNetB3\_Adam\_LR1e-06 & EfficientNetB3 & Adam & 1e-6 & 0.4130 & 0.3676 & 0.1969 & 0.6417 & 0.2564 & 0.3281 & 14 \\
-  81 & EfficientNetB3\_Adagrad\_LR1e-06 & EfficientNetB3 & Adagrad & 1e-6 & 0.3603 & 0.2817 & 0.1575 & 0.5750 & 0.2020 & 0.3001 & 50 \\
-  82 & DenseNet121\_Adagrad\_LR1e-06 & DenseNet121 & Adagrad & 1e-6 & 0.4494 & 0.4783 & 0.7795 & 0.1000 & 0.5928 & 0.2459 & 12 \\
-  83 & EfficientNetB3\_SGD\_LR1e-06 & EfficientNetB3 & SGD & 1e-6 & 0.4413 & 0.0000 & 0.0000 & 0.9083 & 0.0000 & 0.1893 & 33 \\
-  84 & ResNet50\_AdaDelta\_LR1e-04 & ResNet50 & AdaDelta & 1e-4 & 0.4818 & 0.0000 & 0.0000 & 0.9917 & 0.0000 & 0.1554 & 11 \\
+    1 & VGG19\_Adam\_LR1e-04      & VGG19 & Adam    & 1e-4 & 0.7733 & 1.0000 & 0.5591 & 1.0000 & 0.7172 & 0.9995 & 26 \\
+    2 & VGG19\_Adamax\_LR1e-04    & VGG19 & Adamax  & 1e-4 & 0.9717 & 0.9918 & 0.9528 & 0.9917 & 0.9719 & 0.9995 & 50 \\
+    3 & DenseNet121\_Adam\_LR1e-04 & DenseNet121 & Adam & 1e-4 & 0.9676 & 1.0000 & 0.9370 & 1.0000 & 0.9675 & 0.9991 & 27 \\
+    4 & DenseNet121\_RMSProp\_LR1e-04 & DenseNet121 & RMSProp & 1e-4 & 0.9595 & 1.0000 & 0.9213 & 1.0000 & 0.9590 & 0.9990 & 24 \\
+    5 & DenseNet121\_Adamax\_LR1e-04 & DenseNet121 & Adamax & 1e-4 & 0.9231 & 0.8699 & 1.0000 & 0.8417 & 0.9304 & 0.9977 & 23 \\
+    6 & VGG19\_RMSProp\_LR1e-04   & VGG19 & RMSProp & 1e-4 & 0.8178 & 1.0000 & 0.6457 & 1.0000 & 0.7847 & 0.9949 & 21 \\
+    7 & ResNet50\_RMSProp\_LR1e-04 & ResNet50 & RMSProp & 1e-4 & 0.9514 & 1.0000 & 0.9055 & 1.0000 & 0.9504 & 0.9943 & 40 \\
+    8 & VGG19\_RMSProp\_LR1e-05   & VGG19 & RMSProp & 1e-5 & 0.9312 & 0.9583 & 0.9055 & 0.9583 & 0.9312 & 0.9933 & 50 \\
+    9 & DenseNet121\_SGD\_LR1e-04 & DenseNet121 & SGD & 1e-4 & 0.8178 & 1.0000 & 0.6457 & 1.0000 & 0.7847 & 0.9885 & 30 \\
+   10 & ResNet50\_SGD\_LR1e-04    & ResNet50 & SGD & 1e-4 & 0.9150 & 0.9907 & 0.8425 & 0.9917 & 0.9106 & 0.9869 & 35 \\
+   11 & ResNet50\_Adam\_LR1e-04   & ResNet50 & Adam & 1e-4 & 0.9352 & 0.9912 & 0.8819 & 0.9917 & 0.9333 & 0.9864 & 31 \\
+   12 & EfficientNetB3\_RMSProp\_LR1e-04 & EfficientNetB3 & RMSProp & 1e-4 & 0.8462 & 1.0000 & 0.7008 & 1.0000 & 0.8241 & 0.9841 & 41 \\
+   13 & VGG19\_SGD\_LR1e-04       & VGG19 & SGD & 1e-4 & 0.8785 & 1.0000 & 0.7638 & 1.0000 & 0.8661 & 0.9838 & 50 \\
+   14 & ResNet50\_Adamax\_LR1e-04 & ResNet50 & Adamax & 1e-4 & 0.9150 & 0.9818 & 0.8504 & 0.9833 & 0.9114 & 0.9815 & 44 \\
+   15 & EfficientNetB3\_Adam\_LR1e-04 & EfficientNetB3 & Adam & 1e-4 & 0.8988 & 0.9636 & 0.8346 & 0.9667 & 0.8945 & 0.9787 & 42 \\
+   16 & ResNet50\_Adam\_LR1e-05   & ResNet50 & Adam & 1e-5 & 0.8704 & 1.0000 & 0.7480 & 1.0000 & 0.8559 & 0.9768 & 50 \\
+   17 & ResNet50\_SGD\_LR1e-05    & ResNet50 & SGD & 1e-5 & 0.9190 & 0.9496 & 0.8898 & 0.9500 & 0.9187 & 0.9722 & 32 \\
+   18 & EfficientNetB3\_SGD\_LR1e-04 & EfficientNetB3 & SGD & 1e-4 & 0.8623 & 0.9697 & 0.7559 & 0.9750 & 0.8496 & 0.9696 & 47 \\
+   19 & DenseNet121\_RMSProp\_LR1e-05 & DenseNet121 & RMSProp & 1e-5 & 0.9069 & 0.9407 & 0.8740 & 0.9417 & 0.9061 & 0.9619 & 37 \\
+   20 & EfficientNetB3\_Adamax\_LR1e-04 & EfficientNetB3 & Adamax & 1e-4 & 0.8462 & 0.9588 & 0.7323 & 0.9667 & 0.8304 & 0.9589 & 50 \\
+   21 & ResNet50\_RMSProp\_LR1e-05 & ResNet50 & RMSProp & 1e-5 & 0.8340 & 0.9574 & 0.7087 & 0.9667 & 0.8145 & 0.9510 & 36 \\
+   22 & EfficientNetB3\_RMSProp\_LR1e-05 & EfficientNetB3 & RMSProp & 1e-5 & 0.8502 & 0.9245 & 0.7717 & 0.9333 & 0.8412 & 0.9489 & 50 \\
+   23 & DenseNet121\_Adam\_LR1e-05 & DenseNet121 & Adam & 1e-5 & 0.8016 & 0.7600 & 0.8976 & 0.7000 & 0.8231 & 0.9284 & 50 \\
+   24 & DenseNet121\_Adagrad\_LR1e-04 & DenseNet121 & Adagrad & 1e-4 & 0.4939 & 1.0000 & 0.0157 & 1.0000 & 0.0310 & 0.8734 & 25 \\
+   25 & ResNet50\_Adagrad\_LR1e-04 & ResNet50 & Adagrad & 1e-4 & 0.7854 & 0.7372 & 0.9055 & 0.6583 & 0.8127 & 0.8718 & 50 \\
+   26 & VGG19\_Adamax\_LR1e-06    & VGG19 & Adamax & 1e-6 & 0.8016 & 0.8482 & 0.7480 & 0.8583 & 0.7950 & 0.8713 & 11 \\
+   27 & EfficientNetB3\_AdaDelta\_LR1e-05 & EfficientNetB3 & AdaDelta & 1e-5 & 0.5668 & 0.9545 & 0.1654 & 0.9917 & 0.2819 & 0.8531 & 15 \\
+   28 & VGG19\_Adagrad\_LR1e-05   & VGG19 & Adagrad & 1e-5 & 0.6154 & 0.9211 & 0.2756 & 0.9750 & 0.4242 & 0.8491 & 38 \\
+   29 & ResNet50\_Adamax\_LR1e-05 & ResNet50 & Adamax & 1e-5 & 0.7368 & 0.7214 & 0.7953 & 0.6750 & 0.7566 & 0.8366 & 38 \\
+   30 & ResNet50\_AdaDelta\_LR1e-06 & ResNet50 & AdaDelta & 1e-6 & 0.5142 & 0.5142 & 1.0000 & 0.0000 & 0.6791 & 0.8350 & 11 \\
+   31 & EfficientNetB3\_AdaDelta\_LR1e-04 & EfficientNetB3 & AdaDelta & 1e-4 & 0.5668 & 0.9545 & 0.1654 & 0.9917 & 0.2819 & 0.8338 & 11 \\
+   32 & EfficientNetB3\_Adamax\_LR1e-06 & EfficientNetB3 & Adamax & 1e-6 & 0.4858 & 0.0000 & 0.0000 & 1.0000 & 0.0000 & 0.8089 & 21 \\
+   33 & ResNet50\_Adagrad\_LR1e-06 & ResNet50 & Adagrad & 1e-6 & 0.5668 & 0.5435 & 0.9843 & 0.1250 & 0.7003 & 0.7961 & 25 \\
+   34 & EfficientNetB3\_RMSProp\_LR1e-06 & EfficientNetB3 & RMSProp & 1e-6 & 0.6032 & 0.8718 & 0.2677 & 0.9583 & 0.4096 & 0.7854 & 20 \\
+   35 & ResNet50\_SGD\_LR1e-06    & ResNet50 & SGD & 1e-6 & 0.7328 & 0.7440 & 0.7323 & 0.7333 & 0.7381 & 0.7844 & 41 \\
+   36 & EfficientNetB3\_SGD\_LR1e-05 & EfficientNetB3 & SGD & 1e-5 & 0.7166 & 0.6610 & 0.9213 & 0.5000 & 0.7697 & 0.7829 & 50 \\
+   37 & ResNet50\_RMSProp\_LR1e-06 & ResNet50 & RMSProp & 1e-6 & 0.4858 & 0.0000 & 0.0000 & 1.0000 & 0.0000 & 0.7809 & 11 \\
+   38 & DenseNet121\_Adamax\_LR1e-06 & DenseNet121 & Adamax & 1e-6 & 0.6559 & 0.8000 & 0.4409 & 0.8833 & 0.5685 & 0.7663 & 27 \\
+   39 & EfficientNetB3\_Adamax\_LR1e-05 & EfficientNetB3 & Adamax & 1e-5 & 0.6964 & 0.6494 & 0.8898 & 0.4917 & 0.7508 & 0.7335 & 37 \\
+   40 & ResNet50\_Adamax\_LR1e-06 & ResNet50 & Adamax & 1e-6 & 0.6235 & 0.6889 & 0.4882 & 0.7667 & 0.5714 & 0.7269 & 13 \\
+   41 & VGG19\_Adamax\_LR1e-05    & VGG19 & Adamax & 1e-5 & 0.6194 & 0.6813 & 0.4882 & 0.7583 & 0.5688 & 0.7215 & 35 \\
+   42 & DenseNet121\_AdaDelta\_LR1e-05 & DenseNet121 & AdaDelta & 1e-5 & 0.6235 & 0.7833 & 0.3701 & 0.8917 & 0.5027 & 0.7146 & 11 \\
+   43 & VGG19\_Adam\_LR1e-05      & VGG19 & Adam & 1e-5 & 0.6073 & 0.6442 & 0.5276 & 0.6917 & 0.5801 & 0.7117 & 50 \\
+   44 & VGG19\_Adagrad\_LR1e-04   & VGG19 & Adagrad & 1e-4 & 0.4858 & 0.0000 & 0.0000 & 1.0000 & 0.0000 & 0.6997 & 25 \\
+   45 & DenseNet121\_RMSProp\_LR1e-06 & DenseNet121 & RMSProp & 1e-6 & 0.5547 & 0.6735 & 0.2598 & 0.8667 & 0.3750 & 0.6941 & 12 \\
+   46 & EfficientNetB3\_Adagrad\_LR1e-04 & EfficientNetB3 & Adagrad & 1e-4 & 0.4939 & 1.0000 & 0.0157 & 1.0000 & 0.0310 & 0.6686 & 29 \\
+   47 & VGG19\_Adagrad\_LR1e-06   & VGG19 & Adagrad & 1e-6 & 0.4858 & 0.0000 & 0.0000 & 1.0000 & 0.0000 & 0.6667 & 11 \\
+   48 & VGG19\_AdaDelta\_LR1e-05  & VGG19 & AdaDelta & 1e-5 & 0.5223 & 0.5187 & 0.9843 & 0.0333 & 0.6793 & 0.6634 & 11 \\
+   49 & DenseNet121\_AdaDelta\_LR1e-06 & DenseNet121 & AdaDelta & 1e-6 & 0.5992 & 0.5722 & 0.8740 & 0.3083 & 0.6916 & 0.6623 & 12 \\
+   50 & DenseNet121\_Adam\_LR1e-06 & DenseNet121 & Adam & 1e-6 & 0.5951 & 0.6849 & 0.3937 & 0.8083 & 0.5000 & 0.6365 & 18 \\
+   51 & DenseNet121\_SGD\_LR1e-05 & DenseNet121 & SGD & 1e-5 & 0.5830 & 0.6429 & 0.4252 & 0.7500 & 0.5118 & 0.6067 & 50 \\
+   52 & VGG19\_Adam\_LR1e-06      & VGG19 & Adam & 1e-6 & 0.4858 & 0.0000 & 0.0000 & 1.0000 & 0.0000 & 0.5520 & 11 \\
+   53 & VGG19\_AdaDelta\_LR1e-06  & VGG19 & AdaDelta & 1e-6 & 0.5628 & 0.6234 & 0.3780 & 0.7583 & 0.4706 & 0.5505 & 14 \\
+   54 & EfficientNetB3\_Adam\_LR1e-05 & EfficientNetB3 & Adam & 1e-5 & 0.5628 & 0.5497 & 0.8268 & 0.2833 & 0.6604 & 0.5308 & 43 \\
+   55 & ResNet50\_Adagrad\_LR1e-05 & ResNet50 & Adagrad & 1e-5 & 0.4858 & 0.0000 & 0.0000 & 1.0000 & 0.0000 & 0.5074 & 12 \\
+   56 & DenseNet121\_Adamax\_LR1e-05 & DenseNet121 & Adamax & 1e-5 & 0.4777 & 0.4872 & 0.2992 & 0.6667 & 0.3707 & 0.4989 & 49 \\
+   57 & DenseNet121\_Adagrad\_LR1e-05 & DenseNet121 & Adagrad & 1e-5 & 0.4696 & 0.4778 & 0.3386 & 0.6083 & 0.3963 & 0.4711 & 27 \\
+   58 & DenseNet121\_SGD\_LR1e-06 & DenseNet121 & SGD & 1e-6 & 0.4049 & 0.3333 & 0.1575 & 0.6667 & 0.2139 & 0.4566 & 40 \\
+   59 & DenseNet121\_AdaDelta\_LR1e-04 & DenseNet121 & AdaDelta & 1e-4 & 0.4291 & 0.4444 & 0.4409 & 0.4167 & 0.4427 & 0.4281 & 33 \\
+   60 & VGG19\_SGD\_LR1e-05       & VGG19 & SGD & 1e-5 & 0.5385 & 0.5279 & 0.9685 & 0.0833 & 0.6833 & 0.4278 & 22 \\
+   61 & EfficientNetB3\_AdaDelta\_LR1e-06 & EfficientNetB3 & AdaDelta & 1e-6 & 0.4534 & 0.3750 & 0.0945 & 0.8333 & 0.1509 & 0.4241 & 11 \\
+   62 & ResNet50\_AdaDelta\_LR1e-05 & ResNet50 & AdaDelta & 1e-5 & 0.5223 & 0.5184 & 1.0000 & 0.0167 & 0.6828 & 0.3954 & 12 \\
+   63 & EfficientNetB3\_Adagrad\_LR1e-05 & EfficientNetB3 & Adagrad & 1e-5 & 0.4777 & 0.3750 & 0.0236 & 0.9583 & 0.0444 & 0.3934 & 28 \\
+   64 & VGG19\_SGD\_LR1e-06       & VGG19 & SGD & 1e-6 & 0.4939 & 0.5041 & 0.9606 & 0.0000 & 0.6612 & 0.3815 & 11 \\
+   65 & VGG19\_RMSProp\_LR1e-06   & VGG19 & RMSProp & 1e-6 & 0.4332 & 0.4652 & 0.6850 & 0.1667 & 0.5541 & 0.3577 & 35 \\
+   66 & ResNet50\_Adam\_LR1e-06   & ResNet50 & Adam & 1e-6 & 0.4858 & 0.5000 & 0.8976 & 0.0500 & 0.6423 & 0.3573 & 30 \\
+   67 & VGG19\_AdaDelta\_LR1e-04  & VGG19 & AdaDelta & 1e-4 & 0.5142 & 0.5145 & 0.9764 & 0.0250 & 0.6739 & 0.3490 & 12 \\
+   68 & EfficientNetB3\_Adam\_LR1e-06 & EfficientNetB3 & Adam & 1e-6 & 0.4130 & 0.3676 & 0.1969 & 0.6417 & 0.2564 & 0.3281 & 14 \\
+   69 & EfficientNetB3\_Adagrad\_LR1e-06 & EfficientNetB3 & Adagrad & 1e-6 & 0.3603 & 0.2817 & 0.1575 & 0.5750 & 0.2020 & 0.3001 & 50 \\
+   70 & DenseNet121\_Adagrad\_LR1e-06 & DenseNet121 & Adagrad & 1e-6 & 0.4494 & 0.4783 & 0.7795 & 0.1000 & 0.5928 & 0.2459 & 12 \\
+   71 & EfficientNetB3\_SGD\_LR1e-06 & EfficientNetB3 & SGD & 1e-6 & 0.4413 & 0.0000 & 0.0000 & 0.9083 & 0.0000 & 0.1893 & 33 \\
+   72 & ResNet50\_AdaDelta\_LR1e-04 & ResNet50 & AdaDelta & 1e-4 & 0.4818 & 0.0000 & 0.0000 & 0.9917 & 0.0000 & 0.1554 & 11 \\
 \end{longtable}
-}
-\end{landscape}
+\endgroup

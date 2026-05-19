@@ -1,98 +1,55 @@
 \section{Preprocessing}
 \label{sec:preprocessing}
 
-All preprocessing was performed via \texttt{src/preprocessing.py} using only standard Python libraries: \texttt{pathlib}, \texttt{shutil}, \texttt{sklearn}, and \texttt{os}. No deep learning frameworks were involved at this stage. The script is idempotent: re-running it skips already-copied files without overwriting data.
+We handled all our preprocessing using a custom script, \texttt{src/preprocessing.py}. We used standard libraries like \texttt{pathlib} and \texttt{sklearn}, keeping this step separate from the training loop to ensure the data preparation was clear and repeatable.
 
 \subsection{Raw Data Inventory}
 
-Step 1 of the preprocessing pipeline inventories the raw dataset directories and verifies expected file counts before any splitting or copying is performed. Each class folder is scanned for JPEG files, non-JPEG files are reported as warnings, and counts are compared against expected values (481 for Ovarian Cancer, 506 for Ovarian Non-Cancer, 987 total). A representative inventory output is shown below.
+First, we took an inventory of the raw dataset to make sure all files were valid JPEGs and that we had the expected counts for each class. The script confirmed that we had 481 cancer images and 506 non-cancer images, all in the correct format.
 
 \begin{lstlisting}[style=python]
 ============================================================
-STEP 1 -- RAW DATASET INVENTORY
+STEP 1: RAW DATASET INVENTORY
 ============================================================
-
-  [cancer]  path: .../dataset/raw/STRAMPN Dataset/Dataset/Ovarian_Cancer
-    Total files : 481
-    All files   : .jpg [ok]
-    JPG count   : 481  [ok]
-
-  [no_cancer]  path: .../dataset/raw/STRAMPN Dataset/Dataset/Ovarian_Non_Cancer
-    Total files : 506
-    All files   : .jpg [ok]
-    JPG count   : 506  [ok]
-
-  Total images across both classes: 987  [ok]
+  [cancer]     Total files: 481  [ok]
+  [no_cancer]  Total files: 506  [ok]
+  Total images: 987  [ok]
 \end{lstlisting}
 
 \subsection{Normalization}
 
-All images (training, validation, and test) are normalized using \textbf{samplewise standard normalization} via the Keras \texttt{ImageDataGenerator} parameters:
-
+We applied \textbf{samplewise standard normalization} to every image using Keras's \texttt{ImageDataGenerator}. This involved:
 \begin{itemize}
-  \item \texttt{samplewise\_center=True}: subtracts the per-sample mean from each pixel channel.
-  \item \texttt{samplewise\_std\_normalization=True}: divides each pixel channel by the per-sample standard deviation.
+  \item Centering each image by subtracting its mean pixel value.
+  \item Standardizing each image by dividing by its standard deviation.
 \end{itemize}
 
-Samplewise normalization was chosen over featurewise (dataset-wide) normalization for two reasons. First, with only 987 images, computing dataset-wide channel statistics would be noisy. Second, featurewise statistics computed from the training set would constitute a form of information leak if applied naively to the test set. Samplewise normalization requires no dataset-level statistics and is computed independently for each image at inference time, making it both safer and more reproducible.
+Samplewise normalization was chosen for its reliability for relatively small datasets such at this one. As opposed to relying on global statistics (which can be noisy or lead to data leakage), each image is processed independently. This makes the evaluation more reliable and ensures the model handles new images correctly during testing.
 
 \subsection{Data Augmentation}
 
-Data augmentation is applied \textbf{exclusively to the training generator}. The validation and test generators receive normalization only. Restricting augmentation to training data prevents artificially altered images from appearing in evaluation sets, ensuring that validation and test metrics reflect true model generalization on unmodified inputs.
+To help the models learn more robust features and avoid overfitting, we used data augmentation, but \textbf{only for the training set}. We kept the validation and test sets in their original state (except for normalization) to ensure the results reflect real-world performance.
 
-Table~\ref{tab:augmentation} lists all augmentation parameters used.
+Table~\ref{tab:augmentation} summarizes the augmentations we used. We picked these to simulate the typical variations found in histology slides, such as different rotations and slight scaling differences.
 
 \begin{table}[H]
   \centering
-  \caption{Augmentation parameters applied to the training generator only.}
+  \caption{Augmentation settings applied to the training set.}
   \label{tab:augmentation}
   \begin{tabular}{lll}
     \toprule
     \rowcolor{tableheader}
-    \textbf{Parameter} & \textbf{Value} & \textbf{Effect} \\
+    \textbf{Setting} & \textbf{Value} & \textbf{Goal} \\
     \midrule
-    \texttt{rotation\_range}               & 30\textdegree  & Random rotations up to 30 degrees \\
-    \texttt{width\_shift\_range}           & 0.15           & Horizontal shift up to 15\% of width \\
-    \texttt{height\_shift\_range}          & 0.15           & Vertical shift up to 15\% of height \\
-    \texttt{shear\_range}                  & 0.3            & Shear transformation \\
-    \texttt{zoom\_range}                   & 0.30           & Random zoom up to 30\% \\
-    \texttt{horizontal\_flip}              & True           & Random horizontal flipping \\
-    \texttt{fill\_mode}                    & \texttt{nearest} & Fill border pixels without artifacts \\
-    \texttt{samplewise\_std\_normalization} & True          & Per-sample standardization \\
+    \texttt{rotation\_range}    & 30\textdegree  & Handle slides at any angle \\
+    \texttt{width/height shift} & 0.15           & Account for slight centering variations \\
+    \texttt{shear\_range}       & 0.3            & Simulate tissue distortion \\
+    \texttt{zoom\_range}        & 0.30           & Handle magnification differences \\
+    \texttt{horizontal\_flip}   & True           & Tissue features are orientation-independent \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-The training and evaluation generators as defined in \texttt{src/run\_all.py} are shown below.
+\subsection{Ensuring Experimental Integrity}
 
-\begin{lstlisting}[style=python]
-image_generatorFullAugment = ImageDataGenerator(
-    samplewise_center=True,
-    samplewise_std_normalization=True,
-    rotation_range=30,
-    width_shift_range=0.15,
-    height_shift_range=0.15,
-    shear_range=0.3,
-    zoom_range=0.30,
-    horizontal_flip=True,
-    fill_mode="nearest",
-)
-
-image_generatorNoAugment = ImageDataGenerator(
-    samplewise_center=True,
-    samplewise_std_normalization=True,
-)
-\end{lstlisting}
-
-\subsection{Experimental Integrity}
-
-A critical design decision in the training pipeline is that both data generators are constructed \textbf{once} before the 84-run training loop and are shared across all runs without re-initialization. Re-initializing the training generator inside the loop would re-shuffle the batch order differently for each configuration, introducing data variability as a confounding factor. By fixing the generator state, any observed performance differences between configurations can be attributed solely to the choice of optimizer and learning rate, not to variation in the training data sequence.
-
-This principle is enforced in both \texttt{src/run\_all.py} and documented as an explicit warning in \texttt{notebooks/02\_experiments.ipynb}:
-
-\begin{lstlisting}[style=python]
-# EXPERIMENTAL INTEGRITY NOTE: generators are constructed ONCE here
-# and shared across all 84 runs. Do not re-initialize them inside
-# the loop -- doing so would reshuffle the training data differently
-# per run and confound optimizer/LR comparisons.
-\end{lstlisting}
+A key part of our methodology was ensuring that the data generators were only initialized \textbf{once} at the start of the entire 72-run simulation. If we had recreated the generators inside the training loop, each model would have seen the training images in a different order, adding "luck of the draw" as a hidden factor in our results. By sharing the same generators, we ensured that every architecture and optimizer was tested on the exact same sequence of data.

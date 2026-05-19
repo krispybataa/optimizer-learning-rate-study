@@ -8,7 +8,7 @@
 
 ## Project Overview
 
-This study systematically evaluates **84 deep learning model configurations** for binary
+This study systematically evaluates **72 deep learning model configurations** for binary
 classification of ovarian cancer from histopathological images (cancer / no_cancer).
 
 The experiment matrix is:
@@ -16,9 +16,9 @@ The experiment matrix is:
 | Dimension | Options | Count |
 |-----------|---------|------:|
 | Base architectures | VGG19, EfficientNetB3, ResNet50, DenseNet121 | 4 |
-| Optimizers | Adam, Adagrad, Adamax, AdaDelta, SGD, RMSProp, Nadam | 7 |
+| Optimizers | Adam, Adagrad, Adamax, AdaDelta, SGD, RMSProp | 6 |
 | Learning rates | 0.0001, 0.00001, 0.000001 | 3 |
-| **Total runs** | 4 × 7 × 3 | **84** |
+| **Total runs** | 4 × 6 × 3 | **72** |
 
 **Fixed hyperparameters:** dropout (0.6 / 0.4 / 0.3), dense nodes (256 / 128 / 64),
 epochs 50, input 256×256, batch size 32.
@@ -44,7 +44,7 @@ optimizer-learning-rate-study/
 │   ├── train.py               ← Single-run training loop
 │   ├── evaluate.py            ← Metrics, curves, confusion matrix per run
 │   ├── visualize.py           ← Plotting utilities and aggregate figures
-│   └── run_all.py             ← Orchestrates all 84 simulation runs
+│   └── run_all.py             ← Orchestrates all 72 simulation runs
 │
 ├── results/
 │   ├── metrics/               ← Per-run CSV files (accuracy, AUC-ROC, …)
@@ -132,7 +132,7 @@ pip install -r requirements.txt
 # Preprocess the dataset (run once)
 python src/preprocessing.py
 
-# Launch all 84 simulation runs
+# Launch all 72 simulation runs
 python src/run_all.py
 ```
 

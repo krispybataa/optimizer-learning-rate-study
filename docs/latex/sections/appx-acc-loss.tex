@@ -1,532 +1,582 @@
-% Note: src/visualize.py saves both accuracy/loss curves and AUC-ROC curves to
-% {run_dir}/{run_name}.png. In src/train.py, plot_auc_roc() is called after
-% plot_accuracy_loss() using the same directory, so the AUC-ROC file overwrites
-% the accuracy/loss file. The figures referenced here are the files present on disk
-% after training. If accuracy/loss curves are needed separately, re-run training
-% with separate output_dir arguments or save plot_accuracy_loss to a curves/ subdirectory.
+% Accuracy/loss curve figures are saved by src/visualize.py as:
+% {run_dir}/{run_name}_acc_loss.png
 
-\clearpage
+\begin{landscape}
 
-% ── VGG19 ─────────────────────────────────────────────────────────────────────
+% -- VGG19 ----------------------------------------------
 \subsection*{VGG19}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_Adam_LR1e-04/VGG19_Adam_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_Adam_LR1e-04/VGG19_Adam_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_Adam_LR1e-05/VGG19_Adam_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_Adam_LR1e-05/VGG19_Adam_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_Adam_LR1e-06/VGG19_Adam_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_Adam_LR1e-06/VGG19_Adam_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{VGG19,Adam: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-vgg19-adam}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_Adagrad_LR1e-04/VGG19_Adagrad_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_Adagrad_LR1e-04/VGG19_Adagrad_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_Adagrad_LR1e-05/VGG19_Adagrad_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_Adagrad_LR1e-05/VGG19_Adagrad_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_Adagrad_LR1e-06/VGG19_Adagrad_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_Adagrad_LR1e-06/VGG19_Adagrad_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{VGG19,Adagrad: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-vgg19-adagrad}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_Adamax_LR1e-04/VGG19_Adamax_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_Adamax_LR1e-04/VGG19_Adamax_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_Adamax_LR1e-05/VGG19_Adamax_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_Adamax_LR1e-05/VGG19_Adamax_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_Adamax_LR1e-06/VGG19_Adamax_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_Adamax_LR1e-06/VGG19_Adamax_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{VGG19,Adamax: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-vgg19-adamax}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_AdaDelta_LR1e-04/VGG19_AdaDelta_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_AdaDelta_LR1e-04/VGG19_AdaDelta_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_AdaDelta_LR1e-05/VGG19_AdaDelta_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_AdaDelta_LR1e-05/VGG19_AdaDelta_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_AdaDelta_LR1e-06/VGG19_AdaDelta_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_AdaDelta_LR1e-06/VGG19_AdaDelta_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{VGG19,AdaDelta: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-vgg19-adadelta}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_SGD_LR1e-04/VGG19_SGD_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_SGD_LR1e-04/VGG19_SGD_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_SGD_LR1e-05/VGG19_SGD_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_SGD_LR1e-05/VGG19_SGD_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_SGD_LR1e-06/VGG19_SGD_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_SGD_LR1e-06/VGG19_SGD_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{VGG19,SGD: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-vgg19-sgd}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_RMSProp_LR1e-04/VGG19_RMSProp_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_RMSProp_LR1e-04/VGG19_RMSProp_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_RMSProp_LR1e-05/VGG19_RMSProp_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_RMSProp_LR1e-05/VGG19_RMSProp_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_RMSProp_LR1e-06/VGG19_RMSProp_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/VGG19_RMSProp_LR1e-06/VGG19_RMSProp_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{VGG19,RMSProp: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-vgg19-rmsprop}
 \end{figure}
 
-\begin{figure}[htbp]
-  \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_Nadam_LR1e-04/VGG19_Nadam_LR1e-04.png}
-    \caption{LR=1e-4}
-  \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_Nadam_LR1e-05/VGG19_Nadam_LR1e-05.png}
-    \caption{LR=1e-5}
-  \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/VGG19_Nadam_LR1e-06/VGG19_Nadam_LR1e-06.png}
-    \caption{LR=1e-6}
-  \end{subfigure}
-  \caption{VGG19,Nadam: Accuracy and Loss Curves across Learning Rates}
-  \label{fig:acc-loss-vgg19-nadam}
-\end{figure}
+% Nadam runs excluded from presented results
+%\begin{figure}[H]
+%  \centering
+%  \begin{subfigure}[b]{0.3\linewidth}
+%    \includegraphics[width=\textwidth]{../../results/VGG19_Nadam_LR1e-04/VGG19_Nadam_LR1e-04_acc_loss.png}
+%    \caption{LR=1e-4}
+%  \end{subfigure}\hfill
+%  \begin{subfigure}[b]{0.3\linewidth}
+%    \includegraphics[width=\textwidth]{../../results/VGG19_Nadam_LR1e-05/VGG19_Nadam_LR1e-05_acc_loss.png}
+%    \caption{LR=1e-5}
+%  \end{subfigure}\hfill
+%  \begin{subfigure}[b]{0.3\linewidth}
+%    \includegraphics[width=\textwidth]{../../results/VGG19_Nadam_LR1e-06/VGG19_Nadam_LR1e-06_acc_loss.png}
+%    \caption{LR=1e-6}
+%  \end{subfigure}
+%  \caption{VGG19,Nadam: Accuracy and Loss Curves across Learning Rates}
+%  \label{fig:acc-loss-vgg19-nadam}
+%\end{figure}
 
+\end{landscape}
 \clearpage
 
-% ── EfficientNetB3 ────────────────────────────────────────────────────────────
+\begin{landscape}
+
+% -- EfficientNetB3 ----------------------------------------
 \subsection*{EfficientNetB3}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adam_LR1e-04/EfficientNetB3_Adam_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adam_LR1e-04/EfficientNetB3_Adam_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adam_LR1e-05/EfficientNetB3_Adam_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adam_LR1e-05/EfficientNetB3_Adam_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adam_LR1e-06/EfficientNetB3_Adam_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adam_LR1e-06/EfficientNetB3_Adam_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{EfficientNetB3,Adam: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-effnet-adam}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adagrad_LR1e-04/EfficientNetB3_Adagrad_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adagrad_LR1e-04/EfficientNetB3_Adagrad_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adagrad_LR1e-05/EfficientNetB3_Adagrad_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adagrad_LR1e-05/EfficientNetB3_Adagrad_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adagrad_LR1e-06/EfficientNetB3_Adagrad_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adagrad_LR1e-06/EfficientNetB3_Adagrad_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{EfficientNetB3,Adagrad: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-effnet-adagrad}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adamax_LR1e-04/EfficientNetB3_Adamax_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adamax_LR1e-04/EfficientNetB3_Adamax_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adamax_LR1e-05/EfficientNetB3_Adamax_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adamax_LR1e-05/EfficientNetB3_Adamax_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adamax_LR1e-06/EfficientNetB3_Adamax_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Adamax_LR1e-06/EfficientNetB3_Adamax_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{EfficientNetB3,Adamax: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-effnet-adamax}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_AdaDelta_LR1e-04/EfficientNetB3_AdaDelta_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_AdaDelta_LR1e-04/EfficientNetB3_AdaDelta_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_AdaDelta_LR1e-05/EfficientNetB3_AdaDelta_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_AdaDelta_LR1e-05/EfficientNetB3_AdaDelta_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_AdaDelta_LR1e-06/EfficientNetB3_AdaDelta_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_AdaDelta_LR1e-06/EfficientNetB3_AdaDelta_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{EfficientNetB3,AdaDelta: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-effnet-adadelta}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_SGD_LR1e-04/EfficientNetB3_SGD_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_SGD_LR1e-04/EfficientNetB3_SGD_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_SGD_LR1e-05/EfficientNetB3_SGD_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_SGD_LR1e-05/EfficientNetB3_SGD_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_SGD_LR1e-06/EfficientNetB3_SGD_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_SGD_LR1e-06/EfficientNetB3_SGD_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{EfficientNetB3,SGD: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-effnet-sgd}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_RMSProp_LR1e-04/EfficientNetB3_RMSProp_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_RMSProp_LR1e-04/EfficientNetB3_RMSProp_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_RMSProp_LR1e-05/EfficientNetB3_RMSProp_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_RMSProp_LR1e-05/EfficientNetB3_RMSProp_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_RMSProp_LR1e-06/EfficientNetB3_RMSProp_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_RMSProp_LR1e-06/EfficientNetB3_RMSProp_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{EfficientNetB3,RMSProp: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-effnet-rmsprop}
 \end{figure}
 
-\begin{figure}[htbp]
-  \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Nadam_LR1e-04/EfficientNetB3_Nadam_LR1e-04.png}
-    \caption{LR=1e-4}
-  \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Nadam_LR1e-05/EfficientNetB3_Nadam_LR1e-05.png}
-    \caption{LR=1e-5}
-  \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Nadam_LR1e-06/EfficientNetB3_Nadam_LR1e-06.png}
-    \caption{LR=1e-6}
-  \end{subfigure}
-  \caption{EfficientNetB3,Nadam: Accuracy and Loss Curves across Learning Rates}
-  \label{fig:acc-loss-effnet-nadam}
-\end{figure}
+% Nadam runs excluded from presented results
+%\begin{figure}[H]
+%  \centering
+%  \begin{subfigure}[b]{0.3\linewidth}
+%    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Nadam_LR1e-04/EfficientNetB3_Nadam_LR1e-04_acc_loss.png}
+%    \caption{LR=1e-4}
+%  \end{subfigure}\hfill
+%  \begin{subfigure}[b]{0.3\linewidth}
+%    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Nadam_LR1e-05/EfficientNetB3_Nadam_LR1e-05_acc_loss.png}
+%    \caption{LR=1e-5}
+%  \end{subfigure}\hfill
+%  \begin{subfigure}[b]{0.3\linewidth}
+%    \includegraphics[width=\textwidth]{../../results/EfficientNetB3_Nadam_LR1e-06/EfficientNetB3_Nadam_LR1e-06_acc_loss.png}
+%    \caption{LR=1e-6}
+%  \end{subfigure}
+%  \caption{EfficientNetB3,Nadam: Accuracy and Loss Curves across Learning Rates}
+%  \label{fig:acc-loss-effnet-nadam}
+%\end{figure}
 
+\end{landscape}
 \clearpage
 
-% ── ResNet50 ──────────────────────────────────────────────────────────────────
+\begin{landscape}
+
+% -- ResNet50 --------------------------------------------
 \subsection*{ResNet50}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_Adam_LR1e-04/ResNet50_Adam_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_Adam_LR1e-04/ResNet50_Adam_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_Adam_LR1e-05/ResNet50_Adam_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_Adam_LR1e-05/ResNet50_Adam_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_Adam_LR1e-06/ResNet50_Adam_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_Adam_LR1e-06/ResNet50_Adam_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{ResNet50,Adam: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-resnet-adam}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_Adagrad_LR1e-04/ResNet50_Adagrad_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_Adagrad_LR1e-04/ResNet50_Adagrad_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_Adagrad_LR1e-05/ResNet50_Adagrad_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_Adagrad_LR1e-05/ResNet50_Adagrad_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_Adagrad_LR1e-06/ResNet50_Adagrad_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_Adagrad_LR1e-06/ResNet50_Adagrad_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{ResNet50,Adagrad: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-resnet-adagrad}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_Adamax_LR1e-04/ResNet50_Adamax_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_Adamax_LR1e-04/ResNet50_Adamax_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_Adamax_LR1e-05/ResNet50_Adamax_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_Adamax_LR1e-05/ResNet50_Adamax_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_Adamax_LR1e-06/ResNet50_Adamax_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_Adamax_LR1e-06/ResNet50_Adamax_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{ResNet50,Adamax: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-resnet-adamax}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_AdaDelta_LR1e-04/ResNet50_AdaDelta_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_AdaDelta_LR1e-04/ResNet50_AdaDelta_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_AdaDelta_LR1e-05/ResNet50_AdaDelta_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_AdaDelta_LR1e-05/ResNet50_AdaDelta_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_AdaDelta_LR1e-06/ResNet50_AdaDelta_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_AdaDelta_LR1e-06/ResNet50_AdaDelta_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{ResNet50,AdaDelta: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-resnet-adadelta}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_SGD_LR1e-04/ResNet50_SGD_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_SGD_LR1e-04/ResNet50_SGD_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_SGD_LR1e-05/ResNet50_SGD_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_SGD_LR1e-05/ResNet50_SGD_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_SGD_LR1e-06/ResNet50_SGD_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_SGD_LR1e-06/ResNet50_SGD_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{ResNet50,SGD: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-resnet-sgd}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_RMSProp_LR1e-04/ResNet50_RMSProp_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_RMSProp_LR1e-04/ResNet50_RMSProp_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_RMSProp_LR1e-05/ResNet50_RMSProp_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_RMSProp_LR1e-05/ResNet50_RMSProp_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_RMSProp_LR1e-06/ResNet50_RMSProp_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/ResNet50_RMSProp_LR1e-06/ResNet50_RMSProp_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{ResNet50,RMSProp: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-resnet-rmsprop}
 \end{figure}
 
-\begin{figure}[htbp]
-  \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_Nadam_LR1e-04/ResNet50_Nadam_LR1e-04.png}
-    \caption{LR=1e-4}
-  \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_Nadam_LR1e-05/ResNet50_Nadam_LR1e-05.png}
-    \caption{LR=1e-5}
-  \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/ResNet50_Nadam_LR1e-06/ResNet50_Nadam_LR1e-06.png}
-    \caption{LR=1e-6}
-  \end{subfigure}
-  \caption{ResNet50,Nadam: Accuracy and Loss Curves across Learning Rates}
-  \label{fig:acc-loss-resnet-nadam}
-\end{figure}
+% Nadam runs excluded from presented results
+%\begin{figure}[H]
+%  \centering
+%  \begin{subfigure}[b]{0.3\linewidth}
+%    \includegraphics[width=\textwidth]{../../results/ResNet50_Nadam_LR1e-04/ResNet50_Nadam_LR1e-04_acc_loss.png}
+%    \caption{LR=1e-4}
+%  \end{subfigure}\hfill
+%  \begin{subfigure}[b]{0.3\linewidth}
+%    \includegraphics[width=\textwidth]{../../results/ResNet50_Nadam_LR1e-05/ResNet50_Nadam_LR1e-05_acc_loss.png}
+%    \caption{LR=1e-5}
+%  \end{subfigure}\hfill
+%  \begin{subfigure}[b]{0.3\linewidth}
+%    \includegraphics[width=\textwidth]{../../results/ResNet50_Nadam_LR1e-06/ResNet50_Nadam_LR1e-06_acc_loss.png}
+%    \caption{LR=1e-6}
+%  \end{subfigure}
+%  \caption{ResNet50,Nadam: Accuracy and Loss Curves across Learning Rates}
+%  \label{fig:acc-loss-resnet-nadam}
+%\end{figure}
 
+\end{landscape}
 \clearpage
 
-% ── DenseNet121 ───────────────────────────────────────────────────────────────
+\begin{landscape}
+
+% -- DenseNet121 ------------------------------------------
 \subsection*{DenseNet121}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adam_LR1e-04/DenseNet121_Adam_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adam_LR1e-04/DenseNet121_Adam_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adam_LR1e-05/DenseNet121_Adam_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adam_LR1e-05/DenseNet121_Adam_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adam_LR1e-06/DenseNet121_Adam_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adam_LR1e-06/DenseNet121_Adam_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{DenseNet121,Adam: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-densenet-adam}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adagrad_LR1e-04/DenseNet121_Adagrad_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adagrad_LR1e-04/DenseNet121_Adagrad_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adagrad_LR1e-05/DenseNet121_Adagrad_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adagrad_LR1e-05/DenseNet121_Adagrad_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adagrad_LR1e-06/DenseNet121_Adagrad_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adagrad_LR1e-06/DenseNet121_Adagrad_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{DenseNet121,Adagrad: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-densenet-adagrad}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adamax_LR1e-04/DenseNet121_Adamax_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adamax_LR1e-04/DenseNet121_Adamax_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adamax_LR1e-05/DenseNet121_Adamax_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adamax_LR1e-05/DenseNet121_Adamax_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adamax_LR1e-06/DenseNet121_Adamax_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_Adamax_LR1e-06/DenseNet121_Adamax_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{DenseNet121,Adamax: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-densenet-adamax}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_AdaDelta_LR1e-04/DenseNet121_AdaDelta_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_AdaDelta_LR1e-04/DenseNet121_AdaDelta_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_AdaDelta_LR1e-05/DenseNet121_AdaDelta_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_AdaDelta_LR1e-05/DenseNet121_AdaDelta_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_AdaDelta_LR1e-06/DenseNet121_AdaDelta_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_AdaDelta_LR1e-06/DenseNet121_AdaDelta_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{DenseNet121,AdaDelta: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-densenet-adadelta}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_SGD_LR1e-04/DenseNet121_SGD_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_SGD_LR1e-04/DenseNet121_SGD_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_SGD_LR1e-05/DenseNet121_SGD_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_SGD_LR1e-05/DenseNet121_SGD_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_SGD_LR1e-06/DenseNet121_SGD_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_SGD_LR1e-06/DenseNet121_SGD_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{DenseNet121,SGD: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-densenet-sgd}
 \end{figure}
 
-\begin{figure}[htbp]
+\vspace{0.5em}
+
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_RMSProp_LR1e-04/DenseNet121_RMSProp_LR1e-04.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_RMSProp_LR1e-04/DenseNet121_RMSProp_LR1e-04_acc_loss.png}
     \caption{LR=1e-4}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_RMSProp_LR1e-05/DenseNet121_RMSProp_LR1e-05.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_RMSProp_LR1e-05/DenseNet121_RMSProp_LR1e-05_acc_loss.png}
     \caption{LR=1e-5}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_RMSProp_LR1e-06/DenseNet121_RMSProp_LR1e-06.png}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\textwidth]{../../results/DenseNet121_RMSProp_LR1e-06/DenseNet121_RMSProp_LR1e-06_acc_loss.png}
     \caption{LR=1e-6}
   \end{subfigure}
   \caption{DenseNet121,RMSProp: Accuracy and Loss Curves across Learning Rates}
   \label{fig:acc-loss-densenet-rmsprop}
 \end{figure}
 
-\begin{figure}[htbp]
-  \centering
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_Nadam_LR1e-04/DenseNet121_Nadam_LR1e-04.png}
-    \caption{LR=1e-4}
-  \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_Nadam_LR1e-05/DenseNet121_Nadam_LR1e-05.png}
-    \caption{LR=1e-5}
-  \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{../../results/DenseNet121_Nadam_LR1e-06/DenseNet121_Nadam_LR1e-06.png}
-    \caption{LR=1e-6}
-  \end{subfigure}
-  \caption{DenseNet121,Nadam: Accuracy and Loss Curves across Learning Rates}
-  \label{fig:acc-loss-densenet-nadam}
-\end{figure}
+% Nadam runs excluded from presented results
+%\begin{figure}[H]
+%  \centering
+%  \begin{subfigure}[b]{0.3\linewidth}
+%    \includegraphics[width=\textwidth]{../../results/DenseNet121_Nadam_LR1e-04/DenseNet121_Nadam_LR1e-04_acc_loss.png}
+%    \caption{LR=1e-4}
+%  \end{subfigure}\hfill
+%  \begin{subfigure}[b]{0.3\linewidth}
+%    \includegraphics[width=\textwidth]{../../results/DenseNet121_Nadam_LR1e-05/DenseNet121_Nadam_LR1e-05_acc_loss.png}
+%    \caption{LR=1e-5}
+%  \end{subfigure}\hfill
+%  \begin{subfigure}[b]{0.3\linewidth}
+%    \includegraphics[width=\textwidth]{../../results/DenseNet121_Nadam_LR1e-06/DenseNet121_Nadam_LR1e-06_acc_loss.png}
+%    \caption{LR=1e-6}
+%  \end{subfigure}
+%  \caption{DenseNet121,Nadam: Accuracy and Loss Curves across Learning Rates}
+%  \label{fig:acc-loss-densenet-nadam}
+%\end{figure}
 
+\end{landscape}
 \clearpage

@@ -1,0 +1,29 @@
+graph TD
+    subgraph Data_Preparation [Data Preparation]
+        A[STRAMPN Dataset] --> B[Inventory & Integrity Check]
+        B --> C[Stratified Split 75/25]
+        C --> D[Training/Validation Pool]
+        C --> E[Held-out Test Set]
+        D --> F[Final Split 70/30]
+    end
+
+    subgraph Experimentation [72-Run Experiment Matrix]
+        F --> G[Data Generators]
+        G --> H{4 Architectures}
+        H --> I{6 Optimizers}
+        I --> J{3 Learning Rates}
+        
+        J --> K[Training with Callbacks]
+        K --> L[EarlyStopping / Checkpointing]
+    end
+
+    subgraph Evaluation [Analysis & Results]
+        L --> M[Test Set Evaluation]
+        E --> M
+        M --> N[Metric Aggregation]
+        N --> O[Heatmaps & Comparative Analysis]
+    end
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style E fill:#f96,stroke:#333,stroke-width:2px
+    style O fill:#6f6,stroke:#333,stroke-width:2px

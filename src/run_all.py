@@ -1,10 +1,10 @@
 """
 run_all.py
 
-Master orchestration script for all 84 simulation runs.
+Master orchestration script for all 72 simulation runs.
 Builds the shared data pipeline once, then loops over every combination of:
   - 4 architectures : VGG19, EfficientNetB3, ResNet50, DenseNet121
-  - 7 optimizers    : Adam, Adagrad, Adamax, AdaDelta, SGD, RMSProp, Nadam
+  - 6 optimizers    : Adam, Adagrad, Adamax, AdaDelta, SGD, RMSProp
   - 3 learning rates: 1e-4, 1e-5, 1e-6
 
 Run directly:  python src/run_all.py
@@ -23,7 +23,7 @@ from src.model_builder import build_model
 from src.train import train_model
 
 
-# ── Configuration ─────────────────────────────────────────────────────────────
+# Configuration 
 
 RANDOM_SEED   = 42
 EPOCHS        = 50
@@ -31,11 +31,11 @@ BATCH_SIZE    = 32
 INPUT_SIZE    = (256, 256)
 
 ARCHITECTURES  = ['VGG19', 'EfficientNetB3', 'ResNet50', 'DenseNet121']
-OPTIMIZERS     = ['Adam', 'Adagrad', 'Adamax', 'AdaDelta', 'SGD', 'RMSProp', 'Nadam']
+OPTIMIZERS     = ['Adam', 'Adagrad', 'Adamax', 'AdaDelta', 'SGD', 'RMSProp']
 LEARNING_RATES = [1e-4, 1e-5, 1e-6]
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
+# Helpers 
 
 def _seed_everything(seed: int) -> None:
     random.seed(seed)
@@ -43,7 +43,7 @@ def _seed_everything(seed: int) -> None:
     tf.random.set_seed(seed)
 
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+# Main 
 
 def run_all() -> None:
     _seed_everything(RANDOM_SEED)
@@ -54,9 +54,7 @@ def run_all() -> None:
     summary_dir   = results_dir / "summary"
     summary_dir.mkdir(parents=True, exist_ok=True)
 
-    # ══════════════════════════════════════════════════════════════════════════
-    # Section 2 — Shared Data Pipeline (constructed ONCE, reused across all 84)
-    # ══════════════════════════════════════════════════════════════════════════
+    # Section 2 - Shared Data Pipeline (constructed ONCE, reused across all 72)
 
     image_generatorFullAugment = ImageDataGenerator(
         samplewise_center=True,
@@ -107,15 +105,13 @@ def run_all() -> None:
     print(f"Classes: {train_generator.class_indices}")
     print()
     print(
-        "⚠️  EXPERIMENTAL INTEGRITY NOTE: generators are constructed ONCE here "
-        "and shared across all 84 runs. Do not re-initialize them inside the loop — "
+        "[WARNING]  EXPERIMENTAL INTEGRITY NOTE: generators are constructed ONCE here "
+        "and shared across all 72 runs. Do not re-initialize them inside the loop - "
         "doing so would reshuffle the training data differently per run and confound "
         "optimizer/LR comparisons."
     )
 
-    # ══════════════════════════════════════════════════════════════════════════
-    # Section 3 — 84-Run Training Loop
-    # ══════════════════════════════════════════════════════════════════════════
+    # Section 3 - 72-Run Training Loop
 
     experiment_matrix = list(itertools.product(ARCHITECTURES, OPTIMIZERS, LEARNING_RATES))
     total_runs        = len(experiment_matrix)
@@ -154,20 +150,18 @@ def run_all() -> None:
         train_generator.reset()
         test_generator.reset()
 
-    # ══════════════════════════════════════════════════════════════════════════
-    # Section 4 — Aggregate Results
-    # ══════════════════════════════════════════════════════════════════════════
+    # Section 4 - Aggregate Results
 
     master_df   = pd.DataFrame(all_metrics)
     summary_csv = summary_dir / "master_results.csv"
     master_df.to_csv(summary_csv, index=False)
 
-    print(f"\nMaster results saved → {summary_csv}")
+    print(f"\nMaster results saved -> {summary_csv}")
     print(master_df.to_string())
     print(f"\nALL {total_runs} SIMULATIONS COMPLETE")
 
 
-# ── Entry point ───────────────────────────────────────────────────────────────
+# Entry point
 
 if __name__ == "__main__":
     run_all()

@@ -1,0 +1,26 @@
+# Cline Instructions - Optimizer LR Study
+
+## Context
+This repository contains a research study on deep learning optimizers for ovarian cancer detection. The study involves a 84-run experiment matrix.
+
+## Operational Rules
+
+### Source Code Hygiene
+- The LaTeX paper includes source code via the `listings` package. 
+- You must maintain "clean" versions of scripts in `src/` (suffixed with `_clean.py`).
+- These files must be strictly ASCII. Replace `—` with `-`, `…` with `...`, etc.
+
+### Result Management
+- Aggregated results live in `results/summary/master_results.csv`.
+- If you update training logic, ensure the `metrics` dictionary returned by `train_model` in `src/train.py` remains compatible with the dataframe in `src/run_all.py`.
+
+### LaTeX Structure
+- The master file is `docs/latex/main.tex`.
+- Content is split into `docs/latex/sections/*.tex`.
+- Figures should be placed in `docs/latex/figures/`.
+- Use the `longtable` environment for any table likely to exceed one page (like the full results table).
+
+### Environment
+- Python 3.10+
+- TensorFlow 2.x
+- LaTeX with `latexmk`

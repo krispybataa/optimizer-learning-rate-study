@@ -1,71 +1,50 @@
 \section{Experimental Pipeline}
 \label{sec:pipeline}
 
-% Named colors for pipeline diagram nodes
-\definecolor{pipeblue}{HTML}{2E86AB}
-\definecolor{pipeorange}{HTML}{E07A5F}
-\definecolor{pipegreen}{HTML}{3D9970}
-\definecolor{pipepurple}{HTML}{6B4226}
-\definecolor{pipeteal}{HTML}{2A9D8F}
-\definecolor{pipedarkred}{HTML}{C1121F}
-\definecolor{pipedarkgray}{HTML}{4A4A4A}
-\definecolor{pipeyellow}{HTML}{F4A261}
+The pipeline was designed to be as consistent as possible across all 72 configurations. We wanted to make sure that the only things changing were the architecture, optimizer, and learning rate all according to specification. The process follows a clear path from raw data to final evaluation.
 
-The end-to-end experimental pipeline transforms raw histopathological images into a ranked comparison of 84 deep learning configurations. The pipeline proceeds in eight stages: raw dataset ingestion, preprocessing and integrity verification, data splitting, augmentation, model configuration, transfer learning model construction, training with callbacks, and evaluation. All 84 runs share an identical data pipeline; only the optimizer and learning rate vary between runs, with the base architecture as the outer loop variable.
+The diagram in Figure~\ref{fig:pipeline} shows the high-level flow. Starting by preparing the data (splitting and augmenting), then move into the core training loop where we iterate through our experimental matrix, and finally aggregate all the metrics for analysis.
+
+% \begin{figure}[H]
+%   \centering
+%   \begin{tikzpicture}[
+%     node distance=0.8cm and 0.5cm,
+%     stepbox/.style={
+%       rectangle, rounded corners=3pt,
+%       draw=black!70, fill=gray!5,
+%       minimum width=3.5cm, minimum height=1.2cm,
+%       align=center, font=\small
+%     },
+%     arrow/.style={-{Stealth}, thick}
+%   ]
+
+%   % Row 1
+%   \node[stepbox] (data) {\textbf{Data Source}\\STRAMPN Dataset};
+%   \node[stepbox, right=of data] (prep) {\textbf{Preparation}\\Splitting \& Inventory};
+%   \node[stepbox, right=of prep] (aug) {\textbf{Augmentation}\\Training set only};
+
+%   % Row 2
+%   \node[stepbox, below=1.5cm of aug] (matrix) {\textbf{Experiment Matrix}\\72 Configurations};
+%   \node[stepbox, left=of matrix] (train) {\textbf{Training}\\50 Epochs Max};
+%   \node[stepbox, left=of train] (eval) {\textbf{Evaluation}\\Metrics \& Heatmaps};
+
+%   % Arrows
+%   \draw[arrow] (data) -- (prep);
+%   \draw[arrow] (prep) -- (aug);
+%   \draw[arrow] (aug) -- (matrix);
+%   \draw[arrow] (matrix) -- (train);
+%   \draw[arrow] (train) -- (eval);
+
+%   \end{tikzpicture}
+%   \caption[Experiment Pipeline]{Our experimental workflow. We used a unified data pipeline for all 72 runs to ensure that any differences in performance were due to the model settings, not the data preparation.}
+%   \label{fig:pipeline}
+% \end{figure}
 
 \begin{figure}[H]
-  \centering
-  \begin{tikzpicture}[
-    node distance=0.6cm and 0.5cm,
-    rndbox/.style={
-      rectangle, rounded corners=6pt,
-      minimum width=3.2cm, minimum height=1.55cm,
-      align=center, font=\small\linespread{1.1}\selectfont,
-      text width=3.0cm
-    },
-    arr/.style={-{Stealth[length=7pt,width=5pt]}, thick, #1},
-  ]
-
-  % ── Row 1: left to right ──────────────────────────────────────────────────
-  \node[rndbox, draw=pipedarkgray, fill=pipedarkgray, text=white]
-    (raw) {\textbf{STRAMPN Dataset}\\[2pt] 481 Ovarian Cancer\\506 Non-Cancer\\987 Total};
-
-  \node[rndbox, draw=pipeblue!80!black, fill=pipeblue!25, right=of raw]
-    (prep) {\textbf{Preprocessing}\\[2pt] File Inventory\\JPG Verification\\Integrity Check};
-
-  \node[rndbox, draw=pipeorange!80!black, fill=pipeorange!25, right=of prep]
-    (split) {\textbf{Data Splitting}\\[2pt] 75\% Train+Val\\25\% Test\\Stratified · Seed=42};
-
-  \node[rndbox, draw=pipegreen!80!black, fill=pipegreen!25, right=of split]
-    (aug) {\textbf{Augmentation}\\[2pt] Training Only\\Rotation, Zoom\\Shear, Flip};
-
-  % ── Row 2: right to left ──────────────────────────────────────────────────
-  \node[rndbox, draw=pipepurple!80!black, fill=pipepurple!25, below=1.3cm of aug]
-    (config) {\textbf{Model Config}\\[2pt] 4 Architectures\\7 Optimizers\\3 Learning Rates\\84 Total Runs};
-
-  \node[rndbox, draw=pipeteal!80!black, fill=pipeteal!25, left=of config]
-    (tl) {\textbf{Transfer Learning}\\[2pt] Frozen Base\\ImageNet Weights\\Custom Head};
-
-  \node[rndbox, draw=pipedarkred!80!black, fill=pipedarkred!25, left=of tl]
-    (train) {\textbf{Training}\\[2pt] 50 Epochs Max\\EarlyStopping\\ReduceLROnPlateau};
-
-  \node[rndbox, draw=pipeblue!80!black, fill=pipeblue!25, left=of train]
-    (eval) {\textbf{Evaluation}\\[2pt] Accuracy, AUC\\Precision, Recall\\Specificity, F1};
-
-  % ── Arrows Row 1 ──────────────────────────────────────────────────────────
-  \draw[arr=black] (raw)   -- (prep);
-  \draw[arr=black] (prep)  -- (split);
-  \draw[arr=black] (split) -- (aug);
-
-  % ── Connector Row 1 -> Row 2 ──────────────────────────────────────────────
-  \draw[arr=black] (aug) -- (config);
-
-  % ── Arrows Row 2 (right to left) ─────────────────────────────────────────
-  \draw[arr=black] (config) -- (tl);
-  \draw[arr=black] (tl)     -- (train);
-  \draw[arr=black] (train)  -- (eval);
-
-  \end{tikzpicture}
-  \caption{Experimental pipeline for the Optimizer and Learning Rate Study of Ovarian Cancer Prediction. Row 1 (left to right): data ingestion and preparation. Row 2 (right to left): model configuration, training, and evaluation.}
-  \label{fig:pipeline}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/pipeline.png}
+    \caption[Experiment Pipeline]{Our experimental workflow. We used a unified data pipeline for all 72 runs to ensure that any differences in performance were due to the model settings, not the data preparation.}
+    \label{fig:pipeline}
 \end{figure}
+
+By using this structured approach, we were able to systematically compare how each architecture handled different optimizers. This setup also made it easier to identify subopotimal runs early, as we could see when a specific combination of learning rate and optimizer failed to converge regardless of the base model.

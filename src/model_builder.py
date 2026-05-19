@@ -1,7 +1,7 @@
 """
 model_builder.py
 
-Builds compiled Keras transfer-learning models for the 84-simulation experiment matrix.
+Builds compiled Keras transfer-learning models for the 72-simulation experiment matrix.
 """
 
 import tensorflow as tf
@@ -12,10 +12,10 @@ from tensorflow.keras.layers import (
 )
 from tensorflow.keras.metrics import Precision, Recall, AUC
 from tensorflow.keras.optimizers import (
-    Adam, Adagrad, Adamax, Adadelta, SGD, RMSprop, Nadam,
+    Adam, Adagrad, Adamax, Adadelta, SGD, RMSprop,
 )
 
-# ── Architecture registry ─────────────────────────────────────────────────────
+# Architecture registry 
 
 _ARCHITECTURE_REGISTRY = {
     "VGG19":           VGG19,
@@ -24,8 +24,7 @@ _ARCHITECTURE_REGISTRY = {
     "DenseNet121":     DenseNet121,
 }
 
-# ── Optimizer registry ────────────────────────────────────────────────────────
-
+# Optimizer registry 
 def _make_optimizer(name: str, learning_rate: float):
     """Instantiate an optimizer by name with the given learning rate."""
     registry = {
@@ -35,7 +34,6 @@ def _make_optimizer(name: str, learning_rate: float):
         "AdaDelta": lambda lr: Adadelta(learning_rate=lr),
         "SGD":      lambda lr: SGD(learning_rate=lr, momentum=0.9),
         "RMSProp":  lambda lr: RMSprop(learning_rate=lr),
-        "Nadam":    lambda lr: Nadam(learning_rate=lr),
     }
     if name not in registry:
         raise ValueError(
@@ -45,8 +43,7 @@ def _make_optimizer(name: str, learning_rate: float):
     return registry[name](learning_rate)
 
 
-# ── Model builder ─────────────────────────────────────────────────────────────
-
+# Model builder 
 def build_model(
     architecture_name: str,
     optimizer_name: str,
@@ -59,9 +56,9 @@ def build_model(
     Args:
         architecture_name: One of 'VGG19', 'EfficientNetB3', 'ResNet50', 'DenseNet121'.
         optimizer_name:    One of 'Adam', 'Adagrad', 'Adamax', 'AdaDelta',
-                           'SGD', 'RMSProp', 'Nadam'.
+                           'SGD', 'RMSProp'.
         learning_rate:     Floating-point learning rate (e.g. 1e-4).
-        input_shape:       HWC tuple; must match the generators (default 256×256×3).
+        input_shape:       HWC tuple; must match the generators (default 256x256x3).
 
     Returns:
         A compiled tf.keras.Model ready for model.fit().
@@ -72,7 +69,7 @@ def build_model(
             f"Choose from: {sorted(_ARCHITECTURE_REGISTRY.keys())}"
         )
 
-    # ── Base model (frozen ImageNet weights) ──────────────────────────────────
+    # Base model (frozen ImageNet weights) 
     base_cls = _ARCHITECTURE_REGISTRY[architecture_name]
     base_model = base_cls(
         include_top=False,
@@ -81,7 +78,7 @@ def build_model(
     )
     base_model.trainable = False
 
-    # ── Custom classification head ────────────────────────────────────────────
+    # Custom classification head 
     x = base_model.output
     x = GlobalAveragePooling2D()(x)
 
@@ -101,7 +98,7 @@ def build_model(
 
     model = Model(inputs=base_model.input, outputs=output)
 
-    # ── Compile ───────────────────────────────────────────────────────────────
+    # Compile 
     optimizer = _make_optimizer(optimizer_name, learning_rate)
     model.compile(
         optimizer=optimizer,

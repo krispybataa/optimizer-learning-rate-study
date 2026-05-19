@@ -1,283 +1,59 @@
 \section{Results}
 \label{sec:results}
 
-\subsection{Overview}
+\subsection{General Performance}
 
-All 84 simulation runs completed successfully and produced valid metric outputs. Test-set AUC-ROC values ranged from 0.1554 (ResNet50 / AdaDelta / LR=1e-4, a degenerate collapse) to 0.9995 (VGG19 / Adam and VGG19 / Adamax, both at LR=1e-4). Eleven runs were identified as degenerate: the model collapsed to predicting a single class, yielding either recall=0 or specificity=0 (Section~\ref{subsec:degenerate}). The remaining 73 runs produced meaningful discriminative performance.
+Overall, the 72 runs showed a wide range of results. We observed everything from near-perfect classification to complete model failure. The best performance came from VGG19 using Adam and Adamax at a learning rate of $10^{-4}$, both reaching an AUC of 0.9995. On the other end of the spectrum, we had 10 subopotimal runs where the model failed to learn anything useful and just predicted one class for every image.
 
-\subsection{Best Performers}
+\subsection{Top Performers}
 
-\subsubsection*{Best Model per Architecture}
-
-Table~\ref{tab:best-arch} identifies the top-performing configuration for each of the four base architectures, ranked by AUC.
+When we look at the best model for each architecture (Table~\ref{tab:best-arch}), we see that every base model is capable of high performance if given the right optimizer. VGG19 and DenseNet121 both hit very high AUC scores with Adam, while ResNet50 and EfficientNetB3 performed best with RMSProp. The full suite of resultes are documented in Appendices Sections~\ref{appx:per-arch-results} and~\ref{appx:full-results}.
 
 \begin{table}[H]
   \centering
-  \caption{Best model per architecture (ranked by AUC-ROC).}
+  \caption[Per-Architecture AUC Ranking]{Top configurations for each architecture (ranked by AUC).}
   \label{tab:best-arch}
-  \begin{tabular}{llllrr}
-    \toprule
-    \rowcolor{tableheader}
-    \textbf{Architecture} & \textbf{Optimizer} & \textbf{LR} & \textbf{Accuracy} & \textbf{F1} & \textbf{AUC} \\
-    \midrule
-    VGG19          & Adam    & 1e-4 & 0.7733 & 0.7172 & 0.9995 \\
-    DenseNet121    & Adam    & 1e-4 & 0.9676 & 0.9675 & 0.9991 \\
-    ResNet50       & RMSProp & 1e-4 & 0.9514 & 0.9504 & 0.9943 \\
-    EfficientNetB3 & Nadam   & 1e-4 & 0.9312 & 0.9317 & 0.9837 \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\subsubsection*{Best Model per Optimizer}
-
-Table~\ref{tab:best-opt} identifies the top-performing configuration for each optimizer.
-
-\begin{table}[H]
-  \centering
-  \caption{Best model per optimizer (ranked by AUC-ROC).}
-  \label{tab:best-opt}
   \begin{tabular}{llllr}
     \toprule
     \rowcolor{tableheader}
-    \textbf{Optimizer} & \textbf{Architecture} & \textbf{LR} & \textbf{Accuracy} & \textbf{AUC} \\
+    \textbf{Model} & \textbf{Optimizer} & \textbf{LR} & \textbf{Accuracy} & \textbf{AUC} \\
     \midrule
-    Adam     & VGG19          & 1e-4 & 0.7733 & 0.9995 \\
-    Adamax   & VGG19          & 1e-4 & 0.9717 & 0.9995 \\
-    Nadam    & VGG19          & 1e-4 & 0.8826 & 0.9991 \\
-    RMSProp  & DenseNet121    & 1e-4 & 0.9595 & 0.9990 \\
-    SGD      & DenseNet121    & 1e-4 & 0.8178 & 0.9885 \\
-    Adagrad  & DenseNet121    & 1e-4 & 0.4939 & 0.8734 \\
-    AdaDelta & EfficientNetB3 & 1e-5 & 0.5668 & 0.8531 \\
+    VGG19          & Adam    & 1e-4 & 77.33\% & 0.9995 \\
+    DenseNet121    & Adam    & 1e-4 & 96.76\% & 0.9991 \\
+    ResNet50       & RMSProp & 1e-4 & 95.14\% & 0.9943 \\
+    EfficientNetB3 & RMSProp & 1e-4 & 84.62\% & 0.9841 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\subsubsection*{Best Model per Learning Rate}
+\subsection{The Impact of Learning Rate}
 
-Table~\ref{tab:best-lr} shows the best configuration at each learning rate level.
+One of our biggest findings was just how much the learning rate matters for transfer learning. As we dropped the learning rate from $10^{-4}$ down to $10^{-6}$, performance took a massive hit across the board. 
 
-\begin{table}[H]
-  \centering
-  \caption{Best model per learning rate (ranked by AUC-ROC).}
-  \label{tab:best-lr}
-  \begin{tabular}{lllr}
-    \toprule
-    \rowcolor{tableheader}
-    \textbf{Learning Rate} & \textbf{Architecture} & \textbf{Optimizer} & \textbf{AUC} \\
-    \midrule
-    1e-4 & VGG19 & Adam    & 0.9995 \\
-    1e-5 & VGG19 & RMSProp & 0.9933 \\
-    1e-6 & VGG19 & Adamax  & 0.8713 \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+At $10^{-4}$, most models converged quickly and performed well. However, at $10^{-6}$, many models stopped improving after just 11 epochs (due to our EarlyStopping callback) because the updates were too small to make any real progress. This tells us that for these specific frozen models, $10^{-4}$ is likely the optimal rate.
 
-\subsection{Learning Rate Analysis}
+\subsection{Optimizer Comparison}
 
-Learning rate had a pronounced effect on overall performance. At LR=1e-4, the 28 runs achieved a mean AUC of 0.8805, a maximum of 0.9995, and a minimum of 0.1554 (the latter being a degenerate collapse by ResNet50/AdaDelta). At LR=1e-5, mean AUC fell to 0.7539 with a maximum of 0.9933. At LR=1e-6, mean AUC collapsed further to 0.6003, with only VGG19/Adamax reaching a credible 0.8713. Table~\ref{tab:lr-analysis} summarizes these statistics.
+In our tests, RMSProp was the most consistent performer, with the highest average AUC across all models. Adam and Adamax were also very strong, especially at the $10^{-4}$ learning rate. On the other hand, AdaDelta and SGD struggled significantly on this dataset, especially when combined with smaller learning rates. 
 
-\begin{table}[H]
-  \centering
-  \caption{AUC-ROC summary by learning rate (28 runs each).}
-  \label{tab:lr-analysis}
-  \begin{tabular}{lrrr}
-    \toprule
-    \rowcolor{tableheader}
-    \textbf{Learning Rate} & \textbf{Avg AUC} & \textbf{Max AUC} & \textbf{Min AUC} \\
-    \midrule
-    1e-4 & 0.8805 & 0.9995 & 0.1554 \\
-    1e-5 & 0.7539 & 0.9933 & 0.3934 \\
-    1e-6 & 0.6003 & 0.8713 & 0.1893 \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+\subsection{Visualizing the Results}
 
-\subsection{Optimizer Analysis}
-
-Nadam and RMSProp were the strongest optimizers by average AUC, while AdaDelta was consistently the weakest. Table~\ref{tab:opt-analysis} ranks all seven optimizers by mean AUC across all 12 runs (4 architectures $\times$ 3 learning rates) for that optimizer.
-
-\begin{table}[H]
-  \centering
-  \caption{Optimizer ranking by mean AUC-ROC across all architectures and learning rates.}
-  \label{tab:opt-analysis}
-  \begin{tabular}{rlr}
-    \toprule
-    \rowcolor{tableheader}
-    \textbf{Rank} & \textbf{Optimizer} & \textbf{Avg AUC} \\
-    \midrule
-    1 & Nadam    & 0.8749 \\
-    2 & RMSProp  & 0.8705 \\
-    3 & Adamax   & 0.8251 \\
-    4 & Adam     & 0.7488 \\
-    5 & SGD      & 0.7109 \\
-    6 & Adagrad  & 0.6119 \\
-    7 & AdaDelta & 0.5721 \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\subsection{Architecture Analysis}
-
-ResNet50 achieved the highest average AUC (0.7945) across its 21 runs, indicating the most consistent performance. VGG19 produced the single best individual run but had higher variance. Table~\ref{tab:arch-analysis} summarizes architecture-level statistics.
-
-\begin{table}[H]
-  \centering
-  \caption{Architecture performance summary across all 21 runs per architecture.}
-  \label{tab:arch-analysis}
-  \begin{tabular}{llll}
-    \toprule
-    \rowcolor{tableheader}
-    \textbf{Architecture} & \textbf{Avg AUC} & \textbf{Max AUC} & \textbf{Best Configuration} \\
-    \midrule
-    ResNet50       & 0.7945 & 0.9943 & RMSProp, LR=1e-4 \\
-    VGG19          & 0.7392 & 0.9995 & Adam/Adamax, LR=1e-4 \\
-    DenseNet121    & 0.7384 & 0.9991 & Adam, LR=1e-4 \\
-    EfficientNetB3 & 0.7075 & 0.9837 & Nadam, LR=1e-4 \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\subsection{Heatmap Visualizations}
-
-Figures~\ref{fig:heatmap-acc} and~\ref{fig:heatmap-auc} show the accuracy and AUC-ROC heatmaps (optimizer vs.\ learning rate) for each architecture. These were generated by \texttt{notebooks/03\_results\_analysis.ipynb}.
-
-% Replace \fbox placeholders below with \includegraphics once the notebook has been run.
+We used heatmaps to visualize how the different architectures responded to the optimizer and learning rate settings. Figures~\ref{fig:heatmap-acc} and~\ref{fig:heatmap-auc} show that while some models are more flexible, most configurations cluster around a specific ideal zone in the hyperparameter space.
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{figures/accuracy_heatmap.png}
-  \caption{Accuracy heatmap: Optimizer $\times$ Learning Rate across all architectures.}
+  \caption[Full Accuracy Heatmap]{Accuracy across all 72 configurations.}
   \label{fig:heatmap-acc}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{figures/auc_heatmap.png}
-  \caption{AUC-ROC heatmap: Optimizer $\times$ Learning Rate across all architectures.}
+  \caption[Full AUC-ROC Heatmap]{AUC-ROC across all 72 configurations.}
   \label{fig:heatmap-auc}
 \end{figure}
 
-\subsection{Degenerate Runs}
-\label{subsec:degenerate}
+\subsection{Failures and Suboptimal Runs}
 
-Eleven runs collapsed to predicting a single class throughout the test set, producing either recall=0 (predicting all non-cancer) or specificity=0 (predicting all cancer). These configurations failed to find a meaningful decision boundary. Table~\ref{tab:degenerate} lists all degenerate runs with their recall, specificity, and AUC values.
-
-\begin{table}[H]
-  \centering
-  \caption{Degenerate runs (recall=0 or specificity=0) identified across 84 runs.}
-  \label{tab:degenerate}
-  \begin{tabularx}{\textwidth}{X l l l r r r}
-    \toprule
-    \rowcolor{tableheader}
-    \textbf{Architecture} & \textbf{Optimizer} & \textbf{LR} & \textbf{Failure Mode} & \textbf{Recall} & \textbf{Specificity} & \textbf{AUC} \\
-    \midrule
-    VGG19          & Adam     & 1e-6 & recall=0 & 0.0000 & 1.0000 & 0.5520 \\
-    VGG19          & Adagrad  & 1e-4 & recall=0 & 0.0000 & 1.0000 & 0.6997 \\
-    VGG19          & Adagrad  & 1e-6 & recall=0 & 0.0000 & 1.0000 & 0.6667 \\
-    VGG19          & SGD      & 1e-6 & spec=0   & 0.9606 & 0.0000 & 0.3815 \\
-    VGG19          & Nadam    & 1e-6 & recall=0 & 0.0000 & 1.0000 & 0.8201 \\
-    EfficientNetB3 & Adamax   & 1e-6 & recall=0 & 0.0000 & 1.0000 & 0.8089 \\
-    EfficientNetB3 & SGD      & 1e-6 & recall=0 & 0.0000 & 0.9083 & 0.1893 \\
-    ResNet50       & Adagrad  & 1e-5 & recall=0 & 0.0000 & 1.0000 & 0.5074 \\
-    ResNet50       & AdaDelta & 1e-4 & recall=0 & 0.0000 & 0.9917 & 0.1554 \\
-    ResNet50       & AdaDelta & 1e-6 & spec=0   & 1.0000 & 0.0000 & 0.8350 \\
-    ResNet50       & RMSProp  & 1e-6 & recall=0 & 0.0000 & 1.0000 & 0.7809 \\
-    \bottomrule
-  \end{tabularx}
-\end{table}
-
-Notably, some degenerate runs still produce moderate-to-high AUC values (e.g., VGG19/Nadam/1e-6: AUC=0.8201 despite recall=0). This occurs because AUC measures ranking ability across all thresholds, not performance at the specific 0.5 threshold used for binary prediction. A model that predicts all-negative with a systematic score ordering can achieve moderate AUC without ever correctly classifying a positive sample.
-
-\subsection{EarlyStopping Analysis}
-
-The \texttt{EarlyStopping} callback (patience=10 on \texttt{val\_auc}) triggered on 70 of 84 runs, meaning only 14 runs completed all 50 epochs. Table~\ref{tab:early-stop} lists all runs that stopped before epoch 50, sorted by epochs run ascending.
-
-\begingroup
-\setstretch{1}
-\setlength{\extrarowheight}{0pt}
-\setlength{\LTcapwidth}{\textwidth}
-\begin{longtable}{p{9cm} r r}
-  \caption{Runs where EarlyStopping triggered before epoch 50 (70 of 84 runs).}
-  \label{tab:early-stop} \\
-  \toprule
-  \rowcolor{tableheader}
-  \textbf{Run Name} & \textbf{Epochs Run} & \textbf{Test AUC} \\
-  \midrule
-  \endfirsthead
-  \toprule
-  \rowcolor{tableheader}
-  \textbf{Run Name} & \textbf{Epochs Run} & \textbf{Test AUC} \\
-  \midrule
-  \endhead
-  \bottomrule
-  \endfoot
-  VGG19\_Adam\_LR1e-06         & 11 & 0.5520 \\
-  VGG19\_Adagrad\_LR1e-06      & 11 & 0.6667 \\
-  VGG19\_Adamax\_LR1e-06       & 11 & 0.8713 \\
-  VGG19\_AdaDelta\_LR1e-05     & 11 & 0.6634 \\
-  VGG19\_SGD\_LR1e-06          & 11 & 0.3815 \\
-  VGG19\_Nadam\_LR1e-06        & 11 & 0.8201 \\
-  EfficientNetB3\_AdaDelta\_LR1e-04 & 11 & 0.8338 \\
-  EfficientNetB3\_AdaDelta\_LR1e-06 & 11 & 0.4241 \\
-  ResNet50\_AdaDelta\_LR1e-04  & 11 & 0.1554 \\
-  ResNet50\_AdaDelta\_LR1e-06  & 11 & 0.8350 \\
-  ResNet50\_RMSProp\_LR1e-06   & 11 & 0.7809 \\
-  DenseNet121\_AdaDelta\_LR1e-05 & 11 & 0.7146 \\
-  VGG19\_AdaDelta\_LR1e-04     & 12 & 0.3490 \\
-  ResNet50\_Adagrad\_LR1e-05   & 12 & 0.5074 \\
-  ResNet50\_AdaDelta\_LR1e-05  & 12 & 0.3954 \\
-  DenseNet121\_Adagrad\_LR1e-06 & 12 & 0.2459 \\
-  DenseNet121\_AdaDelta\_LR1e-06 & 12 & 0.6623 \\
-  DenseNet121\_RMSProp\_LR1e-06 & 12 & 0.6941 \\
-  ResNet50\_Adamax\_LR1e-06    & 13 & 0.7269 \\
-  VGG19\_AdaDelta\_LR1e-06     & 14 & 0.5505 \\
-  EfficientNetB3\_Adam\_LR1e-06 & 14 & 0.3281 \\
-  DenseNet121\_Nadam\_LR1e-06  & 15 & 0.7275 \\
-  EfficientNetB3\_AdaDelta\_LR1e-05 & 15 & 0.8531 \\
-  DenseNet121\_Adam\_LR1e-06   & 18 & 0.6365 \\
-  DenseNet121\_Nadam\_LR1e-04  & 19 & 0.9978 \\
-  EfficientNetB3\_RMSProp\_LR1e-06 & 20 & 0.7854 \\
-  VGG19\_RMSProp\_LR1e-04      & 21 & 0.9949 \\
-  EfficientNetB3\_Adamax\_LR1e-06 & 21 & 0.8089 \\
-  VGG19\_SGD\_LR1e-05          & 22 & 0.4278 \\
-  DenseNet121\_Adamax\_LR1e-04 & 23 & 0.9977 \\
-  EfficientNetB3\_Nadam\_LR1e-06 & 23 & 0.4567 \\
-  ResNet50\_Nadam\_LR1e-06     & 23 & 0.8451 \\
-  DenseNet121\_RMSProp\_LR1e-04 & 24 & 0.9990 \\
-  VGG19\_Adagrad\_LR1e-04      & 25 & 0.6997 \\
-  DenseNet121\_Adagrad\_LR1e-04 & 25 & 0.8734 \\
-  ResNet50\_Adagrad\_LR1e-06   & 25 & 0.7961 \\
-  VGG19\_Adam\_LR1e-04         & 26 & 0.9995 \\
-  VGG19\_Nadam\_LR1e-04        & 26 & 0.9991 \\
-  DenseNet121\_Adagrad\_LR1e-05 & 27 & 0.4711 \\
-  DenseNet121\_Adam\_LR1e-04   & 27 & 0.9991 \\
-  DenseNet121\_Adamax\_LR1e-06 & 27 & 0.7663 \\
-  EfficientNetB3\_Adagrad\_LR1e-05 & 28 & 0.3934 \\
-  EfficientNetB3\_Adagrad\_LR1e-04 & 29 & 0.6686 \\
-  ResNet50\_Adam\_LR1e-04      & 31 & 0.9864 \\
-  ResNet50\_SGD\_LR1e-05       & 32 & 0.9722 \\
-  ResNet50\_Nadam\_LR1e-05     & 32 & 0.9521 \\
-  EfficientNetB3\_SGD\_LR1e-06 & 33 & 0.1893 \\
-  DenseNet121\_AdaDelta\_LR1e-04 & 33 & 0.4281 \\
-  VGG19\_Adamax\_LR1e-05       & 35 & 0.7215 \\
-  ResNet50\_SGD\_LR1e-04       & 35 & 0.9869 \\
-  VGG19\_RMSProp\_LR1e-06      & 35 & 0.3577 \\
-  EfficientNetB3\_Adamax\_LR1e-05 & 37 & 0.7335 \\
-  ResNet50\_Nadam\_LR1e-04     & 37 & 0.9913 \\
-  DenseNet121\_RMSProp\_LR1e-05 & 37 & 0.9619 \\
-  VGG19\_Adagrad\_LR1e-05      & 38 & 0.8491 \\
-  ResNet50\_Adamax\_LR1e-05    & 38 & 0.8366 \\
-  EfficientNetB3\_Nadam\_LR1e-05 & 39 & 0.9440 \\
-  ResNet50\_RMSProp\_LR1e-04   & 40 & 0.9943 \\
-  DenseNet121\_SGD\_LR1e-06    & 40 & 0.4566 \\
-  EfficientNetB3\_RMSProp\_LR1e-04 & 41 & 0.9841 \\
-  ResNet50\_SGD\_LR1e-06       & 41 & 0.7844 \\
-  EfficientNetB3\_Adam\_LR1e-04 & 42 & 0.9787 \\
-  EfficientNetB3\_Nadam\_LR1e-04 & 42 & 0.9837 \\
-  EfficientNetB3\_Adam\_LR1e-05 & 43 & 0.5308 \\
-  ResNet50\_Adamax\_LR1e-04    & 44 & 0.9815 \\
-  DenseNet121\_Adamax\_LR1e-05 & 49 & 0.4989 \\
-\end{longtable}
-\endgroup
-
-Complete per-model accuracy and loss curves are provided in Appendix~\ref{appx:acc-loss}. AUC-ROC curves are provided in Appendix~\ref{appx:auc-roc}. Confusion matrices for all 84 runs are provided in Appendix~\ref{appx:confusion}. The complete 84-run results table is provided in Appendix~\ref{appx:full-results}.
+It is also worth noting the runs that failed. We identified 10 cases where the models simply collapsed to predicting one class. Interestingly, some of these runs still showed a high AUC (above 0.80) even though they were practically useless because they never correctly identified a single cancer (or non-cancer) case. This highlighted why we need to look at more than just AUC when evaluating these models for medical use.

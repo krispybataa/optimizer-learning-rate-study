@@ -1,37 +1,30 @@
-\textit{Note: Source files presented in this appendix have had Unicode box-drawing and special characters substituted with ASCII equivalents for PDF rendering compatibility. Original source files with full Unicode output formatting are available in the project repository.}
+\singlespacing
+\normalsize
+\setlength{\columnsep}{1.5em}
+\begin{multicols}{2}
+\tiny
+
+
 \vspace{1em}
 
-\subsection*{preprocessing.py}
-\label{appx:src-preprocessing}
 \codefile{src/preprocessing.py}
-\lstinputlisting[style=python]{../../src/preprocessing_clean.py}
+\lstinputlisting[style=python, label=lst:preprocessing, caption={preprocessing.py : Data Preprocessing Pipeline}]{../../src/preprocessing.py}
 
-\clearpage
-\subsection*{model\_builder.py}
-\label{appx:src-model-builder}
 \codefile{src/model\_builder.py}
-\lstinputlisting[style=python]{../../src/model_builder.py}
+\lstinputlisting[style=python, label=lst:model-builder, caption={model\_builder.py : Model Architecture Builder}]{../../src/model_builder.py}
 
-\clearpage
-\subsection*{train.py}
-\label{appx:src-train}
 \codefile{src/train.py}
-\lstinputlisting[style=python]{../../src/train_clean.py}
+\lstinputlisting[style=python, label=lst:train, caption={train.py : Model Training Loop}]{../../src/train.py}
 
-\clearpage
-\subsection*{evaluate.py}
-\label{appx:src-evaluate}
 \codefile{src/evaluate.py}
-\lstinputlisting[style=python]{../../src/evaluate.py}
+\lstinputlisting[style=python, label=lst:evaluate, caption={evaluate.py : Model Evaluation}]{../../src/evaluate.py}
 
-\clearpage
-\subsection*{visualize.py}
-\label{appx:src-visualize}
 \codefile{src/visualize.py}
-\lstinputlisting[style=python]{../../src/visualize_clean.py}
+\lstinputlisting[style=python, label=lst:visualize, caption={visualize.py : Results Visualization}]{../../src/visualize.py}
 
-\clearpage
-\subsection*{run\_all.py}
-\label{appx:src-run-all}
 \codefile{src/run\_all.py}
-\lstinputlisting[style=python]{../../src/run_all_clean.py}
+\lstinputlisting[style=python, label=lst:run-all, caption={run\_all.py : Experiment Orchestrator}]{../../src/run_all.py}
+
+\end{multicols}
+\normalsize
+\doublespacing
